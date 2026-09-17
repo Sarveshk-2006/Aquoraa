@@ -296,6 +296,18 @@ class Settings(BaseSettings):
             return [i.strip() for i in v.split(",") if i.strip()]
         return v
 
+    @field_validator("DATABASE_URL", mode="before")
+    @classmethod
+    def parse_database_url(cls, v: str | None) -> str:
+        if not v:
+            return "postgresql+asyncpg://aquora:aquora_password@localhost:5432/aquora_db"
+        if v.startswith("postgres://"):
+            return v.replace("postgres://", "postgresql+asyncpg://", 1)
+        if v.startswith("postgresql://"):
+            return v.replace("postgresql+asyncpg://" if "postgresql+asyncpg://" in v else "postgresql://", "postgresql+asyncpg://", 1)
+        return v
+
+
     model_config = SettingsConfigDict(
         env_file=".env",
         env_file_encoding="utf-8",

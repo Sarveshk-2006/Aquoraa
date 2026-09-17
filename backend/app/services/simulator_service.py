@@ -130,6 +130,10 @@ class SimulatorService:
                 await self.db.commit()
                 await self.db.refresh(scenario_obj)
             except Exception as err:
+                try:
+                    await self.db.rollback()
+                except Exception:
+                    pass
                 if getattr(settings, "ENVIRONMENT", "development").lower() == "production":
                     raise RuntimeError(f"Production database persistence failure: {err}") from err
                 logger.warning("PostgreSQL commit bypassed, using in-memory store", error=str(err))

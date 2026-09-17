@@ -1,0 +1,17 @@
+{
+  "source_file": "data/raw/phase7\\dem\\Copernicus_DSM_COG_10_N19_00_E072_00.tif",
+  "source_sha256": "9611f68888b0faff728baa0aa34ee1c2bde91393301f344b215929949ef0be2f",
+  "height": 476,
+  "width": 392,
+  "min_elevation_m": 0.10000000149011612,
+  "max_elevation_m": 54.98739242553711,
+  "mean_slope_deg": 0.3514684736728668,
+  "max_flow_accumulation": 183.95797729492188,
+  "outputs": {
+    "elevation": "data/processed/phase7\\terrain\\elevation_30m.tif",
+    "slope": "data/processed/phase7\\terrain\\slope_30m.tif",
+    "aspect": "data/processed/phase7\\terrain\\aspect_30m.tif",
+    "flow_accumulation": "data/processed/phase7\\terrain\\flow_accumulation_30m.tif",
+    "drainage_proxy_score": "data/processed/phase7\\terrain\\drainage_proxy_score.tif"
+  }
+}

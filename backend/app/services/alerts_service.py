@@ -943,6 +943,10 @@ class AlertsService:
                 return res.scalar_one_or_none()
             except Exception as err:  # noqa: BLE001
                 logger.warning("PostgreSQL lookup bypassed, checking in-memory store", error=str(err))
+                try:
+                    await self.db.rollback()
+                except Exception:
+                    pass
 
         for alt in _IN_MEMORY_ALERTS.values():
             if alt.fingerprint == fingerprint and alt.status in (AlertStatus.ACTIVE.value, AlertStatus.ACKNOWLEDGED.value):
@@ -1034,6 +1038,10 @@ class AlertsService:
                 await self.db.commit()
                 await self.db.refresh(alert_obj)
             except Exception as err:
+                try:
+                    await self.db.rollback()
+                except Exception:
+                    pass
                 if getattr(settings, "ENVIRONMENT", "development").lower() == "production":
                     raise RuntimeError(f"Production database persistence failure: {err}") from err
                 logger.warning("PostgreSQL commit bypassed in _create_new_alert", error=str(err))
@@ -1088,6 +1096,10 @@ class AlertsService:
                 self.db.add(audit_event)
                 await self.db.commit()
             except Exception as err:
+                try:
+                    await self.db.rollback()
+                except Exception:
+                    pass
                 if getattr(settings, "ENVIRONMENT", "development").lower() == "production":
                     raise RuntimeError(f"Production database persistence failure: {err}") from err
                 logger.warning("PostgreSQL commit bypassed in _update_continuing_alert", error=str(err))
@@ -1211,6 +1223,10 @@ class AlertsService:
                 alerts_list = list(res.scalars().all())
             except Exception as err:  # noqa: BLE001
                 logger.warning("PostgreSQL alert list query bypassed", error=str(err))
+                try:
+                    await self.db.rollback()
+                except Exception:
+                    pass
 
         if not alerts_list:
             alerts_list = list(_IN_MEMORY_ALERTS.values())

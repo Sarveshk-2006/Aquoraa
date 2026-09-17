@@ -1,10 +1,10 @@
 """
-Idempotent Critical Facility Seeder for Aquora Production.
+Idempotent Critical Facility Seeder and Migration Helper for Aquora Production.
 
 Ensures:
-1. Verified OSM + MCGM critical facility datasets (366 total) are idempotently loaded into PostgreSQL database.
-2. No duplicate facility records are inserted on container restarts.
-3. Database migrations (alembic upgrade head) are executed separately BEFORE Uvicorn starts.
+1. Database migrations (alembic upgrade head) are executed programmatically up to head revision.
+2. Verified OSM + MCGM critical facility datasets (366 total) are idempotently loaded into PostgreSQL database.
+3. No duplicate facility records are inserted on container restarts.
 """
 
 import asyncio
@@ -19,6 +19,28 @@ from app.core.config import settings
 from app.core.logging import logger
 from app.db.session import AsyncSessionLocal
 from app.models.critical_access import CriticalFacility
+
+
+def apply_alembic_migrations() -> None:
+    """Execute Alembic migrations (alembic upgrade head) programmatically."""
+    logger.info("Verifying database schema migration status (alembic upgrade head)...")
+    try:
+        from alembic.config import Config
+        from alembic import command
+
+        backend_dir = Path(__file__).resolve().parents[2]
+        alembic_ini_path = backend_dir / "alembic.ini"
+
+        if alembic_ini_path.exists():
+            alembic_cfg = Config(str(alembic_ini_path))
+            alembic_cfg.set_main_option("script_location", str(backend_dir / "alembic"))
+            command.upgrade(alembic_cfg, "head")
+            logger.info("Alembic database migrations applied successfully (head reached).")
+        else:
+            logger.warning("alembic.ini not found at path", path=str(alembic_ini_path))
+    except Exception as err:
+        logger.error("Alembic migration execution error", error=str(err))
+        raise err
 
 
 async def seed_critical_facilities() -> int:
@@ -108,9 +130,11 @@ async def seed_critical_facilities() -> int:
 
 
 async def run_migrations_and_seed() -> None:
-    """Alias function for backward compatibility."""
+    """Execute migrations and seed facilities."""
+    apply_alembic_migrations()
     await seed_critical_facilities()
 
 
 if __name__ == "__main__":
+    apply_alembic_migrations()
     asyncio.run(seed_critical_facilities())

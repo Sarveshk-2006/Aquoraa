@@ -83,7 +83,15 @@ async def list_scenarios(
             baseline_run_id=s.baseline_run_id,
             scenario_type=ScenarioType(s.scenario_type),
             parameters=s.parameters,
-            assumptions=[ScenarioAssumptionSchema(**a) for a in s.assumptions],
+            assumptions=[
+                ScenarioAssumptionSchema(
+                    assumption_type=str(a.get("assumption_type", "DEFAULT")) if isinstance(a, dict) else "DEFAULT",
+                    assumption_value=a.get("assumption_value", str(a)) if isinstance(a, dict) else str(a),
+                    assumption_source=str(a.get("assumption_source", "SYSTEM")) if isinstance(a, dict) else "SYSTEM",
+                    assumption_description=str(a.get("assumption_description", "")) if isinstance(a, dict) else str(a),
+                )
+                for a in (s.assumptions or [])
+            ],
             status=ScenarioStatus(s.status),
             provenance=s.provenance,
             created_at=s.created_at.isoformat(),
@@ -288,7 +296,15 @@ async def get_run_summary(
         baseline_run_id=scen.baseline_run_id,
         scenario_type=ScenarioType(scen.scenario_type),
         parameters=scen.parameters,
-        assumptions=[ScenarioAssumptionSchema(**a) for a in scen.assumptions],
+        assumptions=[
+            ScenarioAssumptionSchema(
+                assumption_type=str(a.get("assumption_type", "DEFAULT")) if isinstance(a, dict) else "DEFAULT",
+                assumption_value=a.get("assumption_value", str(a)) if isinstance(a, dict) else str(a),
+                assumption_source=str(a.get("assumption_source", "SYSTEM")) if isinstance(a, dict) else "SYSTEM",
+                assumption_description=str(a.get("assumption_description", "")) if isinstance(a, dict) else str(a),
+            )
+            for a in (scen.assumptions or [])
+        ],
         status=ScenarioStatus(scen.status),
         provenance=scen.provenance,
         created_at=scen.created_at.isoformat(),

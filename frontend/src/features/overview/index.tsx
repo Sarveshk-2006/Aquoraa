@@ -25,54 +25,59 @@ import { fetchAlerts } from '@/api/alerts';
 import { fetchCriticalFacilities } from '@/api/criticalAccess';
 import { fetchLatestProtectCityRun } from '@/api/protectCity';
 import { Card } from '@/components/ui/Card';
+import mumbaiHeroImg from '@/assets/aquora-mumbai-hero.webp';
 
-/* ─── Mumbai Skyline Hero Illustration (SVG) ────────────────── */
-const MumbaiSkylineHero: React.FC = () => (
-  <div className="relative w-full h-[90px] rounded-[20px] overflow-hidden bg-gradient-to-r from-[#0f2340] via-[#004d4d] to-[#008080] flex items-center justify-between px-6 text-white shadow-sm border border-teal-800/40">
-    <div className="z-10 flex flex-col justify-center">
-      <span className="text-[10px] uppercase font-bold tracking-widest text-[#F5F5DC] opacity-90">
-        MUMBAI · MITHI CATCHMENT
+/* ─── Mumbai Skyline Hero Section ───────────────────────────── */
+interface MumbaiSkylineHeroProps {
+  onExploreClick: () => void;
+}
+
+const MumbaiSkylineHero: React.FC<MumbaiSkylineHeroProps> = ({ onExploreClick }) => (
+  <div className="relative w-full h-[320px] sm:h-[340px] md:h-[350px] rounded-[20px] overflow-hidden shadow-lg border border-teal-900/30 group">
+    {/* 1. Background Image with subtle hover zoom */}
+    <img
+      src={mumbaiHeroImg}
+      alt="Panoramic Mumbai skyline and waterfront during monsoon weather with a bridge crossing the water."
+      className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-500 ease-out group-hover:scale-[1.02]"
+    />
+
+    {/* 2. Dark Teal Gradient Overlay for WCAG-friendly text readability */}
+    <div className="absolute inset-0 bg-gradient-to-r from-[#031920] via-[#031920]/85 via-50% to-transparent opacity-95 sm:opacity-90" />
+    <div className="absolute inset-0 bg-gradient-to-b from-[#031920]/30 via-transparent to-[#031920]/50 pointer-events-none" />
+
+    {/* 3. Hero Content */}
+    <div className="relative z-10 h-full max-w-[620px] flex flex-col justify-center px-6 sm:px-10 text-white">
+      {/* Eyebrow */}
+      <span className="text-[11px] sm:text-[12px] font-bold tracking-[0.25em] text-teal-300 uppercase mb-2">
+        A Q U O R A
       </span>
-      <h2 className="text-[1.3rem] font-black tracking-tight text-white leading-tight mt-0.5">
-        Current Flood Outlook
-      </h2>
-      <p className="text-[11.5px] text-teal-100 font-medium">
-        See where water may develop over the next 3 hours.
+
+      {/* Main Heading */}
+      <h1 className="text-[2.2rem] sm:text-[2.8rem] md:text-[3.1rem] font-extrabold tracking-tight leading-[1.08] text-white">
+        Safer Mumbai <br />
+        <span className="text-[#00e5d4] drop-shadow-sm">Together</span>
+      </h1>
+
+      {/* Supporting Text */}
+      <p className="mt-3 text-[13px] sm:text-[14.5px] leading-relaxed text-slate-200 font-medium max-w-[480px]">
+        Real-time flood intelligence, route safety, and critical facility access — powered by live data and scientific modelling.
       </p>
+
+      {/* Primary CTA */}
+      <div className="mt-5">
+        <button
+          onClick={onExploreClick}
+          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#008080] hover:bg-[#009696] text-white text-[13px] font-bold tracking-wide transition-all duration-200 shadow-md hover:shadow-lg hover:-translate-y-0.5 cursor-pointer active:translate-y-0"
+        >
+          <span>Explore Flood Outlook</span>
+          <ChevronRight className="w-4 h-4" />
+        </button>
+      </div>
     </div>
 
-    {/* Right side skyline artwork + script badge */}
-    <div className="relative z-10 flex items-center gap-5">
-      <div className="hidden sm:flex flex-col items-end">
-        <span className="font-serif italic text-[1.25rem] font-bold text-[#F5F5DC] tracking-wide drop-shadow-sm">
-          Safer Mumbai Together
-        </span>
-      </div>
-      {/* Decorative Sea Link Cables & Towers SVG */}
-      <svg width="180" height="70" viewBox="0 0 180 70" fill="none" className="opacity-45">
-        {/* Sea Link Pylons */}
-        <path d="M40 65 L60 10 L80 65" stroke="#F5F5DC" strokeWidth="2.5" />
-        <path d="M110 65 L130 15 L150 65" stroke="#F5F5DC" strokeWidth="2.5" />
-        {/* Stay cables */}
-        <line x1="60" y1="10" x2="20" y2="65" stroke="#b2d8d8" strokeWidth="0.8" />
-        <line x1="60" y1="10" x2="35" y2="65" stroke="#b2d8d8" strokeWidth="0.8" />
-        <line x1="60" y1="10" x2="50" y2="65" stroke="#b2d8d8" strokeWidth="0.8" />
-        <line x1="60" y1="10" x2="70" y2="65" stroke="#b2d8d8" strokeWidth="0.8" />
-        <line x1="60" y1="10" x2="85" y2="65" stroke="#b2d8d8" strokeWidth="0.8" />
-
-        <line x1="130" y1="15" x2="95" y2="65" stroke="#b2d8d8" strokeWidth="0.8" />
-        <line x1="130" y1="15" x2="110" y2="65" stroke="#b2d8d8" strokeWidth="0.8" />
-        <line x1="130" y1="15" x2="125" y2="65" stroke="#b2d8d8" strokeWidth="0.8" />
-        <line x1="130" y1="15" x2="145" y2="65" stroke="#b2d8d8" strokeWidth="0.8" />
-        <line x1="130" y1="15" x2="165" y2="65" stroke="#b2d8d8" strokeWidth="0.8" />
-        {/* Deck */}
-        <line x1="0" y1="65" x2="180" y2="65" stroke="#F5F5DC" strokeWidth="3" />
-        {/* City skyline silhouettes background */}
-        <rect x="5" y="40" width="12" height="25" fill="#ffffff" opacity="0.3" />
-        <rect x="20" y="32" width="10" height="33" fill="#ffffff" opacity="0.4" />
-        <rect x="85" y="35" width="14" height="30" fill="#ffffff" opacity="0.3" />
-        <rect x="155" y="28" width="16" height="37" fill="#ffffff" opacity="0.4" />
-      </svg>
+    {/* 4. Contextual Label (Bottom Right) */}
+    <div className="absolute bottom-4 right-4 z-10 bg-black/40 backdrop-blur-md px-3.5 py-1 rounded-full border border-white/15 text-[10.5px] font-semibold text-teal-100/90 tracking-wide pointer-events-none hidden sm:block">
+      Mumbai · Mithi Catchment
     </div>
   </div>
 );
@@ -293,7 +298,7 @@ export const OverviewFeature: React.FC = () => {
     <div className="space-y-4 pb-4 font-sans max-w-[1280px] mx-auto">
 
       {/* ── 1. Hero Skyline Banner ──────────────────────────── */}
-      <MumbaiSkylineHero />
+      <MumbaiSkylineHero onExploreClick={() => setActiveTab('flood-map')} />
 
       {/* ── 2. Four story-oriented KPI cards ───────────────── */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 items-stretch">

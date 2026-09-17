@@ -1,4 +1,4 @@
-import { apiFetch } from './client';
+import { apiFetch, apiUploadFormData } from './client';
 
 export interface ObservationPayload {
   latitude: number;
@@ -106,18 +106,7 @@ export async function createObservation(payload: ObservationPayload): Promise<Ob
 export async function uploadObservationMedia(observationId: string, file: File): Promise<Record<string, unknown>> {
   const formData = new FormData();
   formData.append('file', file);
-
-  const baseUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
-  const res = await fetch(`${baseUrl}/api/v1/ground-truth/observations/${observationId}/media`, {
-    method: 'POST',
-    body: formData,
-  });
-
-  if (!res.ok) {
-    throw new Error(`Upload failed with status ${res.status}`);
-  }
-
-  return res.json();
+  return apiUploadFormData<Record<string, unknown>>(`/api/v1/ground-truth/observations/${observationId}/media`, formData);
 }
 
 export async function fetchIncidents(): Promise<IncidentResponse[]> {

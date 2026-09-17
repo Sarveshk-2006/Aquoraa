@@ -57,3 +57,28 @@ async def test_top_level_health_alias(async_client):
     data = response.json()
     assert "status" in data
     assert "services" in data
+
+
+@pytest.mark.asyncio
+async def test_vercel_cors_header_verification(async_client):
+    """Verify production Vercel origin returns Access-Control-Allow-Origin header."""
+    origin = "https://aquora-nine.vercel.app"
+    response = await async_client.get(
+        "/api/v1/health/live",
+        headers={"Origin": origin}
+    )
+    assert response.status_code == 200
+    assert response.headers.get("access-control-allow-origin") == origin
+
+    # Verify OPTIONS preflight response as well
+    preflight = await async_client.options(
+        "/api/v1/health/live",
+        headers={
+            "Origin": origin,
+            "Access-Control-Request-Method": "GET",
+            "Access-Control-Request-Headers": "Content-Type",
+        }
+    )
+    assert preflight.status_code == 200
+    assert preflight.headers.get("access-control-allow-origin") == origin
+

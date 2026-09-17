@@ -26,16 +26,20 @@ class Settings(BaseSettings):
         default="development",
         description="Runtime environment ('development', 'testing', 'production')"
     )
-    CORS_ORIGINS: list[str] = [
-        "http://localhost:5173",
-        "http://127.0.0.1:5173",
-        "http://localhost:5174",
-        "http://127.0.0.1:5174",
-        "http://localhost:5175",
-        "http://127.0.0.1:5175",
-        "http://localhost:3000",
-        "http://127.0.0.1:3000",
-    ]
+    CORS_ORIGINS: list[str] | str = Field(
+        default=[
+            "http://localhost:5173",
+            "http://127.0.0.1:5173",
+            "http://localhost:5174",
+            "http://127.0.0.1:5174",
+            "http://localhost:5175",
+            "http://127.0.0.1:5175",
+            "http://localhost:3000",
+            "http://127.0.0.1:3000",
+            "https://aquora-nine.vercel.app",
+        ],
+        description="Allowed origins for CORS"
+    )
     LOG_LEVEL: str = "INFO"
 
     MAP_STYLE_URL: str = "https://demotiles.maplibre.org/style.json"
@@ -286,15 +290,47 @@ class Settings(BaseSettings):
 
     @field_validator("CORS_ORIGINS", mode="before")
     @classmethod
-    def parse_cors_origins(cls, v: str | list[str]) -> list[str]:
+    def parse_cors_origins(cls, v: str | list[str] | None) -> list[str]:
+        if not v:
+            return [
+                "http://localhost:5173",
+                "http://127.0.0.1:5173",
+                "http://localhost:5174",
+                "http://127.0.0.1:5174",
+                "http://localhost:5175",
+                "http://127.0.0.1:5175",
+                "http://localhost:3000",
+                "http://127.0.0.1:3000",
+                "https://aquora-nine.vercel.app",
+            ]
+
+        origins: list[str] = []
         if isinstance(v, str):
+            v = v.strip()
+            if not v:
+                return []
             if v.startswith("[") and v.endswith("]"):
                 try:
-                    return json.loads(v)
-                except (json.JSONDecodeError, TypeError):
-                    pass
-            return [i.strip() for i in v.split(",") if i.strip()]
-        return v
+                    parsed = json.loads(v)
+                    if isinstance(parsed, list):
+                        origins = [str(item) for item in parsed]
+                except Exception:
+                    raw = v[1:-1]
+                    origins = [item.strip() for item in raw.split(",") if item.strip()]
+            else:
+                origins = [item.strip() for item in v.split(",") if item.strip()]
+        elif isinstance(v, list):
+            origins = [str(item) for item in v]
+        else:
+            return []
+
+        cleaned: list[str] = []
+        for origin in origins:
+            o = origin.strip().strip("'").strip('"').rstrip('/')
+            if o and o not in cleaned:
+                cleaned.append(o)
+
+        return cleaned
 
     @field_validator("DATABASE_URL", mode="before")
     @classmethod

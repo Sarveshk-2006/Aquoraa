@@ -9,7 +9,7 @@ from app.schemas.health import LivenessResponse, ReadinessResponse, ServicesHeal
 
 router = APIRouter(prefix="/health", tags=["Health"])
 
-@router.get("/live", response_model=LivenessResponse, summary="Application Process Liveness Check")
+@router.api_route("/live", methods=["GET", "HEAD"], response_model=LivenessResponse, summary="Application Process Liveness Check")
 async def health_live() -> LivenessResponse:
     """
     Liveness check to verify if the application process is running.
@@ -17,7 +17,7 @@ async def health_live() -> LivenessResponse:
     """
     return LivenessResponse(status="ok")
 
-@router.get("/ready", response_model=ReadinessResponse, summary="Dependency Infrastructure Readiness Check")
+@router.api_route("/ready", methods=["GET", "HEAD"], response_model=ReadinessResponse, summary="Dependency Infrastructure Readiness Check")
 async def health_ready(response: Response) -> ReadinessResponse:
     """
     Readiness check to verify PostgreSQL database and Redis connectivity.

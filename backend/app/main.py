@@ -58,7 +58,7 @@ app.add_exception_handler(Exception, generic_exception_handler)
 app.include_router(api_router)
 app.include_router(top_health_router)
 
-@app.get("/", summary="Root Metadata Endpoint")
+@app.api_route("/", methods=["GET", "HEAD"], summary="Root Metadata Endpoint")
 async def root():
     return {
         "name": settings.PROJECT_NAME,

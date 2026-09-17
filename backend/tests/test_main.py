@@ -13,3 +13,11 @@ async def test_root_endpoint(async_client):
     assert "endpoints" in data
     assert data["endpoints"]["liveness"] == "/api/v1/health/live"
     assert data["endpoints"]["readiness"] == "/api/v1/health/ready"
+
+
+@pytest.mark.asyncio
+async def test_root_head_endpoint(async_client):
+    """Verify HEAD / returns 200 OK for Render health checks and probes."""
+    response = await async_client.head("/")
+    assert response.status_code == 200
+

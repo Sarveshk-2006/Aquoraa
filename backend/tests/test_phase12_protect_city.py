@@ -122,7 +122,7 @@ def test_06_synthetic_provider_development_only():
     for c in cands:
         assert c.provider_mode == "SYNTHETIC"
         assert c.environment == "DEVELOPMENT_ONLY"
-        assert "TEST INTERVENTION CANDIDATE" in c.name
+        assert "Planning Candidate - Development Data" in c.name
 
 
 def test_07_local_provider_fallback_or_provenance(tmp_path):

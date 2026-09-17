@@ -128,28 +128,21 @@ class OpenMeteoForecastProvider(BaseForecastProvider):
                         data = response.json()
                         break
                     elif response.status_code in (502, 503, 504, 429) and attempt < 3:
-                        await asyncio.sleep(0.5 * attempt)
+                        await asyncio.sleep(0.1 * attempt)
                         continue
                     else:
-                        last_error = f"HTTP status {response.status_code}: {response.text}"
-            except (httpx.TimeoutException, httpx.RequestError) as exc:
-                last_error = str(exc)
-                if attempt < 3:
-                    await asyncio.sleep(0.5 * attempt)
+                        raise RuntimeError(f"Open-Meteo ECMWF API request failed with HTTP status {response.status_code}: {response.text}")
+            except httpx.TimeoutException as exc:
+                if attempt == 3:
+                    raise TimeoutError(f"API request timed out: {exc}")
+                await asyncio.sleep(0.1 * attempt)
+            except httpx.RequestError as exc:
+                if attempt == 3:
+                    raise RuntimeError(f"API request failed: {exc}")
+                await asyncio.sleep(0.1 * attempt)
 
         if data is None:
-            logger.warning(
-                f"Open-Meteo ECMWF API request failed after 3 attempts ({last_error}). Using baseline fallback forecast sequence."
-            )
-            now_iso = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:00")
-            times_fall = [(datetime.now(timezone.utc) + timedelta(hours=i)).strftime("%Y-%m-%dT%H:00") for i in range(24)]
-            precip_fall = [0.0, 5.0, 15.0, 25.0, 10.0, 2.0] + [0.0] * 18
-            data = {
-                "hourly": {
-                    "time": times_fall,
-                    "precipitation": precip_fall
-                }
-            }
+            raise RuntimeError("Failed to retrieve valid forecast data from Open-Meteo API")
 
         if not isinstance(data, dict):
             raise ValueError("Open-Meteo payload is not a valid JSON dictionary")

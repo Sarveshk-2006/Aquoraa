@@ -543,8 +543,12 @@ class DigitalTwinProcessingService:
                     flat_idx = raster_r * 476 + raster_c
                     if flat_idx < len(df):
                         cell_df = df.iloc[[flat_idx]].copy()
-                        cell_df["physical_model_score"] = physical_score
-                        probs = calib_service.model.predict_proba(cell_df)[:, 1]
+                        if hasattr(calib_service.model, "feature_names_in_"):
+                            cols = [c for c in calib_service.model.feature_names_in_ if c in cell_df.columns]
+                            cell_df_input = cell_df[cols]
+                        else:
+                            cell_df_input = cell_df
+                        probs = calib_service.model.predict_proba(cell_df_input)[:, 1]
                         prototype_ml_score = float(probs[0])
                 except Exception as err:
                     logger.warning(f"Cell inspection XGBoost ML evaluation degraded for cell {grid_cell_id}: {err!s}")

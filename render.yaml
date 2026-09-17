@@ -1,0 +1,47 @@
+# Render Infrastructure Blueprint Configuration for Aquora Backend Services
+
+services:
+  - type: web
+    name: aquora-backend
+    env: python
+    region: oregon
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/v1/health/live
+    envVars:
+      - key: ENVIRONMENT
+        value: production
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: DATABASE_URL
+        fromDatabase:
+          name: aquora-db
+          property: connectionString
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          name: aquora-redis
+          property: connectionString
+      - key: CORS_ORIGINS
+        sync: false
+      - key: API_BASE_URL
+        sync: false
+      - key: ROUTING_PROVIDER
+        value: OSRM
+      - key: RAINFALL_PROVIDER
+        value: IMERG
+      - key: FACILITY_PROVIDER
+        value: LOCAL
+      - key: GROUND_TRUTH_PROVIDER
+        value: LOCAL_VERIFIED
+
+databases:
+  - name: aquora-db
+    databaseName: aquora_db
+    user: aquora
+    region: oregon
+
+kv:
+  - name: aquora-redis
+    region: oregon

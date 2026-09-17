@@ -10,12 +10,16 @@ import {
   Sliders,
   AlertCircle,
   ArrowDown,
+  Layers,
   Cpu,
-  Compass,
+  Users,
   Activity,
   Menu,
   X,
-  Globe
+  Play,
+  MapPin,
+  TrendingUp,
+  HeartPulse
 } from 'lucide-react';
 import { useAppStore } from '@/store/useAppStore';
 import mumbaiHeroImg from '@/assets/aquora-mumbai-hero.webp';
@@ -28,7 +32,7 @@ const LandingNavbar: React.FC = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 40);
+      setScrolled(window.scrollY > 30);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
@@ -46,80 +50,84 @@ const LandingNavbar: React.FC = () => {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? 'bg-[#06191C]/90 backdrop-blur-md border-b border-teal-900/40 py-3 shadow-xl'
-          : 'bg-gradient-to-b from-[#06191C]/80 via-[#06191C]/40 to-transparent py-5'
+          ? 'bg-[#04191C]/92 backdrop-blur-md border-b border-teal-900/40 py-3 shadow-xl'
+          : 'bg-gradient-to-b from-[#04191C]/85 via-[#04191C]/40 to-transparent py-4'
       }`}
     >
-      <div className="max-w-[1340px] mx-auto px-5 md:px-8 flex items-center justify-between">
-        {/* Brand Logo */}
+      <div className="max-w-[1360px] mx-auto px-5 md:px-8 flex items-center justify-between">
+        {/* Left: Brand Logo & Tagline */}
         <div
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          className="flex items-center gap-2.5 cursor-pointer group"
+          className="flex items-center gap-3 cursor-pointer group"
         >
           <div className="w-9 h-9 rounded-xl bg-[#008080] flex items-center justify-center shadow-md group-hover:bg-[#009696] transition-colors">
             <Waves className="w-5 h-5 text-white" />
           </div>
           <div className="flex flex-col">
-            <span className="text-base font-extrabold text-white tracking-wider flex items-center gap-1.5 leading-none">
+            <span className="text-base font-black text-white tracking-wider leading-none">
               AQUORA
-              <span className="text-[9.5px] font-bold px-1.5 py-0.5 rounded bg-teal-500/20 text-teal-300 border border-teal-500/30 uppercase tracking-widest hidden sm:inline-block">
-                LIVE
-              </span>
             </span>
-            <span className="text-[10px] text-teal-200/70 font-medium tracking-wide leading-tight mt-0.5">
-              Urban Flood Intelligence
+            <span className="text-[11px] text-teal-200/80 font-medium tracking-tight mt-0.5 hidden sm:inline-block">
+              See the flood before it reaches the road.
             </span>
           </div>
         </div>
 
-        {/* Desktop Navigation Links */}
-        <nav className="hidden md:flex items-center gap-8 text-[13px] font-medium text-slate-300">
+        {/* Center: Desktop Navigation Links */}
+        <nav className="hidden lg:flex items-center gap-8 text-[13.5px] font-medium text-slate-200">
           <button
-            onClick={() => scrollToSection('problem')}
-            className="hover:text-white transition-colors cursor-pointer"
+            onClick={() => scrollToSection('about')}
+            className="hover:text-teal-300 transition-colors cursor-pointer"
           >
-            The Challenge
+            About
           </button>
           <button
             onClick={() => scrollToSection('how-it-works')}
-            className="hover:text-white transition-colors cursor-pointer"
+            className="hover:text-teal-300 transition-colors cursor-pointer"
           >
-            How it Works
+            How it works
           </button>
           <button
-            onClick={() => scrollToSection('capabilities')}
-            className="hover:text-white transition-colors cursor-pointer"
+            onClick={() => scrollToSection('platform')}
+            className="hover:text-teal-300 transition-colors cursor-pointer"
           >
-            Capabilities
+            Platform
           </button>
           <button
             onClick={() => scrollToSection('science')}
-            className="hover:text-white transition-colors cursor-pointer"
+            className="hover:text-teal-300 transition-colors cursor-pointer"
           >
             Science & Data
           </button>
+          <button
+            onClick={() => scrollToSection('impact')}
+            className="hover:text-teal-300 transition-colors cursor-pointer"
+          >
+            Impact
+          </button>
         </nav>
 
-        {/* Right Action & Live Badge */}
+        {/* Right: Live Badge & Enter AQUORA CTA */}
         <div className="hidden sm:flex items-center gap-4">
-          <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-teal-950/60 border border-teal-500/30 text-[11px] font-medium text-teal-300">
+          <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-teal-950/70 border border-teal-500/30 text-[11px] font-medium text-teal-300 shadow-sm">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            <span>Mithi Catchment · Active</span>
+            <span>Live Environment</span>
+            <span className="text-slate-400">• Mumbai · Mithi Catchment</span>
           </div>
 
           <button
             onClick={() => navigateToApp('overview')}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#008080] hover:bg-[#009696] text-white text-[13px] font-bold transition-all duration-200 shadow-md hover:shadow-teal-900/50 hover:-translate-y-0.5 cursor-pointer active:translate-y-0"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#008080] hover:bg-[#009696] text-white text-[13px] font-bold transition-all duration-200 shadow-lg shadow-teal-950/80 hover:shadow-teal-900/50 hover:-translate-y-0.5 cursor-pointer active:translate-y-0"
           >
             <span>Enter AQUORA</span>
             <ChevronRight className="w-4 h-4" />
           </button>
         </div>
 
-        {/* Mobile Hamburger Toggle */}
+        {/* Mobile Toggle */}
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="md:hidden p-2 rounded-lg bg-teal-950/60 text-slate-300 hover:text-white border border-teal-800/40"
+          className="lg:hidden p-2 rounded-lg bg-teal-950/60 text-slate-200 hover:text-white border border-teal-800/40"
         >
           {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
@@ -127,30 +135,28 @@ const LandingNavbar: React.FC = () => {
 
       {/* Mobile Menu Overlay */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-[#06191C] border-b border-teal-900/40 px-6 py-5 space-y-4 text-slate-200 animate-in fade-in slide-in-from-top-2">
-          <div className="flex items-center justify-between pb-3 border-b border-teal-900/40">
-            <div className="flex items-center gap-2 text-[11px] font-medium text-teal-300">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-              <span>Live Environment Connected</span>
-            </div>
+        <div className="lg:hidden bg-[#04191C] border-b border-teal-900/50 px-6 py-5 space-y-3 text-slate-200 animate-in fade-in slide-in-from-top-2">
+          <div className="flex items-center gap-2 text-[11px] font-medium text-teal-300 pb-2 border-b border-teal-900/40">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+            <span>Live Environment · Mumbai Mithi Catchment</span>
           </div>
           <button
-            onClick={() => scrollToSection('problem')}
+            onClick={() => scrollToSection('about')}
             className="block w-full text-left py-2 text-sm font-medium hover:text-teal-300"
           >
-            The Challenge
+            About
           </button>
           <button
             onClick={() => scrollToSection('how-it-works')}
             className="block w-full text-left py-2 text-sm font-medium hover:text-teal-300"
           >
-            How it Works
+            How it works
           </button>
           <button
-            onClick={() => scrollToSection('capabilities')}
+            onClick={() => scrollToSection('platform')}
             className="block w-full text-left py-2 text-sm font-medium hover:text-teal-300"
           >
-            Capabilities
+            Platform
           </button>
           <button
             onClick={() => scrollToSection('science')}
@@ -158,15 +164,21 @@ const LandingNavbar: React.FC = () => {
           >
             Science & Data
           </button>
+          <button
+            onClick={() => scrollToSection('impact')}
+            className="block w-full text-left py-2 text-sm font-medium hover:text-teal-300"
+          >
+            Impact
+          </button>
           <div className="pt-2">
             <button
               onClick={() => {
                 setMobileMenuOpen(false);
                 navigateToApp('overview');
               }}
-              className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-[#008080] text-white font-bold text-sm"
+              className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-[#008080] text-white font-bold text-sm shadow-md"
             >
-              <span>Enter AQUORA Platform</span>
+              <span>Enter AQUORA</span>
               <ChevronRight className="w-4 h-4" />
             </button>
           </div>
@@ -188,52 +200,51 @@ export const LandingPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#06191C] text-slate-100 font-sans selection:bg-[#008080] selection:text-white">
-      {/* ── Floating Header ───────────────────────────────────── */}
+    <div className="min-h-screen bg-[#04191C] text-slate-100 font-sans selection:bg-[#008080] selection:text-white">
+      {/* ── 0. Floating Header Navbar ───────────────────────────── */}
       <LandingNavbar />
 
       {/* ── 1. CINEMATIC HERO SECTION ───────────────────────── */}
-      <section className="relative min-h-screen flex items-center justify-center pt-24 pb-16 overflow-hidden">
-        {/* Background Image with subtle zoom micro-animation */}
+      <section className="relative min-h-screen flex items-center justify-center pt-28 pb-20 overflow-hidden">
+        {/* Hero Panoramic Image with subtle motion zoom */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <img
             src={mumbaiHeroImg}
-            alt="Panoramic Mumbai skyline and Bandra-Worli Sea Link during sunset"
-            className="w-full h-full object-cover object-center transition-transform duration-[20000ms] ease-out scale-100 hover:scale-105"
+            alt="Panoramic Mumbai skyline and Bandra-Worli Sea Link during golden sunset"
+            className="w-full h-full object-cover object-center transition-transform duration-[25000ms] ease-out scale-100 hover:scale-105"
           />
-          {/* Dark Teal Controlled Gradients for WCAG Readability */}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#06191C] via-[#06191C]/85 via-50% to-transparent opacity-95 sm:opacity-90" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#06191C] via-[#06191C]/30 to-[#06191C]/40" />
+          {/* Deep dark gradient overlay for crystal clear typography readability */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#04191C] via-[#04191C]/85 via-55% to-transparent opacity-95 sm:opacity-90" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#04191C] via-transparent to-[#04191C]/60" />
         </div>
 
-        {/* Hero Content Grid */}
-        <div className="relative z-10 max-w-[1340px] mx-auto px-5 md:px-8 w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          {/* Left Column — Text & Action */}
-          <div className="lg:col-span-7 space-y-6 pt-6 sm:pt-0">
-            {/* Eyebrow */}
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-500/10 border border-teal-500/30 text-teal-300 text-[11px] font-bold tracking-[0.25em] uppercase">
-              <Waves className="w-3.5 h-3.5" />
-              <span>A Q U O R A</span>
+        <div className="relative z-10 max-w-[1360px] mx-auto px-5 md:px-8 w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          {/* Left Hero Column */}
+          <div className="lg:col-span-7 space-y-6 pt-4 sm:pt-0">
+            {/* Hero Eyebrow */}
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-500/15 border border-teal-500/30 text-teal-300 text-[11px] font-bold tracking-[0.2em] uppercase">
+              <span>MUMBAI. PEOPLE. A SAFER TOMORROW.</span>
             </div>
 
-            {/* Primary Headline */}
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-[3.8rem] font-extrabold text-white tracking-tight leading-[1.06]">
+            {/* Main Headline */}
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-[4rem] font-black text-white tracking-tight leading-[1.08]">
               See the flood <br />
+              before it reaches <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00e5d4] via-teal-300 to-emerald-400">
-                before it reaches the road.
+                the road.
               </span>
             </h1>
 
-            {/* Subtext */}
+            {/* Supporting Copy */}
             <p className="text-base sm:text-lg text-slate-200 font-medium leading-relaxed max-w-[580px]">
-              Real-time flood intelligence for a more resilient Mumbai. Anticipate changing monsoon conditions, understand flood risk, find safer routes, and protect critical access — all from one live platform.
+              Real-time flood intelligence, route safety, and critical facility access — powered by live data and scientific modelling.
             </p>
 
-            {/* Action Buttons */}
-            <div className="pt-3 flex flex-wrap items-center gap-4">
+            {/* Hero CTA Buttons */}
+            <div className="pt-2 flex flex-wrap items-center gap-4">
               <button
                 onClick={() => navigateToApp('overview')}
-                className="inline-flex items-center gap-3 px-7 py-3.5 rounded-xl bg-[#008080] hover:bg-[#009696] text-white text-base font-bold tracking-wide transition-all duration-200 shadow-xl shadow-teal-950/80 hover:shadow-teal-800/40 hover:-translate-y-0.5 cursor-pointer active:translate-y-0"
+                className="inline-flex items-center gap-3 px-7 py-3.5 rounded-xl bg-[#008080] hover:bg-[#009696] text-white text-base font-bold tracking-wide transition-all duration-200 shadow-xl shadow-teal-950 hover:shadow-teal-900/50 hover:-translate-y-0.5 cursor-pointer active:translate-y-0"
               >
                 <span>Enter AQUORA</span>
                 <ChevronRight className="w-5 h-5" />
@@ -241,542 +252,569 @@ export const LandingPage: React.FC = () => {
 
               <button
                 onClick={() => scrollToId('how-it-works')}
-                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-slate-900/60 hover:bg-slate-800/80 text-slate-200 hover:text-white border border-slate-700/60 text-sm font-semibold transition-all duration-200 backdrop-blur-md cursor-pointer"
+                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-slate-900/70 hover:bg-slate-800/90 text-slate-100 border border-slate-700/60 text-sm font-semibold transition-all duration-200 backdrop-blur-md cursor-pointer hover:border-teal-500/40"
               >
-                <span>Explore How It Works</span>
-                <ArrowDown className="w-4 h-4 text-teal-400" />
+                <div className="w-6 h-6 rounded-full bg-teal-500/20 flex items-center justify-center">
+                  <Play className="w-3 h-3 text-teal-300 fill-teal-300 ml-0.5" />
+                </div>
+                <span>Watch our story</span>
               </button>
             </div>
 
-            {/* Quick Metrics Strip */}
-            <div className="pt-6 grid grid-cols-3 gap-4 border-t border-teal-900/50 max-w-[540px]">
-              <div>
-                <div className="text-xl sm:text-2xl font-black text-white">0–180m</div>
-                <div className="text-[11px] font-medium text-slate-400">Forecast Horizon</div>
-              </div>
-              <div>
-                <div className="text-xl sm:text-2xl font-black text-emerald-400">366</div>
-                <div className="text-[11px] font-medium text-slate-400">Critical Facilities</div>
-              </div>
-              <div>
-                <div className="text-xl sm:text-2xl font-black text-teal-300">2D Depth</div>
-                <div className="text-[11px] font-medium text-slate-400">Physics Solver</div>
-              </div>
+            {/* Bottom Hero Tagline */}
+            <div className="pt-6 border-t border-teal-900/50 flex items-center gap-3 text-xs font-semibold text-slate-400 tracking-wider uppercase">
+              <span>Data</span>
+              <span className="text-teal-500">•</span>
+              <span>People</span>
+              <span className="text-teal-500">•</span>
+              <span>Action</span>
             </div>
           </div>
 
-          {/* Right Column — Intelligence System Glass Overlays */}
-          <div className="lg:col-span-5 hidden lg:flex flex-col gap-4">
-            {/* Overlay Card 1: Operational Status */}
-            <div className="p-5 rounded-2xl bg-[#06191C]/80 backdrop-blur-xl border border-teal-500/25 shadow-2xl space-y-3">
+          {/* Right Hero Column — Live Intelligence Card & Callout */}
+          <div className="lg:col-span-5 hidden lg:flex flex-col gap-6">
+            {/* Live Flood Intelligence Overlay Card */}
+            <div className="p-6 rounded-2xl bg-[#04191C]/85 backdrop-blur-xl border border-teal-500/30 shadow-2xl space-y-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
-                  <span className="text-xs font-bold text-teal-200 uppercase tracking-wider">
+                  <CloudRain className="w-4 h-4 text-teal-300" />
+                  <span className="text-xs font-extrabold text-teal-200 uppercase tracking-wider">
                     LIVE FLOOD INTELLIGENCE
                   </span>
                 </div>
-                <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded bg-teal-500/20 text-teal-300 border border-teal-500/30">
-                  IMD / ECMWF SYNTHESIS
+                <span className="text-[10px] font-medium text-slate-300 px-2 py-0.5 rounded bg-teal-500/20 border border-teal-500/30">
+                  Real-time data & modelling
                 </span>
               </div>
-              <div className="space-y-1.5 pt-1">
-                <div className="flex justify-between text-xs text-slate-300">
-                  <span className="font-medium">Primary Focus Zone:</span>
-                  <span className="font-bold text-white">Mithi Catchment · Mumbai</span>
-                </div>
-                <div className="flex justify-between text-xs text-slate-300">
-                  <span className="font-medium">Active Model Horizon:</span>
-                  <span className="font-bold text-teal-300">0 — 180 Minutes</span>
-                </div>
-                <div className="flex justify-between text-xs text-slate-300">
-                  <span className="font-medium">Core Solver Status:</span>
-                  <span className="font-bold text-emerald-400">Operational · 2D Shallow Water</span>
-                </div>
-              </div>
-            </div>
 
-            {/* Overlay Card 2: Feature Quick Jump */}
-            <div className="p-5 rounded-2xl bg-[#06191C]/70 backdrop-blur-xl border border-slate-700/50 shadow-2xl space-y-3">
-              <div className="text-xs font-bold text-slate-400 uppercase tracking-wider">
-                EXPLORE PLATFORM MODULES
-              </div>
-              <div className="grid grid-cols-2 gap-2">
-                <button
-                  onClick={() => navigateToApp('flood-map')}
-                  className="p-2.5 rounded-xl bg-slate-900/80 hover:bg-teal-950/60 border border-slate-800 hover:border-teal-700/50 text-left transition-all group cursor-pointer"
-                >
-                  <div className="flex items-center gap-2">
-                    <CloudRain className="w-3.5 h-3.5 text-teal-400" />
-                    <span className="text-xs font-bold text-white group-hover:text-teal-300">Flood Outlook</span>
-                  </div>
-                </button>
-                <button
-                  onClick={() => navigateToApp('travel-window')}
-                  className="p-2.5 rounded-xl bg-slate-900/80 hover:bg-teal-950/60 border border-slate-800 hover:border-teal-700/50 text-left transition-all group cursor-pointer"
-                >
-                  <div className="flex items-center gap-2">
-                    <Navigation className="w-3.5 h-3.5 text-emerald-400" />
-                    <span className="text-xs font-bold text-white group-hover:text-emerald-300">Travel Window</span>
-                  </div>
-                </button>
-                <button
-                  onClick={() => navigateToApp('critical-access')}
-                  className="p-2.5 rounded-xl bg-slate-900/80 hover:bg-teal-950/60 border border-slate-800 hover:border-teal-700/50 text-left transition-all group cursor-pointer"
-                >
-                  <div className="flex items-center gap-2">
-                    <ShieldAlert className="w-3.5 h-3.5 text-red-400" />
-                    <span className="text-xs font-bold text-white group-hover:text-red-300">Critical Access</span>
-                  </div>
-                </button>
-                <button
-                  onClick={() => navigateToApp('protect-city')}
-                  className="p-2.5 rounded-xl bg-slate-900/80 hover:bg-teal-950/60 border border-slate-800 hover:border-teal-700/50 text-left transition-all group cursor-pointer"
-                >
-                  <div className="flex items-center gap-2">
-                    <Building2 className="w-3.5 h-3.5 text-teal-300" />
-                    <span className="text-xs font-bold text-white group-hover:text-teal-200">Protect City</span>
-                  </div>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── 2. THE CHALLENGE & PURPOSE ───────────────────────── */}
-      <section id="problem" className="py-24 bg-[#041215] border-t border-teal-900/30 relative">
-        <div className="max-w-[1340px] mx-auto px-5 md:px-8">
-          <div className="max-w-3xl mb-16">
-            <span className="text-xs font-bold tracking-[0.2em] text-teal-400 uppercase">
-              THE URBAN CHALLENGE
-            </span>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight mt-3 leading-tight">
-              When water moves fast, <br />
-              <span className="text-teal-300">decisions need to move faster.</span>
-            </h2>
-            <p className="mt-4 text-slate-300 text-base sm:text-lg leading-relaxed font-medium">
-              Mumbai's high-density topography and intense monsoon rainfall create rapid surface water accumulation. Traditional static alerts are insufficient for dynamic route safety and essential facility access.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-            {/* 4 Problem Pillar Cards */}
-            <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="p-6 rounded-2xl bg-[#06191C] border border-teal-900/40 hover:border-teal-700/50 transition-all space-y-3">
-                <div className="w-10 h-10 rounded-xl bg-teal-500/10 border border-teal-500/20 flex items-center justify-center">
-                  <CloudRain className="w-5 h-5 text-teal-300" />
+              <div className="space-y-2.5 pt-1">
+                <div className="flex items-center gap-2 text-xs text-slate-200">
+                  <MapPin className="w-3.5 h-3.5 text-teal-400 shrink-0" />
+                  <span className="font-bold text-white">Mumbai · Mithi Catchment</span>
                 </div>
-                <h3 className="text-base font-bold text-white">Monsoon Accumulation</h3>
-                <p className="text-xs text-slate-400 leading-relaxed font-medium">
-                  High-intensity rainfall events overwhelm natural drainage in low-lying Mithi catchment corridors within minutes.
-                </p>
-              </div>
-
-              <div className="p-6 rounded-2xl bg-[#06191C] border border-teal-900/40 hover:border-teal-700/50 transition-all space-y-3">
-                <div className="w-10 h-10 rounded-xl bg-teal-500/10 border border-teal-500/20 flex items-center justify-center">
-                  <Activity className="w-5 h-5 text-teal-300" />
+                <div className="flex items-center gap-2 text-xs text-slate-200">
+                  <TrendingUp className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                  <span>Forecast horizon: <strong className="text-emerald-300 font-extrabold">0 – 180 min</strong></span>
                 </div>
-                <h3 className="text-base font-bold text-white">Tidal Lockout Effect</h3>
-                <p className="text-xs text-slate-400 leading-relaxed font-medium">
-                  High Arabian Sea tides block river discharge, creating compounding backwater flooding near Kurla and BKC.
-                </p>
-              </div>
-
-              <div className="p-6 rounded-2xl bg-[#06191C] border border-teal-900/40 hover:border-teal-700/50 transition-all space-y-3">
-                <div className="w-10 h-10 rounded-xl bg-red-500/10 border border-red-500/20 flex items-center justify-center">
-                  <ShieldAlert className="w-5 h-5 text-red-400" />
-                </div>
-                <h3 className="text-base font-bold text-white">Hospital Route Disruption</h3>
-                <p className="text-xs text-slate-400 leading-relaxed font-medium">
-                  Key arterial routes to hospitals like Sion Hospital become impassable without predictive routing advice.
-                </p>
-              </div>
-
-              <div className="p-6 rounded-2xl bg-[#06191C] border border-teal-900/40 hover:border-teal-700/50 transition-all space-y-3">
-                <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center">
-                  <Compass className="w-5 h-5 text-emerald-400" />
-                </div>
-                <h3 className="text-base font-bold text-white">Emergency Coordination</h3>
-                <p className="text-xs text-slate-400 leading-relaxed font-medium">
-                  Civic response teams require actionable 0-180 minute lead times to deploy mobile pumps and clear critical routes.
-                </p>
-              </div>
-            </div>
-
-            {/* Right Side — Catchment Feature Highlight Visual */}
-            <div className="lg:col-span-5 p-7 rounded-2xl bg-gradient-to-br from-[#06191C] to-[#041215] border border-teal-700/30 flex flex-col justify-between shadow-2xl relative overflow-hidden">
-              <div className="space-y-4 relative z-10">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-500/10 text-teal-300 text-xs font-bold uppercase tracking-wider">
-                  MITHI CATCHMENT TARGET ZONE
-                </div>
-                <h3 className="text-2xl font-extrabold text-white leading-snug">
-                  Precision spatial intelligence for Mumbai's central corridor.
-                </h3>
-                <p className="text-xs text-slate-300 leading-relaxed font-medium">
-                  AQUORA models 2D surface water dynamics across Copernicus DSM elevation grids, continuously synthesizing rainfall forecasts to predict inundation depths before roads become flooded.
-                </p>
-              </div>
-
-              <div className="pt-6 border-t border-teal-900/60 space-y-2 relative z-10">
-                <div className="flex justify-between text-xs">
-                  <span className="text-slate-400 font-medium">Corridor Length:</span>
-                  <span className="font-bold text-white">17.8 km River Reach</span>
-                </div>
-                <div className="flex justify-between text-xs">
-                  <span className="text-slate-400 font-medium">Elevation Coverage:</span>
-                  <span className="font-bold text-teal-300">0m — 35m DEM Grid</span>
-                </div>
-                <div className="flex justify-between text-xs">
-                  <span className="text-slate-400 font-medium">Critical Nodes Monitored:</span>
-                  <span className="font-bold text-emerald-400">366 OSM Facilities</span>
+                <div className="flex items-center gap-2 text-xs text-slate-300 pt-1 border-t border-teal-900/40">
+                  <Activity className="w-3.5 h-3.5 text-teal-300 shrink-0" />
+                  <span className="text-[11px] font-medium text-slate-300">
+                    Weather · Terrain · Runoff · Access
+                  </span>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
 
-      {/* ── 3. HOW AQUORA WORKS — 3-STEP PROCESS ─────────────── */}
-      <section id="how-it-works" className="py-24 bg-[#06191C] relative border-t border-teal-900/30">
-        <div className="max-w-[1340px] mx-auto px-5 md:px-8">
-          <div className="text-center max-w-2xl mx-auto mb-20">
-            <span className="text-xs font-bold tracking-[0.2em] text-teal-400 uppercase">
-              WORKFLOW & ARCHITECTURE
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight mt-3">
-              How AQUORA Operates
-            </h2>
-            <p className="mt-3 text-slate-300 text-base font-medium">
-              From raw satellite precipitation forecasts to real-time route safety in 3 steps.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
-            {/* Step 1 */}
-            <div className="p-8 rounded-2xl bg-[#041215] border border-teal-900/40 relative group hover:border-teal-600/50 transition-all shadow-xl">
-              <div className="text-5xl font-black text-teal-500/20 group-hover:text-teal-400/30 transition-colors mb-4">
-                01
-              </div>
-              <h3 className="text-xl font-bold text-white mb-2 flex items-center gap-2">
-                <span>SEE</span>
-                <span className="text-xs font-medium px-2 py-0.5 rounded bg-teal-500/10 text-teal-300">0-180 Min</span>
-              </h3>
-              <p className="text-sm font-bold text-teal-300 mb-3">
-                Understand where flood risk may develop.
-              </p>
-              <p className="text-xs text-slate-400 leading-relaxed font-medium">
-                Continuously ingests IMD and ECMWF weather forecast streams, projecting 2D surface water depth across Mumbai's catchment topography.
-              </p>
-            </div>
-
-            {/* Step 2 */}
-            <div className="p-8 rounded-2xl bg-[#041215] border border-teal-900/40 relative group hover:border-teal-600/50 transition-all shadow-xl">
-              <div className="text-5xl font-black text-emerald-500/20 group-hover:text-emerald-400/30 transition-colors mb-4">
-                02
-              </div>
-              <h3 className="text-xl font-bold text-white mb-2 flex items-center gap-2">
-                <span>DECIDE</span>
-                <span className="text-xs font-medium px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-300">Routing</span>
-              </h3>
-              <p className="text-sm font-bold text-emerald-300 mb-3">
-                Evaluate routes, access, and critical locations.
-              </p>
-              <p className="text-xs text-slate-400 leading-relaxed font-medium">
-                Analyses travel windows using dynamic OSRM routing, checking essential hospital access and identifying safe alternative corridors.
-              </p>
-            </div>
-
-            {/* Step 3 */}
-            <div className="p-8 rounded-2xl bg-[#041215] border border-teal-900/40 relative group hover:border-teal-600/50 transition-all shadow-xl">
-              <div className="text-5xl font-black text-cyan-500/20 group-hover:text-cyan-400/30 transition-colors mb-4">
-                03
-              </div>
-              <h3 className="text-xl font-bold text-white mb-2 flex items-center gap-2">
-                <span>ACT</span>
-                <span className="text-xs font-medium px-2 py-0.5 rounded bg-cyan-500/10 text-cyan-300">Response</span>
-              </h3>
-              <p className="text-sm font-bold text-cyan-300 mb-3">
-                Respond earlier and protect communities.
-              </p>
-              <p className="text-xs text-slate-400 leading-relaxed font-medium">
-                Generates targeted intervention advice for mobile pumps, alerts emergency responders, and integrates ground-truth field reports.
+            {/* Stylized Handwritten/Serif Script Accent */}
+            <div className="p-5 rounded-2xl bg-gradient-to-r from-teal-950/60 to-[#04191C]/90 border border-teal-800/40 backdrop-blur-md text-right">
+              <p className="text-xl sm:text-2xl font-serif italic text-teal-200/90 leading-snug">
+                "A more resilient Mumbai is possible."
               </p>
             </div>
           </div>
         </div>
+
+        {/* Scroll Indicator */}
+        <button
+          onClick={() => scrollToId('about')}
+          className="absolute bottom-6 right-8 hidden md:flex items-center gap-2 text-xs font-bold text-slate-300 hover:text-teal-300 transition-colors cursor-pointer group"
+        >
+          <ArrowDown className="w-4 h-4 text-teal-400 group-hover:translate-y-1 transition-transform" />
+          <span>Scroll to explore</span>
+        </button>
       </section>
 
-      {/* ── 4. PLATFORM CAPABILITIES — 7 CARDS ───────────────── */}
-      <section id="capabilities" className="py-24 bg-[#041215] border-t border-teal-900/30">
-        <div className="max-w-[1340px] mx-auto px-5 md:px-8">
-          <div className="text-center max-w-2xl mx-auto mb-16">
-            <span className="text-xs font-bold tracking-[0.2em] text-teal-400 uppercase">
-              PLATFORM MODULES
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight mt-3">
-              One platform. A clearer view of what's ahead.
-            </h2>
-            <p className="mt-3 text-slate-300 text-base font-medium">
-              Explore the 7 core modules powering Mumbai's live urban flood intelligence.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {/* Card 1: Flood Outlook */}
-            <div
-              onClick={() => navigateToApp('flood-map')}
-              className="p-6 rounded-2xl bg-[#06191C] border border-teal-900/40 hover:border-teal-500/60 transition-all group cursor-pointer shadow-lg hover:-translate-y-1"
-            >
-              <div className="w-10 h-10 rounded-xl bg-teal-500/10 border border-teal-500/20 flex items-center justify-center mb-4 group-hover:bg-[#008080] transition-colors">
-                <CloudRain className="w-5 h-5 text-teal-300 group-hover:text-white" />
-              </div>
-              <h3 className="text-lg font-bold text-white group-hover:text-teal-300 transition-colors flex items-center justify-between">
-                <span>Flood Outlook</span>
-                <ChevronRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity text-teal-400" />
-              </h3>
-              <p className="text-xs text-slate-300 mt-2 font-medium">
-                See where water may develop over the next 3 hours with interactive 2D flood depth maps.
+      {/* ── 2. THE CHALLENGE (Light Warm Background) ─────────── */}
+      <section id="about" className="py-24 bg-[#F5F5F0] text-slate-900 relative">
+        <div className="max-w-[1360px] mx-auto px-5 md:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            {/* Left Content */}
+            <div className="lg:col-span-6 space-y-6">
+              <span className="text-xs font-extrabold tracking-[0.2em] text-[#008080] uppercase">
+                THE CHALLENGE
+              </span>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 tracking-tight leading-tight">
+                Mumbai doesn't stop <br />
+                <span className="text-[#008080]">when the rain starts.</span>
+              </h2>
+              <p className="text-slate-700 text-base sm:text-lg leading-relaxed font-normal">
+                Intense rainfall, high tides, and a complex urban landscape can quickly turn roads impassable, disrupt essential services, and impact millions of lives. AQUORA helps the city anticipate change, make better decisions, and stay one step ahead.
               </p>
-            </div>
 
-            {/* Card 2: Travel Window */}
-            <div
-              onClick={() => navigateToApp('travel-window')}
-              className="p-6 rounded-2xl bg-[#06191C] border border-teal-900/40 hover:border-emerald-500/60 transition-all group cursor-pointer shadow-lg hover:-translate-y-1"
-            >
-              <div className="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mb-4 group-hover:bg-[#059669] transition-colors">
-                <Navigation className="w-5 h-5 text-emerald-300 group-hover:text-white" />
-              </div>
-              <h3 className="text-lg font-bold text-white group-hover:text-emerald-300 transition-colors flex items-center justify-between">
-                <span>Travel Window</span>
-                <ChevronRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity text-emerald-400" />
-              </h3>
-              <p className="text-xs text-slate-300 mt-2 font-medium">
-                Understand route safety, travel times, and safe departure timing across transit corridors.
-              </p>
-            </div>
-
-            {/* Card 3: Critical Access */}
-            <div
-              onClick={() => navigateToApp('critical-access')}
-              className="p-6 rounded-2xl bg-[#06191C] border border-teal-900/40 hover:border-red-500/60 transition-all group cursor-pointer shadow-lg hover:-translate-y-1"
-            >
-              <div className="w-10 h-10 rounded-xl bg-red-500/10 border border-red-500/20 flex items-center justify-center mb-4 group-hover:bg-red-600 transition-colors">
-                <ShieldAlert className="w-5 h-5 text-red-400 group-hover:text-white" />
-              </div>
-              <h3 className="text-lg font-bold text-white group-hover:text-red-300 transition-colors flex items-center justify-between">
-                <span>Critical Access</span>
-                <ChevronRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity text-red-400" />
-              </h3>
-              <p className="text-xs text-slate-300 mt-2 font-medium">
-                See how essential facilities like Sion Hospital remain accessible from responder units.
-              </p>
-            </div>
-
-            {/* Card 4: Protect the City */}
-            <div
-              onClick={() => navigateToApp('protect-city')}
-              className="p-6 rounded-2xl bg-[#06191C] border border-teal-900/40 hover:border-teal-500/60 transition-all group cursor-pointer shadow-lg hover:-translate-y-1"
-            >
-              <div className="w-10 h-10 rounded-xl bg-teal-500/10 border border-teal-500/20 flex items-center justify-center mb-4 group-hover:bg-teal-700 transition-colors">
-                <Building2 className="w-5 h-5 text-teal-300 group-hover:text-white" />
-              </div>
-              <h3 className="text-lg font-bold text-white group-hover:text-teal-300 transition-colors flex items-center justify-between">
-                <span>Protect the City</span>
-                <ChevronRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity text-teal-400" />
-              </h3>
-              <p className="text-xs text-slate-300 mt-2 font-medium">
-                Explore where targeted mobile pumps and temporary barrier interventions help reduce risk.
-              </p>
-            </div>
-
-            {/* Card 5: Ground Truth */}
-            <div
-              onClick={() => navigateToApp('ground-truth')}
-              className="p-6 rounded-2xl bg-[#06191C] border border-teal-900/40 hover:border-purple-500/60 transition-all group cursor-pointer shadow-lg hover:-translate-y-1"
-            >
-              <div className="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center mb-4 group-hover:bg-purple-600 transition-colors">
-                <Camera className="w-5 h-5 text-purple-300 group-hover:text-white" />
-              </div>
-              <h3 className="text-lg font-bold text-white group-hover:text-purple-300 transition-colors flex items-center justify-between">
-                <span>Ground Truth</span>
-                <ChevronRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity text-purple-400" />
-              </h3>
-              <p className="text-xs text-slate-300 mt-2 font-medium">
-                Connect physical field observations and citizen evidence with scientific model runs.
-              </p>
-            </div>
-
-            {/* Card 6: Simulator */}
-            <div
-              onClick={() => navigateToApp('simulator')}
-              className="p-6 rounded-2xl bg-[#06191C] border border-teal-900/40 hover:border-orange-500/60 transition-all group cursor-pointer shadow-lg hover:-translate-y-1"
-            >
-              <div className="w-10 h-10 rounded-xl bg-orange-500/10 border border-orange-500/20 flex items-center justify-center mb-4 group-hover:bg-orange-600 transition-colors">
-                <Sliders className="w-5 h-5 text-orange-300 group-hover:text-white" />
-              </div>
-              <h3 className="text-lg font-bold text-white group-hover:text-orange-300 transition-colors flex items-center justify-between">
-                <span>Simulator</span>
-                <ChevronRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity text-orange-400" />
-              </h3>
-              <p className="text-xs text-slate-300 mt-2 font-medium">
-                Test custom what-if rainfall scenarios and model peak runoff under extreme weather.
-              </p>
-            </div>
-
-            {/* Card 7: Alert Center (Full Width on 3-col Grid) */}
-            <div
-              onClick={() => navigateToApp('alerts')}
-              className="sm:col-span-2 lg:col-span-3 p-6 rounded-2xl bg-gradient-to-r from-[#06191C] to-[#041215] border border-teal-900/50 hover:border-teal-500/60 transition-all group cursor-pointer shadow-lg flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
-            >
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-xl bg-teal-500/10 border border-teal-500/20 flex items-center justify-center shrink-0 group-hover:bg-[#008080] transition-colors">
-                  <AlertCircle className="w-6 h-6 text-teal-300 group-hover:text-white" />
+              {/* 3 Challenge Indicators */}
+              <div className="pt-4 grid grid-cols-3 gap-4 border-t border-slate-300">
+                <div className="space-y-1">
+                  <div className="text-2xl sm:text-3xl font-black text-[#008080]">12M+</div>
+                  <div className="text-[11px] font-medium text-slate-600 leading-snug">
+                    People live in flood-prone areas
+                  </div>
                 </div>
-                <div>
-                  <h3 className="text-lg font-bold text-white group-hover:text-teal-300 transition-colors">
-                    Alert Center Operations
-                  </h3>
-                  <p className="text-xs text-slate-300 mt-0.5 font-medium">
-                    Stay aware of important catchment-wide risk escalations and real-time civic notifications.
+                <div className="space-y-1">
+                  <div className="text-2xl sm:text-3xl font-black text-emerald-700">Higher</div>
+                  <div className="text-[11px] font-medium text-slate-600 leading-snug">
+                    Exposure to extreme rainfall events
+                  </div>
+                </div>
+                <div className="space-y-1">
+                  <div className="text-2xl sm:text-3xl font-black text-slate-900">Complex</div>
+                  <div className="text-[11px] font-medium text-slate-600 leading-snug">
+                    Urban drainage and terrain
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Visual Box (Mumbai Rain Scene Card with Stylized Overlay) */}
+            <div className="lg:col-span-6 relative">
+              <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-slate-300/80 bg-slate-900 group">
+                <div className="aspect-[4/3] relative overflow-hidden bg-gradient-to-br from-slate-800 to-slate-900">
+                  {/* Stylized Rainy Street Visual Container */}
+                  <img
+                    src={mumbaiHeroImg}
+                    alt="Mumbai street infrastructure during heavy rain"
+                    className="w-full h-full object-cover filter brightness-[0.7] contrast-[1.1] transition-transform duration-700 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#04191C]/90 via-[#04191C]/30 to-transparent" />
+                </div>
+
+                {/* Overlaid Quote Card */}
+                <div className="absolute bottom-6 right-6 left-6 p-6 rounded-2xl bg-[#04191C]/90 backdrop-blur-md border border-teal-500/30 text-white shadow-xl">
+                  <p className="text-lg sm:text-xl font-serif italic text-teal-200">
+                    "A city that keeps moving deserves to be better prepared."
                   </p>
                 </div>
               </div>
-              <button className="px-4 py-2 rounded-xl bg-teal-500/20 text-teal-300 font-bold text-xs group-hover:bg-[#008080] group-hover:text-white transition-all shrink-0">
-                Launch Alert Center →
-              </button>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ── 5. SCIENCE & DATA TRUST ───────────────────────────── */}
-      <section id="science" className="py-24 bg-[#06191C] border-t border-teal-900/30">
-        <div className="max-w-[1340px] mx-auto px-5 md:px-8">
-          <div className="text-center max-w-2xl mx-auto mb-16">
-            <span className="text-xs font-bold tracking-[0.2em] text-teal-400 uppercase">
-              INTELLIGENCE STACK
+      {/* ── 3. HOW AQUORA WORKS (Dark Teal) ──────────────────── */}
+      <section id="how-it-works" className="py-24 bg-[#04191C] border-t border-teal-900/40 relative">
+        <div className="max-w-[1360px] mx-auto px-5 md:px-8">
+          <div className="max-w-2xl mb-16 space-y-3">
+            <span className="text-xs font-extrabold tracking-[0.2em] text-teal-400 uppercase">
+              HOW AQUORA WORKS
             </span>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight mt-3">
-              Built on data. Grounded in science.
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tight leading-tight">
+              From data to decisions, <br />
+              <span className="text-teal-300">for a safer Mumbai.</span>
             </h2>
-            <p className="mt-3 text-slate-300 text-base font-medium">
-              A transparent, multi-layered computing pipeline for urban flood risk prediction.
-            </p>
           </div>
 
-          <div className="space-y-4 max-w-4xl mx-auto">
-            {/* Pipeline Stage 1 */}
-            <div className="p-5 rounded-2xl bg-[#041215] border border-teal-900/40 flex items-center justify-between gap-4">
-              <div className="flex items-center gap-4">
-                <div className="w-8 h-8 rounded-lg bg-teal-500/10 text-teal-300 font-mono font-bold text-xs flex items-center justify-center">
+          {/* 4 Horizontal Process Steps */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 relative">
+            {/* Step 01 */}
+            <div className="p-7 rounded-2xl bg-[#062327] border border-teal-900/50 hover:border-teal-500/50 transition-all space-y-4 shadow-xl group">
+              <div className="flex items-center justify-between">
+                <div className="w-10 h-10 rounded-xl bg-teal-500/15 border border-teal-500/30 flex items-center justify-center text-teal-300">
+                  <CloudRain className="w-5 h-5" />
+                </div>
+                <span className="text-2xl font-black text-teal-500/30 group-hover:text-teal-400/50 transition-colors">
                   01
-                </div>
-                <div>
-                  <h4 className="text-sm font-bold text-white">Live Forecasts & Radar Data</h4>
-                  <p className="text-xs text-slate-400 font-medium">IMD precipitation feeds & ECMWF GFS/HRES forecast synthesis (0-180 min lead time).</p>
-                </div>
+                </span>
               </div>
-              <span className="text-[10px] font-mono px-2.5 py-1 rounded bg-teal-950 text-teal-300 border border-teal-800 hidden sm:inline-block">
-                INPUT STREAM
-              </span>
+              <h3 className="text-base font-bold text-white tracking-wide uppercase">
+                LIVE DATA
+              </h3>
+              <p className="text-xs text-slate-300 leading-relaxed font-medium">
+                Forecasts, rain, tides and real-time inputs
+              </p>
             </div>
 
-            {/* Pipeline Stage 2 */}
-            <div className="p-5 rounded-2xl bg-[#041215] border border-teal-900/40 flex items-center justify-between gap-4">
-              <div className="flex items-center gap-4">
-                <div className="w-8 h-8 rounded-lg bg-teal-500/10 text-teal-300 font-mono font-bold text-xs flex items-center justify-center">
+            {/* Step 02 */}
+            <div className="p-7 rounded-2xl bg-[#062327] border border-teal-900/50 hover:border-teal-500/50 transition-all space-y-4 shadow-xl group">
+              <div className="flex items-center justify-between">
+                <div className="w-10 h-10 rounded-xl bg-teal-500/15 border border-teal-500/30 flex items-center justify-center text-teal-300">
+                  <Layers className="w-5 h-5" />
+                </div>
+                <span className="text-2xl font-black text-teal-500/30 group-hover:text-teal-400/50 transition-colors">
                   02
-                </div>
-                <div>
-                  <h4 className="text-sm font-bold text-white">Terrain & Elevation Modeling</h4>
-                  <p className="text-xs text-slate-400 font-medium">Copernicus 30m Digital Surface Model (DSM) & Sentinel-1 SAR flood extent mapping.</p>
-                </div>
+                </span>
               </div>
-              <span className="text-[10px] font-mono px-2.5 py-1 rounded bg-teal-950 text-teal-300 border border-teal-800 hidden sm:inline-block">
-                GEOSPATIAL GRID
-              </span>
+              <h3 className="text-base font-bold text-white tracking-wide uppercase">
+                UNDERSTAND RISK
+              </h3>
+              <p className="text-xs text-slate-300 leading-relaxed font-medium">
+                Model flood behaviour across the city
+              </p>
             </div>
 
-            {/* Pipeline Stage 3 */}
-            <div className="p-5 rounded-2xl bg-[#041215] border border-teal-700/50 flex items-center justify-between gap-4 shadow-lg">
-              <div className="flex items-center gap-4">
-                <div className="w-8 h-8 rounded-lg bg-[#008080] text-white font-mono font-bold text-xs flex items-center justify-center">
+            {/* Step 03 */}
+            <div className="p-7 rounded-2xl bg-[#062327] border border-teal-900/50 hover:border-teal-500/50 transition-all space-y-4 shadow-xl group">
+              <div className="flex items-center justify-between">
+                <div className="w-10 h-10 rounded-xl bg-teal-500/15 border border-teal-500/30 flex items-center justify-center text-teal-300">
+                  <Navigation className="w-5 h-5" />
+                </div>
+                <span className="text-2xl font-black text-teal-500/30 group-hover:text-teal-400/50 transition-colors">
                   03
-                </div>
-                <div>
-                  <h4 className="text-sm font-bold text-white flex items-center gap-2">
-                    <span>Physics-Based 2D Hydraulic Solver</span>
-                    <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 uppercase">
-                      AUTHORITATIVE
-                    </span>
-                  </h4>
-                  <p className="text-xs text-slate-300 font-medium">Shallow water equations solving surface water flow and inundation depth across Mithi River catchment.</p>
-                </div>
+                </span>
               </div>
-              <span className="text-[10px] font-mono px-2.5 py-1 rounded bg-[#008080]/30 text-teal-200 border border-teal-500/40 hidden sm:inline-block">
-                CORE SOLVER
-              </span>
+              <h3 className="text-base font-bold text-white tracking-wide uppercase">
+                FIND SAFER OPTIONS
+              </h3>
+              <p className="text-xs text-slate-300 leading-relaxed font-medium">
+                Analyse routes and critical access
+              </p>
             </div>
 
-            {/* Pipeline Stage 4 */}
-            <div className="p-5 rounded-2xl bg-[#041215] border border-teal-900/40 flex items-center justify-between gap-4">
-              <div className="flex items-center gap-4">
-                <div className="w-8 h-8 rounded-lg bg-teal-500/10 text-teal-300 font-mono font-bold text-xs flex items-center justify-center">
+            {/* Step 04 */}
+            <div className="p-7 rounded-2xl bg-[#062327] border border-teal-900/50 hover:border-teal-500/50 transition-all space-y-4 shadow-xl group">
+              <div className="flex items-center justify-between">
+                <div className="w-10 h-10 rounded-xl bg-teal-500/15 border border-teal-500/30 flex items-center justify-center text-teal-300">
+                  <ShieldAlert className="w-5 h-5" />
+                </div>
+                <span className="text-2xl font-black text-teal-500/30 group-hover:text-teal-400/50 transition-colors">
                   04
-                </div>
-                <div>
-                  <h4 className="text-sm font-bold text-white">Route Safety & Access Graph</h4>
-                  <p className="text-xs text-slate-400 font-medium">OSRM dynamic matrix graph calculating travel windows to 366 critical MCGM healthcare facilities.</p>
-                </div>
+                </span>
               </div>
-              <span className="text-[10px] font-mono px-2.5 py-1 rounded bg-teal-950 text-teal-300 border border-teal-800 hidden sm:inline-block">
-                GRAPH MATRIX
-              </span>
+              <h3 className="text-base font-bold text-white tracking-wide uppercase">
+                ACT EARLIER
+              </h3>
+              <p className="text-xs text-slate-300 leading-relaxed font-medium">
+                Support response and intervention
+              </p>
             </div>
-          </div>
-
-          {/* Advisory ML Note */}
-          <div className="mt-8 max-w-4xl mx-auto p-4 rounded-xl bg-slate-900/60 border border-slate-800 flex items-start gap-3">
-            <Cpu className="w-5 h-5 text-teal-400 shrink-0 mt-0.5" />
-            <p className="text-xs text-slate-400 leading-relaxed font-medium">
-              <span className="font-bold text-slate-200">Note on Machine Learning:</span> AQUORA incorporates an XGBoost prototype model as an advisory acceleration layer. The Phase 6 2D physical hydraulic solver remains authoritative for all civic safety decisions.
-            </p>
           </div>
         </div>
       </section>
 
-      {/* ── 6. MUMBAI MISSION & CIVIC IMPACT ──────────────────── */}
-      <section className="py-24 bg-[#041215] border-t border-teal-900/30 relative overflow-hidden">
-        <div className="max-w-[1340px] mx-auto px-5 md:px-8 relative z-10">
-          <div className="p-10 md:p-16 rounded-3xl bg-gradient-to-r from-[#06191C] via-[#041215] to-[#003B3B]/40 border border-teal-700/40 shadow-2xl space-y-6">
-            <span className="text-xs font-bold tracking-[0.2em] text-teal-400 uppercase">
-              OUR CIVIC MISSION
-            </span>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight max-w-3xl leading-tight">
-              A safer, more resilient Mumbai starts with seeing what's ahead.
-            </h2>
-            <p className="text-base sm:text-lg text-slate-300 font-medium max-w-2xl leading-relaxed">
-              Empowering citizens, urban planners, and emergency responders with clear, actionable flood intelligence today for a safer tomorrow.
-            </p>
+      {/* ── 4. THE PLATFORM (Light Background) ───────────────── */}
+      <section id="platform" className="py-24 bg-[#F8FAFC] text-slate-900 relative">
+        <div className="max-w-[1360px] mx-auto px-5 md:px-8">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+            <div className="max-w-2xl space-y-3">
+              <span className="text-xs font-extrabold tracking-[0.2em] text-[#008080] uppercase">
+                THE PLATFORM
+              </span>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 tracking-tight leading-tight">
+                Integrated tools for <br />
+                <span className="text-[#008080]">a more resilient city.</span>
+              </h2>
+              <p className="text-slate-600 text-base font-normal">
+                Explore real-time insights, plan with confidence, and support safer, more connected communities.
+              </p>
+            </div>
 
-            <div className="pt-4">
+            <button
+              onClick={() => navigateToApp('overview')}
+              className="inline-flex items-center gap-2 text-sm font-bold text-[#008080] hover:text-[#006666] transition-colors cursor-pointer group shrink-0"
+            >
+              <span>Explore the platform</span>
+              <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </button>
+          </div>
+
+          {/* 7 Feature Cards Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {/* Card 1 */}
+            <div
+              onClick={() => navigateToApp('flood-map')}
+              className="p-6 rounded-2xl bg-white border border-slate-200 hover:border-teal-500/60 shadow-md hover:shadow-xl transition-all cursor-pointer group space-y-3"
+            >
+              <div className="w-10 h-10 rounded-xl bg-teal-50 border border-teal-100 flex items-center justify-center text-[#008080] group-hover:bg-[#008080] group-hover:text-white transition-colors">
+                <CloudRain className="w-5 h-5" />
+              </div>
+              <h3 className="text-base font-bold text-slate-900 group-hover:text-[#008080] transition-colors">
+                Flood Outlook
+              </h3>
+              <p className="text-xs text-slate-600 leading-relaxed font-normal">
+                See where water may develop over the next 3 hours.
+              </p>
+            </div>
+
+            {/* Card 2 */}
+            <div
+              onClick={() => navigateToApp('travel-window')}
+              className="p-6 rounded-2xl bg-white border border-slate-200 hover:border-emerald-500/60 shadow-md hover:shadow-xl transition-all cursor-pointer group space-y-3"
+            >
+              <div className="w-10 h-10 rounded-xl bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-700 group-hover:bg-emerald-700 group-hover:text-white transition-colors">
+                <Navigation className="w-5 h-5" />
+              </div>
+              <h3 className="text-base font-bold text-slate-900 group-hover:text-emerald-700 transition-colors">
+                Travel Window
+              </h3>
+              <p className="text-xs text-slate-600 leading-relaxed font-normal">
+                Check route safety and timing.
+              </p>
+            </div>
+
+            {/* Card 3 */}
+            <div
+              onClick={() => navigateToApp('critical-access')}
+              className="p-6 rounded-2xl bg-white border border-slate-200 hover:border-red-500/60 shadow-md hover:shadow-xl transition-all cursor-pointer group space-y-3"
+            >
+              <div className="w-10 h-10 rounded-xl bg-red-50 border border-red-100 flex items-center justify-center text-red-600 group-hover:bg-red-600 group-hover:text-white transition-colors">
+                <ShieldAlert className="w-5 h-5" />
+              </div>
+              <h3 className="text-base font-bold text-slate-900 group-hover:text-red-600 transition-colors">
+                Critical Access
+              </h3>
+              <p className="text-xs text-slate-600 leading-relaxed font-normal">
+                See how essential facilities may be affected.
+              </p>
+            </div>
+
+            {/* Card 4 */}
+            <div
+              onClick={() => navigateToApp('protect-city')}
+              className="p-6 rounded-2xl bg-white border border-slate-200 hover:border-teal-500/60 shadow-md hover:shadow-xl transition-all cursor-pointer group space-y-3"
+            >
+              <div className="w-10 h-10 rounded-xl bg-teal-50 border border-teal-100 flex items-center justify-center text-[#008080] group-hover:bg-[#008080] group-hover:text-white transition-colors">
+                <Building2 className="w-5 h-5" />
+              </div>
+              <h3 className="text-base font-bold text-slate-900 group-hover:text-[#008080] transition-colors">
+                Protect the City
+              </h3>
+              <p className="text-xs text-slate-600 leading-relaxed font-normal">
+                Explore where intervention may help.
+              </p>
+            </div>
+
+            {/* Card 5 */}
+            <div
+              onClick={() => navigateToApp('ground-truth')}
+              className="p-6 rounded-2xl bg-white border border-slate-200 hover:border-purple-500/60 shadow-md hover:shadow-xl transition-all cursor-pointer group space-y-3"
+            >
+              <div className="w-10 h-10 rounded-xl bg-purple-50 border border-purple-100 flex items-center justify-center text-purple-700 group-hover:bg-purple-700 group-hover:text-white transition-colors">
+                <Camera className="w-5 h-5" />
+              </div>
+              <h3 className="text-base font-bold text-slate-900 group-hover:text-purple-700 transition-colors">
+                Ground Truth
+              </h3>
+              <p className="text-xs text-slate-600 leading-relaxed font-normal">
+                Connect modelled conditions with observations.
+              </p>
+            </div>
+
+            {/* Card 6 */}
+            <div
+              onClick={() => navigateToApp('simulator')}
+              className="p-6 rounded-2xl bg-white border border-slate-200 hover:border-orange-500/60 shadow-md hover:shadow-xl transition-all cursor-pointer group space-y-3"
+            >
+              <div className="w-10 h-10 rounded-xl bg-orange-50 border border-orange-100 flex items-center justify-center text-orange-600 group-hover:bg-orange-600 group-hover:text-white transition-colors">
+                <Sliders className="w-5 h-5" />
+              </div>
+              <h3 className="text-base font-bold text-slate-900 group-hover:text-orange-600 transition-colors">
+                Simulator
+              </h3>
+              <p className="text-xs text-slate-600 leading-relaxed font-normal">
+                Explore what-if scenarios.
+              </p>
+            </div>
+
+            {/* Card 7 */}
+            <div
+              onClick={() => navigateToApp('alerts')}
+              className="sm:col-span-2 xl:col-span-2 p-6 rounded-2xl bg-white border border-slate-200 hover:border-teal-500/60 shadow-md hover:shadow-xl transition-all cursor-pointer group flex flex-col justify-between space-y-3"
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-teal-50 border border-teal-100 flex items-center justify-center text-[#008080] group-hover:bg-[#008080] group-hover:text-white transition-colors shrink-0">
+                  <AlertCircle className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="text-base font-bold text-slate-900 group-hover:text-[#008080] transition-colors">
+                    Alert Center
+                  </h3>
+                  <p className="text-xs text-slate-600 leading-relaxed font-normal">
+                    Stay aware of important changes across Mumbai.
+                  </p>
+                </div>
+              </div>
+              <div className="text-xs font-bold text-[#008080] group-hover:translate-x-1 transition-transform">
+                Launch Alert Center →
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── 5. SCIENCE & TRUST (Dark Teal) ────────────────────── */}
+      <section id="science" className="py-24 bg-[#04191C] border-t border-teal-900/40 relative">
+        <div className="max-w-[1360px] mx-auto px-5 md:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            {/* Left Content */}
+            <div className="lg:col-span-6 space-y-6">
+              <span className="text-xs font-extrabold tracking-[0.2em] text-teal-400 uppercase">
+                BUILT ON SCIENCE
+              </span>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tight leading-tight">
+                Trusted data. <br />
+                <span className="text-teal-300">Real-world impact.</span>
+              </h2>
+              <p className="text-slate-300 text-base leading-relaxed font-medium">
+                AQUORA combines live data with physics-based modelling and real-world observations to provide a clearer, earlier view of flood risk.
+              </p>
+
+              {/* Data Layer Diagram List */}
+              <div className="space-y-3 pt-2">
+                <div className="p-3.5 rounded-xl bg-[#062327] border border-teal-900/50 flex items-center justify-between text-xs text-slate-200">
+                  <span className="font-bold text-white">Live weather forecasts</span>
+                  <span className="text-slate-400 font-mono text-[11px]">(e.g. Open-Meteo)</span>
+                </div>
+                <div className="p-3.5 rounded-xl bg-[#062327] border border-teal-900/50 flex items-center justify-between text-xs text-slate-200">
+                  <span className="font-bold text-white">Terrain & land cover</span>
+                  <span className="text-slate-400 font-mono text-[11px]">(e.g. NASA, Open data)</span>
+                </div>
+                <div className="p-3.5 rounded-xl bg-[#008080]/30 border border-teal-500/40 flex items-center justify-between text-xs text-white">
+                  <span className="font-bold text-teal-200">Physics-based flood modelling</span>
+                  <span className="text-teal-300 font-mono text-[11px]">(Digital Twin)</span>
+                </div>
+                <div className="p-3.5 rounded-xl bg-[#062327] border border-teal-900/50 flex items-center justify-between text-xs text-slate-200">
+                  <span className="font-bold text-white">Route & access analysis</span>
+                  <span className="text-slate-400 font-mono text-[11px]">(e.g. OSRM)</span>
+                </div>
+                <div className="p-3.5 rounded-xl bg-[#062327] border border-teal-900/50 flex items-center justify-between text-xs text-slate-200">
+                  <span className="font-bold text-white">Ground truth & observations</span>
+                  <span className="text-slate-400 font-mono text-[11px]">(Citizen reports)</span>
+                </div>
+                <div className="p-3.5 rounded-xl bg-[#062327] border border-teal-900/50 flex items-center justify-between text-xs text-slate-200">
+                  <span className="font-bold text-white">AI/ML (Advisory)</span>
+                  <span className="text-slate-400 font-mono text-[11px]">Prototype models to enhance insights</span>
+                </div>
+              </div>
+
+              <div className="pt-2">
+                <button
+                  onClick={() => navigateToApp('overview')}
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#008080] hover:bg-[#009696] text-white font-bold text-sm transition-all shadow-md cursor-pointer"
+                >
+                  <span>Learn more about our approach</span>
+                  <ChevronRight className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+
+            {/* Right Card */}
+            <div className="lg:col-span-6 p-8 sm:p-10 rounded-3xl bg-gradient-to-br from-[#062327] to-[#04191C] border border-teal-700/40 shadow-2xl space-y-6">
+              <div className="w-12 h-12 rounded-2xl bg-teal-500/15 border border-teal-500/30 flex items-center justify-center text-teal-300">
+                <Cpu className="w-6 h-6" />
+              </div>
+              <h3 className="text-2xl sm:text-3xl font-black text-white leading-tight">
+                Science for a <br />
+                <span className="text-teal-300">safer tomorrow.</span>
+              </h3>
+              <p className="text-slate-300 text-sm sm:text-base leading-relaxed font-medium">
+                We combine open data, proven modelling approaches and real-world evidence to support smarter, faster, and more inclusive decisions.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── 6. PEOPLE & HUMAN IMPACT (Light Background) ───────── */}
+      <section id="impact" className="py-24 bg-[#F8FAFC] text-slate-900 relative">
+        <div className="max-w-[1360px] mx-auto px-5 md:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            {/* Left Visual Card */}
+            <div className="lg:col-span-5 relative">
+              <div className="rounded-3xl overflow-hidden shadow-2xl border border-slate-300 bg-slate-900 relative group">
+                <img
+                  src={mumbaiHeroImg}
+                  alt="People navigating Mumbai streets during monsoon"
+                  className="w-full h-full object-cover filter brightness-[0.75] contrast-[1.1] transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-transparent to-transparent" />
+                <div className="absolute bottom-6 left-6 right-6 p-5 rounded-2xl bg-white/95 backdrop-blur-md shadow-lg border border-slate-200">
+                  <div className="text-lg font-serif italic text-slate-900">
+                    People. Places. Possibilities.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Content */}
+            <div className="lg:col-span-7 space-y-6">
+              <span className="text-xs font-extrabold tracking-[0.2em] text-[#008080] uppercase">
+                FOR PEOPLE. FOR COMMUNITIES.
+              </span>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 tracking-tight leading-tight">
+                Because flood intelligence <br />
+                <span className="text-[#008080]">is ultimately about people.</span>
+              </h2>
+              <p className="text-slate-600 text-base leading-relaxed font-normal">
+                Safer commutes. Accessible hospitals. Stronger communities. A more resilient Mumbai.
+              </p>
+
+              {/* 4 Impact Pillars */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                <div className="p-4 rounded-xl bg-white border border-slate-200 shadow-sm space-y-1">
+                  <div className="flex items-center gap-2 text-sm font-bold text-slate-900">
+                    <Navigation className="w-4 h-4 text-[#008080]" />
+                    <span>Commuters</span>
+                  </div>
+                  <p className="text-xs text-slate-600">Safer journeys</p>
+                </div>
+
+                <div className="p-4 rounded-xl bg-white border border-slate-200 shadow-sm space-y-1">
+                  <div className="flex items-center gap-2 text-sm font-bold text-slate-900">
+                    <HeartPulse className="w-4 h-4 text-red-600" />
+                    <span>Emergency services</span>
+                  </div>
+                  <p className="text-xs text-slate-600">Uninterrupted access</p>
+                </div>
+
+                <div className="p-4 rounded-xl bg-white border border-slate-200 shadow-sm space-y-1">
+                  <div className="flex items-center gap-2 text-sm font-bold text-slate-900">
+                    <Building2 className="w-4 h-4 text-emerald-700" />
+                    <span>Municipal teams</span>
+                  </div>
+                  <p className="text-xs text-slate-600">Better planning</p>
+                </div>
+
+                <div className="p-4 rounded-xl bg-white border border-slate-200 shadow-sm space-y-1">
+                  <div className="flex items-center gap-2 text-sm font-bold text-slate-900">
+                    <Users className="w-4 h-4 text-purple-700" />
+                    <span>Communities</span>
+                  </div>
+                  <p className="text-xs text-slate-600">Greater resilience</p>
+                </div>
+              </div>
+
+              {/* Quote Banner */}
+              <div className="p-5 rounded-2xl bg-teal-50 border border-teal-100 text-slate-800 font-serif italic text-base leading-snug">
+                "A smarter, safer Mumbai is not just possible — it's within our reach."
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── 7. THE NEXT STEP / FINAL CTA (Dark Teal) ─────────── */}
+      <section className="py-24 bg-[#04191C] border-t border-teal-900/40 relative overflow-hidden">
+        <div className="max-w-[1360px] mx-auto px-5 md:px-8 relative z-10">
+          <div className="p-10 md:p-16 rounded-3xl bg-gradient-to-r from-[#062327] via-[#04191C] to-[#003B3B]/50 border border-teal-700/40 shadow-2xl flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
+            <div className="space-y-4 max-w-2xl">
+              <span className="text-xs font-extrabold tracking-[0.2em] text-teal-400 uppercase">
+                THE NEXT STEP
+              </span>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tight leading-tight">
+                A safer, more resilient Mumbai starts with seeing what's ahead.
+              </h2>
+              <p className="text-slate-300 text-base font-medium">
+                Explore AQUORA's live flood intelligence platform.
+              </p>
+            </div>
+
+            <div className="space-y-3 shrink-0">
               <button
                 onClick={() => navigateToApp('overview')}
-                className="inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-[#008080] hover:bg-[#009696] text-white text-base font-bold transition-all duration-200 shadow-xl shadow-teal-950 hover:-translate-y-0.5 cursor-pointer"
+                className="inline-flex items-center gap-3 px-8 py-4 rounded-xl bg-[#008080] hover:bg-[#009696] text-white text-base font-bold transition-all duration-200 shadow-xl shadow-teal-950 hover:-translate-y-0.5 cursor-pointer active:translate-y-0"
               >
-                <span>Open AQUORA Live Platform</span>
+                <span>Enter AQUORA</span>
                 <ChevronRight className="w-5 h-5" />
               </button>
+              <div className="text-right text-sm font-serif italic text-teal-200/80">
+                Same city. A safer tomorrow.
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ── 7. FOOTER ─────────────────────────────────────────── */}
-      <footer className="bg-[#030e10] border-t border-teal-950 py-16 text-slate-400 text-xs">
-        <div className="max-w-[1340px] mx-auto px-5 md:px-8 grid grid-cols-1 md:grid-cols-12 gap-12">
+      {/* ── 8. FOOTER ─────────────────────────────────────────── */}
+      <footer className="bg-[#031113] border-t border-teal-950 py-16 text-slate-400 text-xs">
+        <div className="max-w-[1360px] mx-auto px-5 md:px-8 grid grid-cols-1 md:grid-cols-12 gap-12">
           {/* Col 1: Brand Info */}
           <div className="md:col-span-5 space-y-4">
             <div className="flex items-center gap-2.5">
@@ -786,18 +824,18 @@ export const LandingPage: React.FC = () => {
               <span className="text-lg font-black text-white tracking-wider">AQUORA</span>
             </div>
             <p className="text-slate-400 max-w-sm leading-relaxed font-medium">
-              Urban flood intelligence & response platform built for Mumbai. See the flood before it reaches the road.
+              See the flood before it reaches the road.
             </p>
-            <div className="pt-2 text-[11px] font-semibold text-teal-400 flex items-center gap-2">
-              <Globe className="w-3.5 h-3.5" />
-              <span>Mumbai · Mithi River Catchment (Lat: 19.0600, Lon: 72.8650)</span>
+            <div className="pt-2 text-[11px] font-semibold text-teal-400 space-y-1">
+              <div>Mumbai · Mithi Catchment</div>
+              <div className="text-slate-400">Data · People · Action</div>
             </div>
           </div>
 
-          {/* Col 2: Platform Links */}
+          {/* Col 2: Navigation Links */}
           <div className="md:col-span-4 space-y-3">
             <div className="text-xs font-bold text-white uppercase tracking-wider mb-2">
-              Platform Features
+              Platform Modules
             </div>
             <div className="grid grid-cols-2 gap-2 font-medium">
               <button onClick={() => navigateToApp('overview')} className="text-left hover:text-teal-300">Overview</button>
@@ -811,25 +849,27 @@ export const LandingPage: React.FC = () => {
             </div>
           </div>
 
-          {/* Col 3: Principles & Metadata */}
+          {/* Col 3: Legal & Metadata */}
           <div className="md:col-span-3 space-y-3">
             <div className="text-xs font-bold text-white uppercase tracking-wider mb-2">
-              Core Principles
+              AQUORA System
             </div>
             <div className="space-y-1.5 font-medium text-slate-400">
-              <div>Data · People · Action</div>
-              <div>0-180 Minute Lead Time</div>
-              <div>Strict Phase Boundaries</div>
-              <div>Strict Type Safety</div>
+              <div>Urban Flood Intelligence</div>
+              <div>Mithi River Reach (17.8 km)</div>
+              <div>0-180 Minute Lead Horizon</div>
             </div>
           </div>
         </div>
 
-        <div className="max-w-[1340px] mx-auto px-5 md:px-8 pt-12 mt-12 border-t border-teal-950/80 flex flex-col sm:flex-row justify-between items-center gap-4 text-slate-500">
-          <div>© 2026 AQUORA. Built for people, cities and a safer tomorrow.</div>
-          <div className="flex items-center gap-4">
+        <div className="max-w-[1360px] mx-auto px-5 md:px-8 pt-12 mt-12 border-t border-teal-950/80 flex flex-col sm:flex-row justify-between items-center gap-4 text-slate-500">
+          <div>© 2026 AQUORA. Building a more resilient Mumbai.</div>
+          <div className="flex items-center gap-6 text-[11px] font-medium text-slate-400">
+            <span>Privacy</span>
+            <span>Terms</span>
+            <span>Contact</span>
             <button onClick={() => navigateToApp('overview')} className="hover:text-teal-300 font-bold text-teal-400">
-              Enter Live Platform →
+              Enter AQUORA →
             </button>
           </div>
         </div>

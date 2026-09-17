@@ -1,0 +1,116 @@
+{
+  "simulation_id": "sim_61613a2ce877",
+  "provider_mode": "REAL_DATA",
+  "configuration_hash": "8fc8fe7f697b6d8c",
+  "engine_version": "0.6.0-phase6",
+  "created_at": "2026-09-17T10:54:42.575246+00:00",
+  "provenance": {
+    "provider_mode": "REAL_DATA",
+    "dem_source": "LocalDEMFile:elevation_30m.tif",
+    "dem_crs": "EPSG:32643",
+    "dem_resolution_m": [
+      30.0,
+      30.0
+    ],
+    "dem_dimensions": [
+      476,
+      392
+    ],
+    "rainfall_source": "D:\\Aquora\\Aquora\\data\\processed\\phase7\\rainfall\\E05_rainfall_30m.tif",
+    "rainfall_event_id": "E05",
+    "rainfall_intensity_mean_mm_hr": 0.9740000367164612,
+    "rainfall_intensity_max_mm_hr": 0.9740000367164612,
+    "drainage_status": "REAL municipal drainage network data UNAVAILABLE; surface drainage proxy active.",
+    "tide_status": "REAL tide data AVAILABLE (UHSLC Station 846A), but backwater boundary conditions NOT CONSUMED by Phase 6 D8 solver engine.",
+    "is_synthetic_fallback": false
+  },
+  "totals": {
+    "total_gross_rain_m3": 109044.36891059877,
+    "total_runoff_gen_m3": 0.0,
+    "total_infil_loss_m3": 109044.36891059877,
+    "total_drainage_removed_m3": 0.0,
+    "total_surface_transferred_m3": 0.0,
+    "final_surface_storage_m3": 0.0,
+    "overall_mass_balance_error_m3": 0.0
+  },
+  "input_completeness": {
+    "completeness_score": 0.75,
+    "completeness_level": "MEDIUM",
+    "dem_available": true,
+    "rainfall_available": true,
+    "drainage_available": false,
+    "known_capacity_ratio": 1.0,
+    "known_direction_ratio": 1.0,
+    "catchment_assoc_ratio": 0.0
+  },
+  "warnings": [
+    {
+      "category": "DATA_UNCERTAINTY",
+      "code": "COARSE_RAINFALL_RESOLUTION",
+      "message": "IMERG rainfall observation has coarse resolution (~0.1\u00b0 / 10km) spatially distributed across higher-resolution DEM cells."
+    },
+    {
+      "category": "STRUCTURAL_UNCERTAINTY",
+      "code": "UNASSOCIATED_CATCHMENTS",
+      "message": "100.0% of catchments lack defensible drainage inlet associations."
+    }
+  ],
+  "timestep_summaries": [
+    {
+      "step_index": 0,
+      "elapsed_minutes": 0,
+      "timestamp_iso": "2020-08-05T08:00:00+00:00",
+      "rainfall_intensity_mm_hr": 0.9740000367164612,
+      "gross_rain_volume_m3": 27261.092227649693,
+      "runoff_volume_m3": 0.0,
+      "surface_storage_m3": 0.0,
+      "drainage_removed_m3": 0.0,
+      "max_depth_m": 0.0,
+      "flooded_cells_count": 0,
+      "mass_balance_error_m3": 0.0,
+      "is_valid": true
+    },
+    {
+      "step_index": 1,
+      "elapsed_minutes": 10,
+      "timestamp_iso": "2020-08-05T08:10:00+00:00",
+      "rainfall_intensity_mm_hr": 0.9740000367164612,
+      "gross_rain_volume_m3": 27261.092227649693,
+      "runoff_volume_m3": 0.0,
+      "surface_storage_m3": 0.0,
+      "drainage_removed_m3": 0.0,
+      "max_depth_m": 0.0,
+      "flooded_cells_count": 0,
+      "mass_balance_error_m3": 0.0,
+      "is_valid": true
+    },
+    {
+      "step_index": 2,
+      "elapsed_minutes": 20,
+      "timestamp_iso": "2020-08-05T08:20:00+00:00",
+      "rainfall_intensity_mm_hr": 0.9740000367164612,
+      "gross_rain_volume_m3": 27261.092227649693,
+      "runoff_volume_m3": 0.0,
+      "surface_storage_m3": 0.0,
+      "drainage_removed_m3": 0.0,
+      "max_depth_m": 0.0,
+      "flooded_cells_count": 0,
+      "mass_balance_error_m3": 0.0,
+      "is_valid": true
+    },
+    {
+      "step_index": 3,
+      "elapsed_minutes": 30,
+      "timestamp_iso": "2020-08-05T08:30:00+00:00",
+      "rainfall_intensity_mm_hr": 0.9740000367164612,
+      "gross_rain_volume_m3": 27261.092227649693,
+      "runoff_volume_m3": 0.0,
+      "surface_storage_m3": 0.0,
+      "drainage_removed_m3": 0.0,
+      "max_depth_m": 0.0,
+      "flooded_cells_count": 0,
+      "mass_balance_error_m3": 0.0,
+      "is_valid": true
+    }
+  ]
+}

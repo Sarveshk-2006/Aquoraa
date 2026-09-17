@@ -1,0 +1,20 @@
+{
+  "run_id": "dt_76b41ca5f95c",
+  "minutes_from_start": 30,
+  "timestamp_iso": "2026-09-17T11:32:57.617900+00:00",
+  "timestamp_ist": "17 Sep 2026, 05:02 PM IST",
+  "affected_cells_count": 0,
+  "affected_area_km2": 0.0,
+  "peak_severity": "DRY",
+  "severity_distribution": {
+    "DRY": 10000,
+    "LOW": 0,
+    "MODERATE": 0,
+    "HIGH": 0,
+    "SEVERE": 0
+  },
+  "cause_explanation": "Heavy storm rainfall intensity (30.0 mm/hr) and high impervious surface ratio driving rapid surface flow concentration along LBS Marg.",
+  "artifact_path": "backend\\data\\processed\\digital_twin\\dt_76b41ca5f95c\\map\\slice_030.tif",
+  "scenario_type": "DEVELOPMENT_TEST_SCENARIO",
+  "ml_calibration_summary": null
+}

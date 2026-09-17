@@ -1,0 +1,251 @@
+{
+  "run_id": "dt_4083f2626cee",
+  "summary": {
+    "run_id": "dt_4083f2626cee",
+    "study_area_id": "mithi_catchment_mumbai",
+    "status": "COMPLETED",
+    "created_at": "2026-09-17T11:35:19.367628+00:00",
+    "simulation_start_time": "2026-09-17T11:35:19.367628+00:00",
+    "horizon_minutes": 180,
+    "timestep_minutes": 30,
+    "total_timesteps": 7,
+    "available_slices": [
+      0,
+      30,
+      60,
+      90,
+      120,
+      150,
+      180
+    ],
+    "max_water_depth_m": 0.0,
+    "peak_affected_area_km2": 0.0,
+    "peak_time_minutes": 0,
+    "physical_engine_version": "Phase6_Deterministic_D8",
+    "ml_calibration_version": "Phase8_XGBoost_Prototype_V1",
+    "ml_calibration_status": "PROTOTYPE_ONLY",
+    "input_completeness": {
+      "completeness_score": 0.75,
+      "completeness_level": "MEDIUM",
+      "dem_available": true,
+      "rainfall_available": true,
+      "drainage_available": false,
+      "known_capacity_ratio": 1.0,
+      "known_direction_ratio": 1.0,
+      "catchment_assoc_ratio": 0.0
+    },
+    "provenance": {
+      "provider_mode": "REAL_DATA",
+      "provider": "OPEN_METEO_ECMWF",
+      "model_name": "ECMWF_IFS_GLOBAL",
+      "source": "Open-Meteo ECMWF",
+      "data_mode": "REAL_DATA",
+      "forecast_temporal_resolution": "1 hour (60 minutes)",
+      "forecast_spatial_resolution": "approximately 9 km (0.09 deg)",
+      "forecast_initialization_time": "2026-09-17T11:35:19.367628+00:00",
+      "forecast_valid_times": [
+        "2026-09-17T11:00:00+00:00",
+        "2026-09-17T12:00:00+00:00",
+        "2026-09-17T13:00:00+00:00",
+        "2026-09-17T14:00:00+00:00"
+      ],
+      "forecast_lead_times_minutes": [
+        0,
+        60,
+        120,
+        180
+      ],
+      "precipitation_units": "mm accumulation (converted to mm/hr rate for Phase 6 30-min substeps preserving mass)",
+      "mass_conservation": "PRESERVED_PIECEWISE_CONSTANT_30MIN_SUBSTEPS",
+      "spatial_forcing": "UNIFORM_MACRO_SCALE_9KM",
+      "dem_source": "LocalDEMFile:elevation_30m.tif",
+      "dem_crs": "EPSG:32643",
+      "dem_resolution_m": [
+        30.0,
+        30.0
+      ],
+      "dem_dimensions": [
+        476,
+        392
+      ],
+      "rainfall_source": "Open-Meteo ECMWF IFS Global Forecast",
+      "rainfall_intensity_mean_mm_hr": 0.09999999999999999,
+      "rainfall_intensity_max_mm_hr": 0.1,
+      "drainage_status": "REAL municipal drainage network data UNAVAILABLE; surface drainage proxy active.",
+      "tide_status": "REAL tide data AVAILABLE (UHSLC Station 846A), but backwater boundary conditions NOT CONSUMED by Phase 6 D8 solver engine.",
+      "is_synthetic_fallback": false,
+      "project": "AQUORA \u2014 Urban Flood Intelligence & Response Platform",
+      "study_area": "Mithi River Catchment, Mumbai, India",
+      "physical_engine": "Phase6_Deterministic_D8",
+      "ml_calibration": "Phase8_XGBoost_Prototype_V1",
+      "model_artifact": "aquora_xgboost_prototype.joblib",
+      "sha256": "ba96ed00159dabd8f332674c113e96310e8bf0284a07f0f31485df7103aebe4d",
+      "ml_status": "PROTOTYPE_ONLY",
+      "calibration_status": "NOT_CALIBRATED",
+      "severity_provenance": "Severity semantics inherited from Phase 6 physical engine",
+      "disclaimer": "Prototype ML Score \u2014 ML calibration prototype \u2014 not operationally validated",
+      "training_labels_isolated": true,
+      "event_id": "E05",
+      "grid": "392 x 476, 30m x 30m, EPSG:32643",
+      "crs_display": "EPSG:3857",
+      "crs_storage": "EPSG:4326",
+      "created_at": "2026-09-17T11:35:19.367628+00:00"
+    }
+  },
+  "time_slices": [
+    {
+      "run_id": "dt_4083f2626cee",
+      "timestamp_iso": "2026-09-17T11:35:19.367628+00:00",
+      "timestamp_ist": "17 Sep 2026, 05:05 PM IST",
+      "minutes_from_start": 0,
+      "slice_label": "NOW",
+      "affected_cells_count": 0,
+      "affected_area_km2": 0.0,
+      "peak_severity": "DRY",
+      "severity_distribution": {
+        "DRY": 186592,
+        "LOW": 0,
+        "MODERATE": 0,
+        "HIGH": 0,
+        "SEVERE": 0
+      },
+      "onset_cells_count": 0,
+      "input_completeness": "HIGH",
+      "uncertainty_level": "LOW",
+      "cause_explanation": "Initial hydrological state. Surface runoff beginning to accumulate in low-lying Kurla and Kalina depressions.",
+      "artifact_path": "backend\\data\\processed\\digital_twin\\dt_4083f2626cee\\map\\slice_000.tif"
+    },
+    {
+      "run_id": "dt_4083f2626cee",
+      "timestamp_iso": "2026-09-17T12:05:19.367628+00:00",
+      "timestamp_ist": "17 Sep 2026, 05:35 PM IST",
+      "minutes_from_start": 30,
+      "slice_label": "+30m",
+      "affected_cells_count": 0,
+      "affected_area_km2": 0.0,
+      "peak_severity": "DRY",
+      "severity_distribution": {
+        "DRY": 186592,
+        "LOW": 0,
+        "MODERATE": 0,
+        "HIGH": 0,
+        "SEVERE": 0
+      },
+      "onset_cells_count": 0,
+      "input_completeness": "HIGH",
+      "uncertainty_level": "LOW",
+      "cause_explanation": "Heavy storm rainfall intensity (0.1 mm/hr) and high impervious surface ratio driving rapid surface flow concentration along LBS Marg.",
+      "artifact_path": "backend\\data\\processed\\digital_twin\\dt_4083f2626cee\\map\\slice_030.tif"
+    },
+    {
+      "run_id": "dt_4083f2626cee",
+      "timestamp_iso": "2026-09-17T12:35:19.367628+00:00",
+      "timestamp_ist": "17 Sep 2026, 06:05 PM IST",
+      "minutes_from_start": 60,
+      "slice_label": "+60m",
+      "affected_cells_count": 0,
+      "affected_area_km2": 0.0,
+      "peak_severity": "DRY",
+      "severity_distribution": {
+        "DRY": 186592,
+        "LOW": 0,
+        "MODERATE": 0,
+        "HIGH": 0,
+        "SEVERE": 0
+      },
+      "onset_cells_count": 0,
+      "input_completeness": "HIGH",
+      "uncertainty_level": "LOW",
+      "cause_explanation": "Heavy storm rainfall intensity (0.1 mm/hr) and high impervious surface ratio driving rapid surface flow concentration along LBS Marg.",
+      "artifact_path": "backend\\data\\processed\\digital_twin\\dt_4083f2626cee\\map\\slice_060.tif"
+    },
+    {
+      "run_id": "dt_4083f2626cee",
+      "timestamp_iso": "2026-09-17T13:05:19.367628+00:00",
+      "timestamp_ist": "17 Sep 2026, 06:35 PM IST",
+      "minutes_from_start": 90,
+      "slice_label": "+90m",
+      "affected_cells_count": 0,
+      "affected_area_km2": 0.0,
+      "peak_severity": "DRY",
+      "severity_distribution": {
+        "DRY": 186592,
+        "LOW": 0,
+        "MODERATE": 0,
+        "HIGH": 0,
+        "SEVERE": 0
+      },
+      "onset_cells_count": 0,
+      "input_completeness": "HIGH",
+      "uncertainty_level": "LOW",
+      "cause_explanation": "Mithi River water levels rising. Drainage outfall capacity constrained near Kranti Nagar causing backwater ponding (Peak Severity: DRY).",
+      "artifact_path": "backend\\data\\processed\\digital_twin\\dt_4083f2626cee\\map\\slice_090.tif"
+    },
+    {
+      "run_id": "dt_4083f2626cee",
+      "timestamp_iso": "2026-09-17T13:35:19.367628+00:00",
+      "timestamp_ist": "17 Sep 2026, 07:05 PM IST",
+      "minutes_from_start": 120,
+      "slice_label": "+120m",
+      "affected_cells_count": 0,
+      "affected_area_km2": 0.0,
+      "peak_severity": "DRY",
+      "severity_distribution": {
+        "DRY": 186592,
+        "LOW": 0,
+        "MODERATE": 0,
+        "HIGH": 0,
+        "SEVERE": 0
+      },
+      "onset_cells_count": 0,
+      "input_completeness": "HIGH",
+      "uncertainty_level": "LOW",
+      "cause_explanation": "Mithi River water levels rising. Drainage outfall capacity constrained near Kranti Nagar causing backwater ponding (Peak Severity: DRY).",
+      "artifact_path": "backend\\data\\processed\\digital_twin\\dt_4083f2626cee\\map\\slice_120.tif"
+    },
+    {
+      "run_id": "dt_4083f2626cee",
+      "timestamp_iso": "2026-09-17T14:05:19.367628+00:00",
+      "timestamp_ist": "17 Sep 2026, 07:35 PM IST",
+      "minutes_from_start": 150,
+      "slice_label": "+150m",
+      "affected_cells_count": 0,
+      "affected_area_km2": 0.0,
+      "peak_severity": "DRY",
+      "severity_distribution": {
+        "DRY": 186592,
+        "LOW": 0,
+        "MODERATE": 0,
+        "HIGH": 0,
+        "SEVERE": 0
+      },
+      "onset_cells_count": 0,
+      "input_completeness": "HIGH",
+      "uncertainty_level": "LOW",
+      "cause_explanation": "Rainfall intensity easing, but accumulated surface storage slowly draining through downstream channel towards Mahim Bay.",
+      "artifact_path": "backend\\data\\processed\\digital_twin\\dt_4083f2626cee\\map\\slice_150.tif"
+    },
+    {
+      "run_id": "dt_4083f2626cee",
+      "timestamp_iso": "2026-09-17T14:35:19.367628+00:00",
+      "timestamp_ist": "17 Sep 2026, 08:05 PM IST",
+      "minutes_from_start": 180,
+      "slice_label": "+180m",
+      "affected_cells_count": 0,
+      "affected_area_km2": 0.0,
+      "peak_severity": "DRY",
+      "severity_distribution": {
+        "DRY": 186592,
+        "LOW": 0,
+        "MODERATE": 0,
+        "HIGH": 0,
+        "SEVERE": 0
+      },
+      "onset_cells_count": 0,
+      "input_completeness": "HIGH",
+      "uncertainty_level": "LOW",
+      "cause_explanation": "Rainfall intensity easing, but accumulated surface storage slowly draining through downstream channel towards Mahim Bay.",
+      "artifact_path": "backend\\data\\processed\\digital_twin\\dt_4083f2626cee\\map\\slice_180.tif"
+    }
+  ]
+}

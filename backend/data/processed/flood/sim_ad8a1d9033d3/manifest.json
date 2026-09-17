@@ -1,0 +1,174 @@
+{
+  "simulation_id": "sim_ad8a1d9033d3",
+  "provider_mode": "REAL_DATA",
+  "configuration_hash": "181d72718251af70",
+  "engine_version": "0.6.0-phase6",
+  "created_at": "2026-09-17T11:33:08.465122+00:00",
+  "provenance": {
+    "provider_mode": "REAL_DATA",
+    "provider": "OPEN_METEO_ECMWF",
+    "model_name": "ECMWF_IFS_GLOBAL",
+    "source": "Open-Meteo ECMWF",
+    "data_mode": "REAL_DATA",
+    "forecast_temporal_resolution": "1 hour (60 minutes)",
+    "forecast_spatial_resolution": "approximately 9 km (0.09 deg)",
+    "forecast_initialization_time": "2026-09-17T11:33:02.693398+00:00",
+    "forecast_valid_times": [
+      "2026-09-17T11:00:00+00:00",
+      "2026-09-17T12:00:00+00:00",
+      "2026-09-17T13:00:00+00:00",
+      "2026-09-17T14:00:00+00:00"
+    ],
+    "forecast_lead_times_minutes": [
+      0,
+      60,
+      120,
+      180
+    ],
+    "precipitation_units": "mm accumulation (converted to mm/hr rate for Phase 6 30-min substeps preserving mass)",
+    "mass_conservation": "PRESERVED_PIECEWISE_CONSTANT_30MIN_SUBSTEPS",
+    "spatial_forcing": "UNIFORM_MACRO_SCALE_9KM",
+    "dem_source": "LocalDEMFile:elevation_30m.tif",
+    "dem_crs": "EPSG:32643",
+    "dem_resolution_m": [
+      30.0,
+      30.0
+    ],
+    "dem_dimensions": [
+      476,
+      392
+    ],
+    "rainfall_source": "Open-Meteo ECMWF IFS Global Forecast",
+    "rainfall_intensity_mean_mm_hr": 0.09999999999999999,
+    "rainfall_intensity_max_mm_hr": 0.1,
+    "drainage_status": "REAL municipal drainage network data UNAVAILABLE; surface drainage proxy active.",
+    "tide_status": "REAL tide data AVAILABLE (UHSLC Station 846A), but backwater boundary conditions NOT CONSUMED by Phase 6 D8 solver engine.",
+    "is_synthetic_fallback": false
+  },
+  "totals": {
+    "total_gross_rain_m3": 58776.48,
+    "total_runoff_gen_m3": 0.0,
+    "total_infil_loss_m3": 58776.48,
+    "total_drainage_removed_m3": 0.0,
+    "total_surface_transferred_m3": 0.0,
+    "final_surface_storage_m3": 0.0,
+    "overall_mass_balance_error_m3": 0.0
+  },
+  "input_completeness": {
+    "completeness_score": 0.75,
+    "completeness_level": "MEDIUM",
+    "dem_available": true,
+    "rainfall_available": true,
+    "drainage_available": false,
+    "known_capacity_ratio": 1.0,
+    "known_direction_ratio": 1.0,
+    "catchment_assoc_ratio": 0.0
+  },
+  "warnings": [
+    {
+      "category": "STRUCTURAL_UNCERTAINTY",
+      "code": "UNASSOCIATED_CATCHMENTS",
+      "message": "100.0% of catchments lack defensible drainage inlet associations."
+    }
+  ],
+  "timestep_summaries": [
+    {
+      "step_index": 0,
+      "elapsed_minutes": 0,
+      "timestamp_iso": "2026-09-17T11:33:02.693398+00:00",
+      "rainfall_intensity_mm_hr": 0.1,
+      "gross_rain_volume_m3": 8396.640000000001,
+      "runoff_volume_m3": 0.0,
+      "surface_storage_m3": 0.0,
+      "drainage_removed_m3": 0.0,
+      "max_depth_m": 0.0,
+      "flooded_cells_count": 0,
+      "mass_balance_error_m3": 0.0,
+      "is_valid": true
+    },
+    {
+      "step_index": 1,
+      "elapsed_minutes": 30,
+      "timestamp_iso": "2026-09-17T12:03:02.693398+00:00",
+      "rainfall_intensity_mm_hr": 0.1,
+      "gross_rain_volume_m3": 8396.640000000001,
+      "runoff_volume_m3": 0.0,
+      "surface_storage_m3": 0.0,
+      "drainage_removed_m3": 0.0,
+      "max_depth_m": 0.0,
+      "flooded_cells_count": 0,
+      "mass_balance_error_m3": 0.0,
+      "is_valid": true
+    },
+    {
+      "step_index": 2,
+      "elapsed_minutes": 60,
+      "timestamp_iso": "2026-09-17T12:33:02.693398+00:00",
+      "rainfall_intensity_mm_hr": 0.1,
+      "gross_rain_volume_m3": 8396.640000000001,
+      "runoff_volume_m3": 0.0,
+      "surface_storage_m3": 0.0,
+      "drainage_removed_m3": 0.0,
+      "max_depth_m": 0.0,
+      "flooded_cells_count": 0,
+      "mass_balance_error_m3": 0.0,
+      "is_valid": true
+    },
+    {
+      "step_index": 3,
+      "elapsed_minutes": 90,
+      "timestamp_iso": "2026-09-17T13:03:02.693398+00:00",
+      "rainfall_intensity_mm_hr": 0.1,
+      "gross_rain_volume_m3": 8396.640000000001,
+      "runoff_volume_m3": 0.0,
+      "surface_storage_m3": 0.0,
+      "drainage_removed_m3": 0.0,
+      "max_depth_m": 0.0,
+      "flooded_cells_count": 0,
+      "mass_balance_error_m3": 0.0,
+      "is_valid": true
+    },
+    {
+      "step_index": 4,
+      "elapsed_minutes": 120,
+      "timestamp_iso": "2026-09-17T13:33:02.693398+00:00",
+      "rainfall_intensity_mm_hr": 0.1,
+      "gross_rain_volume_m3": 8396.640000000001,
+      "runoff_volume_m3": 0.0,
+      "surface_storage_m3": 0.0,
+      "drainage_removed_m3": 0.0,
+      "max_depth_m": 0.0,
+      "flooded_cells_count": 0,
+      "mass_balance_error_m3": 0.0,
+      "is_valid": true
+    },
+    {
+      "step_index": 5,
+      "elapsed_minutes": 150,
+      "timestamp_iso": "2026-09-17T14:03:02.693398+00:00",
+      "rainfall_intensity_mm_hr": 0.1,
+      "gross_rain_volume_m3": 8396.640000000001,
+      "runoff_volume_m3": 0.0,
+      "surface_storage_m3": 0.0,
+      "drainage_removed_m3": 0.0,
+      "max_depth_m": 0.0,
+      "flooded_cells_count": 0,
+      "mass_balance_error_m3": 0.0,
+      "is_valid": true
+    },
+    {
+      "step_index": 6,
+      "elapsed_minutes": 180,
+      "timestamp_iso": "2026-09-17T14:33:02.693398+00:00",
+      "rainfall_intensity_mm_hr": 0.1,
+      "gross_rain_volume_m3": 8396.640000000001,
+      "runoff_volume_m3": 0.0,
+      "surface_storage_m3": 0.0,
+      "drainage_removed_m3": 0.0,
+      "max_depth_m": 0.0,
+      "flooded_cells_count": 0,
+      "mass_balance_error_m3": 0.0,
+      "is_valid": true
+    }
+  ]
+}

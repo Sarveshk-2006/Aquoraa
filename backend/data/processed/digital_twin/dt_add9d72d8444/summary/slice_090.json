@@ -1,0 +1,20 @@
+{
+  "run_id": "dt_add9d72d8444",
+  "minutes_from_start": 90,
+  "timestamp_iso": "2026-09-13T01:30:00+00:00",
+  "timestamp_ist": "13 Sep 2026, 07:00 AM IST",
+  "affected_cells_count": 186592,
+  "affected_area_km2": 167.933,
+  "peak_severity": "LOW",
+  "severity_distribution": {
+    "DRY": 0,
+    "LOW": 186592,
+    "MODERATE": 0,
+    "HIGH": 0,
+    "SEVERE": 0
+  },
+  "cause_explanation": "Mithi River water levels rising. Drainage outfall capacity constrained near Kranti Nagar causing backwater ponding (Peak Severity: LOW).",
+  "artifact_path": "backend\\data\\processed\\digital_twin\\dt_add9d72d8444\\map\\slice_090.tif",
+  "scenario_type": "FORECAST_DRIVEN_REAL_DATA",
+  "ml_calibration_summary": null
+}

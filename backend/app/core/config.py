@@ -60,6 +60,10 @@ class Settings(BaseSettings):
     )
 
     # NASA Earthdata & Rainfall Pipeline Configuration
+    RAINFALL_PROVIDER: str = Field(
+        default="OPEN_METEO",
+        description="Active rainfall forecast provider ('OPEN_METEO', 'IMERG')"
+    )
     NASA_EARTHDATA_USERNAME: str | None = Field(
         default=None,
         description="NASA Earthdata Login username for GPM IMERG data access"

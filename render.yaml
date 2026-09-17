@@ -33,7 +33,7 @@ services:
       - key: ROUTING_BASE_URL
         value: https://router.project-osrm.org
       - key: RAINFALL_PROVIDER
-        value: IMERG
+        value: OPEN_METEO
       - key: FACILITY_PROVIDER
         value: LOCAL
       - key: GROUND_TRUTH_PROVIDER

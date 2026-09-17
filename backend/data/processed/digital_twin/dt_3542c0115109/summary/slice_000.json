@@ -1,0 +1,28 @@
+{
+  "run_id": "dt_3542c0115109",
+  "minutes_from_start": 0,
+  "timestamp_iso": "2026-09-16T13:34:00.402148+00:00",
+  "timestamp_ist": "16 Sep 2026, 07:04 PM IST",
+  "affected_cells_count": 0,
+  "affected_area_km2": 0.0,
+  "peak_severity": "DRY",
+  "severity_distribution": {
+    "DRY": 186592,
+    "LOW": 0,
+    "MODERATE": 0,
+    "HIGH": 0,
+    "SEVERE": 0
+  },
+  "cause_explanation": "Initial hydrological state. Surface runoff beginning to accumulate in low-lying Kurla and Kalina depressions.",
+  "artifact_path": "backend\\data\\processed\\digital_twin\\dt_3542c0115109\\map\\slice_000.tif",
+  "scenario_type": "FORECAST_DRIVEN_REAL_DATA",
+  "ml_calibration_summary": {
+    "input_row_count": 186592,
+    "prediction_count": 186592,
+    "min_score": 0.9999539852142334,
+    "max_score": 0.9999539852142334,
+    "mean_score": 0.999954104423523,
+    "std_score": 1.1920928955078125e-07,
+    "high_risk_cell_count": 186592
+  }
+}

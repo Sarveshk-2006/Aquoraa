@@ -1,0 +1,57 @@
+manifest_version: 1.0.0
+policy_name: PHASE_7_FEATURE_LEAKAGE_AND_GOVERNANCE_POLICY
+created_at: '2026-09-16T19:20:07.849310+00:00'
+status: PASSED_ZERO_LEAKAGE
+summary: Strict governance policy enforcing explicit separation between predictor
+  features and observational target evidence.
+permitted_model_predictors:
+- elevation_m
+- slope_deg
+- aspect_deg
+- flow_accumulation_cells
+- drainage_proxy_score
+- landcover_class
+- built_up_fraction
+- distance_to_road_m
+- distance_to_waterway_m
+- rainfall_30min_mm
+- rainfall_intensity_mm_hr
+- tide_level_m
+excluded_target_evidence_fields:
+- flood_label
+- label_status
+- evidence_strength
+- permanent_water_mask
+- sar_pre_vv_db
+- sar_co_vv_db
+- sar_delta_vv_db
+- sar_pre_vh_db
+- sar_co_vh_db
+- sar_delta_vh_db
+- sar_strong_negative_change
+- sar_moderate_negative_change
+- sar_weak_negative_change
+- sar_usable_for_label
+- observed_flood_candidate
+- physical_model_score
+validation_and_metadata_fields:
+- event_id
+- grid_cell_id
+- timestamp_utc
+- latitude
+- longitude
+- x_utm
+- y_utm
+- in_decision_domain
+- split
+leakage_audit_rules:
+- rule: SAR backscatter delta (VV/VH) excluded from predictors
+  status: ENFORCED
+- rule: SAR candidate inundation masks excluded from predictors
+  status: ENFORCED
+- rule: Physical model flood depths excluded from predictors
+  status: ENFORCED
+- rule: Post-event variables excluded from pre-event predictors
+  status: ENFORCED
+- rule: Event-based split isolation (E01-E07) enforced
+  status: ENFORCED

@@ -1,0 +1,165 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   AQUORA — Central Design Tokens & Color System
+   Teal (#008080) + Beige (#F5F5DC) Identity System
+   Civic climate technology · Calm · Modern · Trustworthy
+   ============================================================ */
+
+@layer base {
+  :root {
+    /* --- Central Aquora Brand Colors --- */
+    --aq-teal:         #008080;   /* Brand Teal HEX #008080 (RGB: 0, 128, 128) */
+    --aq-teal-dark:    #006666;   /* Dark Teal hover/pressed state */
+    --aq-teal-light:   #e6f2f2;   /* Very pale teal background tint */
+    --aq-teal-hover:   #006c6c;   /* Interactive hover teal */
+    --aq-teal-focus:   rgba(0, 128, 128, 0.35);
+
+    /* --- Warm System Beige Surfaces --- */
+    --aq-beige:        #F5F5DC;   /* Warm System Beige HEX #F5F5DC (RGB: 245, 245, 220) */
+    --aq-beige-light:  #fdfdf7;   /* Near-white warm surface */
+    --aq-beige-subtle: #f9f9ee;   /* Subtle beige card background tint */
+    --aq-beige-border: #e6e6cc;   /* Warm beige border */
+
+    /* --- Structural Deep Teal & Surfaces --- */
+    --aq-navy:         #042f2e;   /* Structural Deep Dark Teal sidebar (replaces blue) */
+    --aq-navy-hover:   rgba(0, 128, 128, 0.22); /* Hover sidebar surface */
+    --aq-navy-active:  #008080;   /* Active navigation uses Teal */
+
+    --aq-bg:           #f7f7f4;   /* Page background (subtle warm off-white/beige tone) */
+    --aq-surface:      #ffffff;   /* Clean white card surfaces */
+    --aq-border:      rgba(15,35,64,0.08); /* Subtle neutral borders */
+    --aq-text:        #0f2340;   /* Primary text */
+    --aq-text-muted:  #5a7299;   /* Secondary text */
+
+    /* --- Primary Action Aliases --- */
+    --aq-blue:         #008080;   /* Primary action uses Teal */
+    --aq-blue-light:   #006666;   /* Darker teal accent */
+    --aq-aqua:         #008080;   /* Brand accents */
+
+    /* --- Hydrological & Flood Intelligence (STRICT WATER SEMANTICS) --- */
+    --aq-water-blue:   #1a56db;   /* Flood / Water intelligence blue */
+    --aq-water-cyan:   #0891b2;   /* Water cyan depth scale */
+
+    /* --- Semantic Severity Tones --- */
+    --aq-green:       #059669;   /* Safe / Healthy */
+    --aq-amber:       #d97706;   /* Warning / At risk */
+    --aq-red:         #dc2626;   /* Critical / Danger */
+
+    /* --- Sidebar text tones --- */
+    --aq-sidebar-text:     rgba(255,255,255,0.92);
+    --aq-sidebar-muted:    rgba(255,255,255,0.52);
+    --aq-sidebar-border:   rgba(255,255,255,0.07);
+  }
+
+  html {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background-color: var(--aq-bg);
+    color: var(--aq-text);
+    selection-color: #b2d8d8;
+  }
+
+  /* Custom keyboard focus outline */
+  *:focus {
+    outline: none;
+  }
+  *:focus-visible {
+    outline: 2px solid var(--aq-teal);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+}
+
+/* ============================================================
+   SCROLLBARS — Light & Dark
+   ============================================================ */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #008080;
+}
+
+/* Dark scrollbar for sidebar */
+.aq-sidebar ::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.15);
+}
+.aq-sidebar ::-webkit-scrollbar-thumb:hover {
+  background: rgba(255,255,255,0.25);
+}
+
+/* ============================================================
+   ANIMATIONS
+   ============================================================ */
+@keyframes aq-fadein {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes aq-pulse-dot {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}
+
+.aq-page-enter {
+  animation: aq-fadein 200ms ease both;
+}
+
+.aq-live-dot {
+  animation: aq-pulse-dot 2s ease-in-out infinite;
+}
+
+/* ============================================================
+   MAP CONTAINER & LEAFLET CUSTOMIZATIONS — Aquora Native Surface
+   ============================================================ */
+.aq-map-container {
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(15,35,64,0.08), 0 0 0 1px rgba(15,35,64,0.08);
+}
+
+.aq-map-container .leaflet-container {
+  border-radius: 20px;
+  font-family: 'Inter', system-ui, sans-serif;
+  background-color: #f8fafc;
+}
+
+/* Softer / slightly desaturated basemap treatment */
+.leaflet-tile-container img {
+  filter: saturate(0.70) brightness(1.01) contrast(0.96);
+}
+
+/* Custom Aquora Leaflet Popups */
+.leaflet-popup-content-wrapper {
+  border-radius: 14px !important;
+  box-shadow: 0 8px 24px rgba(15,35,64,0.16), 0 0 0 1px rgba(15,35,64,0.08) !important;
+  padding: 4px !important;
+  border: none !important;
+}
+
+.leaflet-popup-tip {
+  box-shadow: none !important;
+}
+
+/* Custom styled attribution */
+.leaflet-control-attribution {
+  background: rgba(255, 255, 255, 0.75) !important;
+  backdrop-filter: blur(4px) !important;
+  font-size: 9px !important;
+}

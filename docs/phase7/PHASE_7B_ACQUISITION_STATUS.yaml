@@ -1,0 +1,145 @@
+status_doc_version: 1.0.0
+phase: PHASE_7B_ACQUISITION_STATUS
+summary:
+  total: 17
+  acquired: 4
+  smoke_test: 0
+  superseded: 0
+  needs_auth: 0
+acquisitions:
+- id: DL-DEM-001
+  product_name: Copernicus DEM GLO-30
+  event_id: ALL
+  target_id: Copernicus_DSM_COG_10_N19_00_E072_00
+  status: ACQUIRED
+  classification: manifest_acquisition
+  size_mb: 12.72
+  sha256: b90f91a2b8cd69da327d8c133417d119a44f9880c8bb080114be5d8e9cf3dcdd
+- id: DL-LC-001
+  product_name: ESA WorldCover 2021 10m V200
+  event_id: ALL
+  target_id: ESA_WorldCover_10m_2021_v200_N18E072
+  status: ACQUIRED
+  classification: manifest_acquisition
+  size_mb: 119.94
+  sha256: 2d28650e0eba865efb08656e45b75a269eaf535f9260a245ae5aad72ee5a5c63
+- id: DL-OSM-001
+  product_name: OpenStreetMap Bounding Box Extraction
+  event_id: ALL
+  target_id: DL-OSM-001
+  status: ACQUIRED
+  classification: manifest_acquisition
+  size_mb: 47.64
+  sha256: 17de47bbf3ec5cf43e034819eb39fc25e1515d40f1213ed26a10662ebd01cd4e
+- id: DL-RAIN-E01
+  product_name: NASA GPM IMERG V07B Final Half-Hourly
+  event_id: E01
+  target_id: DL-RAIN-E01
+  status: SPECIFIED_PENDING_PHASE_7B
+  classification: manifest_acquisition
+  size_mb: 0.0
+  sha256: null
+- id: DL-RAIN-E02
+  product_name: NASA GPM IMERG V07B Final Half-Hourly
+  event_id: E02
+  target_id: DL-RAIN-E02
+  status: SPECIFIED_PENDING_PHASE_7B
+  classification: manifest_acquisition
+  size_mb: 0.0
+  sha256: null
+- id: DL-RAIN-E03
+  product_name: NASA GPM IMERG V07B Final Half-Hourly
+  event_id: E03
+  target_id: DL-RAIN-E03
+  status: SPECIFIED_PENDING_PHASE_7B
+  classification: manifest_acquisition
+  size_mb: 0.0
+  sha256: null
+- id: DL-RAIN-E04
+  product_name: NASA GPM IMERG V07B Final Half-Hourly
+  event_id: E04
+  target_id: DL-RAIN-E04
+  status: SPECIFIED_PENDING_PHASE_7B
+  classification: manifest_acquisition
+  size_mb: 0.0
+  sha256: null
+- id: DL-RAIN-E05
+  product_name: NASA GPM IMERG V07B Final Half-Hourly
+  event_id: E05
+  target_id: DL-RAIN-E05
+  status: SPECIFIED_PENDING_PHASE_7B
+  classification: manifest_acquisition
+  size_mb: 0.0
+  sha256: null
+- id: DL-RAIN-E06
+  product_name: NASA GPM IMERG V07B Final Half-Hourly
+  event_id: E06
+  target_id: DL-RAIN-E06
+  status: SPECIFIED_PENDING_PHASE_7B
+  classification: manifest_acquisition
+  size_mb: 0.0
+  sha256: null
+- id: DL-RAIN-E07
+  product_name: NASA GPM IMERG V07B Final Half-Hourly
+  event_id: E07
+  target_id: DL-RAIN-E07
+  status: SPECIFIED_PENDING_PHASE_7B
+  classification: manifest_acquisition
+  size_mb: 0.0
+  sha256: null
+- id: DL-SAR-E02
+  product_name: Sentinel-1A GRD IW Dual VV+VH
+  event_id: E02
+  target_id: S1A_IW_GRDH_1SDV_20170829T010248_20170829T010313_018131_01E74F_E820
+  status: VERIFIED_TARGET
+  classification: manifest_acquisition
+  size_mb: 0.0
+  sha256: null
+- id: DL-SAR-E03
+  product_name: Sentinel-1A GRD IW Dual VV+VH
+  event_id: E03
+  target_id: S1A_IW_GRDH_1SDV_20190702T010258_20190702T010323_027931_03274B_DDDA
+  status: VERIFIED_TARGET
+  classification: manifest_acquisition
+  size_mb: 0.0
+  sha256: null
+- id: DL-SAR-E04
+  product_name: Sentinel-1A GRD IW Dual VV+VH
+  event_id: E04
+  target_id: S1A_IW_GRDH_1SDV_20190831T010301_20190831T010326_028806_034364_FA1B
+  status: VERIFIED_TARGET
+  classification: manifest_acquisition
+  size_mb: 0.0
+  sha256: null
+- id: DL-SAR-E05
+  product_name: Sentinel-1A GRD IW Dual VV+VH
+  event_id: E05
+  target_id: S1A_IW_GRDH_1SDV_20200801T010318_20200801T010343_033706_03E812_4FB3
+  status: VERIFIED_TARGET
+  classification: manifest_acquisition
+  size_mb: 0.0
+  sha256: null
+- id: DL-SAR-E06
+  product_name: Sentinel-1A GRD IW Dual VV+VH
+  event_id: E06
+  target_id: S1A_IW_GRDH_1SDV_20200918T010321_20200918T010346_034406_040065_2BB1
+  status: VERIFIED_TARGET
+  classification: manifest_acquisition
+  size_mb: 0.0
+  sha256: null
+- id: DL-SAR-E07
+  product_name: Sentinel-1A GRD IW Dual VV+VH
+  event_id: E07
+  target_id: S1A_IW_GRDH_1SDV_20210715T010321_20210715T010346_038781_049379_1EE0
+  status: VERIFIED_TARGET
+  classification: manifest_acquisition
+  size_mb: 0.0
+  sha256: null
+- id: DL-TIDE-001
+  product_name: Mumbai Port Trust Tide Station Data
+  event_id: ALL
+  target_id: DL-TIDE-001
+  status: ACQUIRED
+  classification: manifest_acquisition
+  size_mb: 6.79
+  sha256: 56c8a8b032b72e2d7867db596804c62c4213cd401ef5f4545b70dca71be96f5f

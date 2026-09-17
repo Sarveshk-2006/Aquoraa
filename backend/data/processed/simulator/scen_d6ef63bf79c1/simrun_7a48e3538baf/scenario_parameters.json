@@ -1,0 +1,23 @@
+{
+  "scenario_id": "scen_d6ef63bf79c1",
+  "run_id": "simrun_7a48e3538baf",
+  "baseline_run_id": "dt_mithi_baseline_001",
+  "scenario_type": "RAINFALL_ADDITION",
+  "parameters": {
+    "rainfall_addition_mm": 20.0
+  },
+  "assumptions": [
+    {
+      "assumption_type": "RAINFALL_TEMPORAL_PROFILE_PRESERVATION",
+      "assumption_value": "+20.0 mm",
+      "assumption_source": "CANONICAL_RAINFALL_ADDITION_SEMANTICS",
+      "assumption_description": "Distributed +20.0 mm total event rainfall proportional to baseline temporal storm profile."
+    },
+    {
+      "assumption_type": "RAINFALL_TEMPORAL_PROFILE_PRESERVATION",
+      "assumption_value": "+20.0 mm",
+      "assumption_source": "CANONICAL_RAINFALL_ADDITION_SEMANTICS",
+      "assumption_description": "Distributed +20.0 mm total event rainfall proportional to baseline temporal storm profile."
+    }
+  ]
+}

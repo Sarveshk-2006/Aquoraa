@@ -1,0 +1,23 @@
+{
+  "scenario_id": "scen_a9c9dc81ff5f",
+  "run_id": "simrun_0b875b95e960",
+  "baseline_run_id": "dt_mithi_baseline_001",
+  "scenario_type": "RAINFALL_MULTIPLIER",
+  "parameters": {
+    "rainfall_multiplier": 1.25
+  },
+  "assumptions": [
+    {
+      "assumption_type": "RAINFALL_MULTIPLIER_TRANSFORMATION",
+      "assumption_value": "1.25",
+      "assumption_source": "USER_SCENARIO_INPUT",
+      "assumption_description": "Applied uniform scaling factor of 1.25x across all timeline rainfall timesteps."
+    },
+    {
+      "assumption_type": "RAINFALL_MULTIPLIER_TRANSFORMATION",
+      "assumption_value": "1.25",
+      "assumption_source": "USER_SCENARIO_INPUT",
+      "assumption_description": "Applied uniform scaling factor of 1.25x across all timeline rainfall timesteps."
+    }
+  ]
+}

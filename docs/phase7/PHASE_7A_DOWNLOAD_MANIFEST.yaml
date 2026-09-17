@@ -1,0 +1,291 @@
+manifest_version: "1.0.0"
+created_at: "2026-09-12T12:20:00Z"
+phase: "PHASE_7A_DATA_ACQUISITION_SPECIFICATION"
+status: "READY_FOR_HUMAN_REVIEW"
+
+pilot_study_area:
+  city: "Mumbai"
+  state: "Maharashtra"
+  country: "India"
+  hydrologic_domain:
+    name: "Mithi Catchment Acquisition Envelope"
+    bbox_wgs84: [72.8200, 19.0300, 72.9300, 19.1600]
+    area_sq_km: 72.95
+    catchment_polygon_status: "NEEDS_VERIFICATION"
+  decision_domain:
+    name: "Decision-Domain Acquisition Envelope (Kurla Corridor)"
+    bbox_wgs84: [72.8400, 19.0400, 72.9000, 19.1200]
+    area_sq_km: 18.50
+
+crs_configuration:
+  canonical_storage_crs: "EPSG:4326"
+  display_crs: "EPSG:3857"
+  analysis_crs: "EPSG:32643"
+
+download_entries:
+  - id: "DL-DEM-001"
+    category: "terrain"
+    product_name: "Copernicus DEM GLO-30"
+    tile_id: "Copernicus_DSM_COG_10_N19_00_E072_00"
+    events: ["ALL"]
+    priority: "REQUIRED"
+    format: "GeoTIFF"
+    access_url: "https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_N19_00_E072_00_DEM/Copernicus_DSM_COG_10_N19_00_E072_00_DEM.tif"
+    auth_required: false
+    estimated_size_mb: 25.4
+    status: "SPECIFIED_PENDING_PHASE_7B"
+    notes: "Master 30m spatial reference DEM for Mithi catchment D8 surface routing."
+
+  - id: "DL-LC-001"
+    category: "land_cover"
+    product_name: "ESA WorldCover 2021 10m V200"
+    tile_id: "ESA_WorldCover_10m_2021_v200_N18E072"
+    events: ["ALL"]
+    priority: "HIGH"
+    format: "GeoTIFF"
+    access_url: "https://esa-worldcover.s3.amazonaws.com/v200/2021/map/ESA_WorldCover_10m_2021_v200_N18E072_Map.tif"
+    auth_required: false
+    estimated_size_mb: 42.1
+    status: "SPECIFIED_PENDING_PHASE_7B"
+    notes: "10m land cover grid used to derive cell-level landcover_class and built_up_fraction."
+
+  - id: "DL-OSM-001"
+    category: "urban_infrastructure"
+    product_name: "OpenStreetMap Bounding Box Extraction"
+    query_bbox: [72.8200, 19.0300, 72.9300, 19.1600]
+    events: ["ALL"]
+    priority: "REQUIRED"
+    format: "GeoJSON"
+    access_url: "https://overpass-api.de/api/interpreter"
+    auth_required: false
+    estimated_size_mb: 18.5
+    status: "SPECIFIED_PENDING_PHASE_7B"
+    notes: "Road, railway, building footprint, and emergency facility layers via Overpass QL."
+
+  - id: "DL-RAIN-E01"
+    category: "precipitation"
+    product_name: "NASA GPM IMERG V07B Final Half-Hourly"
+    event_id: "E01"
+    time_extent_utc: ["2005-07-25T18:30:00Z", "2005-07-27T06:00:00Z"]
+    priority: "OPTIONAL"
+    format: "NetCDF4"
+    access_url: "https://disc.gsfc.nasa.gov/datasets/GPM_3IMERGHH_07/summary"
+    auth_required: true
+    auth_env_var: "EARTHDATA_TOKEN"
+    estimated_size_mb: 80.0
+    status: "SPECIFIED_PENDING_PHASE_7B"
+    notes: "Historical rainfall forcing for E01 2005 physical benchmark stress test."
+
+  - id: "DL-RAIN-E02"
+    category: "precipitation"
+    product_name: "NASA GPM IMERG V07B Final Half-Hourly"
+    event_id: "E02"
+    time_extent_utc: ["2017-08-27T00:00:00Z", "2017-08-30T12:00:00Z"]
+    priority: "REQUIRED"
+    format: "NetCDF4"
+    access_url: "https://disc.gsfc.nasa.gov/datasets/GPM_3IMERGHH_07/summary"
+    auth_required: true
+    auth_env_var: "EARTHDATA_TOKEN"
+    estimated_size_mb: 120.0
+    status: "SPECIFIED_PENDING_PHASE_7B"
+    notes: "30-min rainfall forcing for 29 August 2017 Mumbai flood."
+
+  - id: "DL-RAIN-E03"
+    category: "precipitation"
+    product_name: "NASA GPM IMERG V07B Final Half-Hourly"
+    event_id: "E03"
+    time_extent_utc: ["2019-06-30T00:00:00Z", "2019-07-03T12:00:00Z"]
+    priority: "REQUIRED"
+    format: "NetCDF4"
+    access_url: "https://disc.gsfc.nasa.gov/datasets/GPM_3IMERGHH_07/summary"
+    auth_required: true
+    auth_env_var: "EARTHDATA_TOKEN"
+    estimated_size_mb: 120.0
+    status: "SPECIFIED_PENDING_PHASE_7B"
+
+  - id: "DL-RAIN-E04"
+    category: "precipitation"
+    product_name: "NASA GPM IMERG V07B Final Half-Hourly"
+    event_id: "E04"
+    time_extent_utc: ["2019-09-02T00:00:00Z", "2019-09-05T12:00:00Z"]
+    priority: "REQUIRED"
+    format: "NetCDF4"
+    access_url: "https://disc.gsfc.nasa.gov/datasets/GPM_3IMERGHH_07/summary"
+    auth_required: true
+    auth_env_var: "EARTHDATA_TOKEN"
+    estimated_size_mb: 120.0
+    status: "SPECIFIED_PENDING_PHASE_7B"
+
+  - id: "DL-RAIN-E05"
+    category: "precipitation"
+    product_name: "NASA GPM IMERG V07B Final Half-Hourly"
+    event_id: "E05"
+    time_extent_utc: ["2020-08-03T00:00:00Z", "2020-08-06T12:00:00Z"]
+    priority: "REQUIRED"
+    format: "NetCDF4"
+    access_url: "https://disc.gsfc.nasa.gov/datasets/GPM_3IMERGHH_07/summary"
+    auth_required: true
+    auth_env_var: "EARTHDATA_TOKEN"
+    estimated_size_mb: 120.0
+    status: "SPECIFIED_PENDING_PHASE_7B"
+
+  - id: "DL-RAIN-E06"
+    category: "precipitation"
+    product_name: "NASA GPM IMERG V07B Final Half-Hourly"
+    event_id: "E06"
+    time_extent_utc: ["2020-09-20T12:00:00Z", "2020-09-23T18:00:00Z"]
+    priority: "HIGH"
+    format: "NetCDF4"
+    access_url: "https://disc.gsfc.nasa.gov/datasets/GPM_3IMERGHH_07/summary"
+    auth_required: true
+    auth_env_var: "EARTHDATA_TOKEN"
+    estimated_size_mb: 100.0
+    status: "SPECIFIED_PENDING_PHASE_7B"
+
+  - id: "DL-RAIN-E07"
+    category: "precipitation"
+    product_name: "NASA GPM IMERG V07B Final Half-Hourly"
+    event_id: "E07"
+    time_extent_utc: ["2021-07-16T00:00:00Z", "2021-07-19T12:00:00Z"]
+    priority: "HIGH"
+    format: "NetCDF4"
+    access_url: "https://disc.gsfc.nasa.gov/datasets/GPM_3IMERGHH_07/summary"
+    auth_required: true
+    auth_env_var: "EARTHDATA_TOKEN"
+    estimated_size_mb: 120.0
+    status: "SPECIFIED_PENDING_PHASE_7B"
+
+  - id: "DL-SAR-E02"
+    category: "satellite_ground_truth"
+    product_name: "Sentinel-1A GRD IW Dual VV+VH"
+    event_id: "E02"
+    scene_id: "S1A_IW_GRDH_1SDV_20170829T010248_20170829T010313_018131_01E74F_E820"
+    acquisition_utc: "2017-08-29T01:02:48Z"
+    priority: "REQUIRED"
+    format: "SAFE_ZIP"
+    source: "ASF DAAC Datapool"
+    product_type: "GRD_HD"
+    access_url: "https://datapool.asf.alaska.edu/GRD_HD/SA/S1A_IW_GRDH_1SDV_20170829T010248_20170829T010313_018131_01E74F_E820.zip"
+    auth_required: true
+    auth_env_var: "EARTHDATA_TOKEN"
+    estimated_size_mb: 954.99
+    status: "VERIFIED_TARGET"
+    verification_timestamp: "2026-09-12T09:33:31Z"
+    verification_source_api: "https://api.daac.asf.alaska.edu/services/search/param"
+    reason_for_replacement: "Phase 7A target D1F2 not found in ASF catalog; replaced after source verification with co-event granule."
+    notes: "Co-event SAR imagery acquired 2017-08-29 01:02:48 UTC for E02 flood."
+
+  - id: "DL-SAR-E03"
+    category: "satellite_ground_truth"
+    product_name: "Sentinel-1A GRD IW Dual VV+VH"
+    event_id: "E03"
+    scene_id: "S1A_IW_GRDH_1SDV_20190702T010258_20190702T010323_027931_03274B_DDDA"
+    acquisition_utc: "2019-07-02T01:02:58Z"
+    priority: "REQUIRED"
+    format: "SAFE_ZIP"
+    source: "ASF DAAC Datapool"
+    product_type: "GRD_HD"
+    access_url: "https://datapool.asf.alaska.edu/GRD_HD/SA/S1A_IW_GRDH_1SDV_20190702T010258_20190702T010323_027931_03274B_DDDA.zip"
+    auth_required: true
+    auth_env_var: "EARTHDATA_TOKEN"
+    estimated_size_mb: 936.39
+    status: "VERIFIED_TARGET"
+    verification_timestamp: "2026-09-12T09:33:31Z"
+    verification_source_api: "https://api.daac.asf.alaska.edu/services/search/param"
+    reason_for_replacement: "Phase 7A target C81B not found in ASF catalog; replaced after source verification with co-event granule."
+    notes: "Co-event SAR imagery acquired 2019-07-02 01:02:58 UTC for E03 flood."
+
+  - id: "DL-SAR-E04"
+    category: "satellite_ground_truth"
+    product_name: "Sentinel-1A GRD IW Dual VV+VH"
+    event_id: "E04"
+    scene_id: "S1A_IW_GRDH_1SDV_20190831T010301_20190831T010326_028806_034364_FA1B"
+    acquisition_utc: "2019-08-31T01:03:01Z"
+    priority: "REQUIRED"
+    format: "SAFE_ZIP"
+    source: "ASF DAAC Datapool"
+    product_type: "GRD_HD"
+    access_url: "https://datapool.asf.alaska.edu/GRD_HD/SA/S1A_IW_GRDH_1SDV_20190831T010301_20190831T010326_028806_034364_FA1B.zip"
+    auth_required: true
+    auth_env_var: "EARTHDATA_TOKEN"
+    estimated_size_mb: 914.76
+    status: "VERIFIED_TARGET"
+    verification_timestamp: "2026-09-12T09:33:31Z"
+    verification_source_api: "https://api.daac.asf.alaska.edu/services/search/param"
+    reason_for_replacement: "Phase 7A target 7A88 not found in ASF catalog; replaced after source verification with verified pre-event baseline granule."
+    notes: "Pre-event baseline SAR imagery acquired 2019-08-31 01:03:01 UTC for E04 flood."
+
+  - id: "DL-SAR-E05"
+    category: "satellite_ground_truth"
+    product_name: "Sentinel-1A GRD IW Dual VV+VH"
+    event_id: "E05"
+    scene_id: "S1A_IW_GRDH_1SDV_20200801T010318_20200801T010343_033706_03E812_4FB3"
+    acquisition_utc: "2020-08-01T01:03:18Z"
+    priority: "REQUIRED"
+    format: "SAFE_ZIP"
+    source: "ASF DAAC Datapool"
+    product_type: "GRD_HD"
+    access_url: "https://datapool.asf.alaska.edu/GRD_HD/SA/S1A_IW_GRDH_1SDV_20200801T010318_20200801T010343_033706_03E812_4FB3.zip"
+    auth_required: true
+    auth_env_var: "EARTHDATA_TOKEN"
+    estimated_size_mb: 856.98
+    status: "VERIFIED_TARGET"
+    verification_timestamp: "2026-09-12T09:33:31Z"
+    verification_source_api: "https://api.daac.asf.alaska.edu/services/search/param"
+    reason_for_replacement: "Phase 7A target E944 not found in ASF catalog; replaced after source verification with verified pre-event baseline granule."
+    notes: "Pre-event baseline SAR imagery acquired 2020-08-01 01:03:18 UTC for E05 flood."
+
+  - id: "DL-SAR-E06"
+    category: "satellite_ground_truth"
+    product_name: "Sentinel-1A GRD IW Dual VV+VH"
+    event_id: "E06"
+    scene_id: "S1A_IW_GRDH_1SDV_20200918T010321_20200918T010346_034406_040065_2BB1"
+    acquisition_utc: "2020-09-18T01:03:21Z"
+    priority: "HIGH"
+    format: "SAFE_ZIP"
+    source: "ASF DAAC Datapool"
+    product_type: "GRD_HD"
+    access_url: "https://datapool.asf.alaska.edu/GRD_HD/SA/S1A_IW_GRDH_1SDV_20200918T010321_20200918T010346_034406_040065_2BB1.zip"
+    auth_required: true
+    auth_env_var: "EARTHDATA_TOKEN"
+    estimated_size_mb: 865.46
+    status: "VERIFIED_TARGET"
+    verification_timestamp: "2026-09-12T09:33:31Z"
+    verification_source_api: "https://api.daac.asf.alaska.edu/services/search/param"
+    reason_for_replacement: "Phase 7A target B32A not found in ASF catalog; replaced after source verification with verified pre-event baseline granule."
+    notes: "Pre-event baseline SAR imagery acquired 2020-09-18 01:03:21 UTC for E06 flood."
+
+  - id: "DL-SAR-E07"
+    category: "satellite_ground_truth"
+    product_name: "Sentinel-1A GRD IW Dual VV+VH"
+    event_id: "E07"
+    scene_id: "S1A_IW_GRDH_1SDV_20210715T010321_20210715T010346_038781_049379_1EE0"
+    acquisition_utc: "2021-07-15T01:03:21Z"
+    priority: "HIGH"
+    format: "SAFE_ZIP"
+    source: "ASF DAAC Datapool"
+    product_type: "GRD_HD"
+    access_url: "https://datapool.asf.alaska.edu/GRD_HD/SA/S1A_IW_GRDH_1SDV_20210715T010321_20210715T010346_038781_049379_1EE0.zip"
+    auth_required: true
+    auth_env_var: "EARTHDATA_TOKEN"
+    estimated_size_mb: 830.78
+    status: "VERIFIED_TARGET"
+    verification_timestamp: "2026-09-12T09:33:31Z"
+    verification_source_api: "https://api.daac.asf.alaska.edu/services/search/param"
+    reason_for_replacement: "Phase 7A target 5F12 not found in ASF catalog; replaced after source verification with verified pre-event baseline granule."
+    notes: "Pre-event baseline SAR imagery acquired 2021-07-15 01:03:21 UTC for E07 flood."
+
+  - id: "DL-TIDE-001"
+    category: "coastal_tide"
+    product_name: "Mumbai Port Trust Tide Station Data"
+    events: ["ALL"]
+    priority: "HIGH"
+    format: "CSV"
+    access_url: "https://uhslc.soest.hawaii.edu/data/csv/rqds/indian/hourly/h184a.csv"
+    auth_required: false
+    estimated_size_mb: 2.5
+    status: "NEEDS_VERIFICATION"
+    notes: "Hourly sea level records for outfall backwater boundary conditions."
+
+total_estimated_download_size_mb: 6227.86
+total_estimated_processed_size_mb: 2840.0

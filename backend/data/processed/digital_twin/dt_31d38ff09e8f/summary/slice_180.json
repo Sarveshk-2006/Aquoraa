@@ -1,0 +1,20 @@
+{
+  "run_id": "dt_31d38ff09e8f",
+  "minutes_from_start": 180,
+  "timestamp_iso": "2026-09-16T15:03:41.810767+00:00",
+  "timestamp_ist": "16 Sep 2026, 08:33 PM IST",
+  "affected_cells_count": 9999,
+  "affected_area_km2": 1.0,
+  "peak_severity": "LOW",
+  "severity_distribution": {
+    "DRY": 1,
+    "LOW": 9999,
+    "MODERATE": 0,
+    "HIGH": 0,
+    "SEVERE": 0
+  },
+  "cause_explanation": "Rainfall intensity easing, but accumulated surface storage slowly draining through downstream channel towards Mahim Bay.",
+  "artifact_path": "backend\\data\\processed\\digital_twin\\dt_31d38ff09e8f\\map\\slice_180.tif",
+  "scenario_type": "DEVELOPMENT_TEST_SCENARIO",
+  "ml_calibration_summary": null
+}

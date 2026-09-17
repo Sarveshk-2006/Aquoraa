@@ -1,0 +1,110 @@
+manifest_version: 1.0.0
+phase: PHASE_7_STEP_6_MASTER_DATASET
+created_at: '2026-09-16T19:20:07.869896+00:00'
+master_grid:
+  crs: EPSG:32643
+  width: 392
+  height: 476
+  cell_size_m: 30.0
+  bounding_box_utm43n:
+    min_x: 272671.93359098653
+    max_y: 2115431.7022439907
+    max_x: 284431.93359098653
+    min_y: 2101151.7022439907
+  total_cells_per_event: 186592
+  events_count: 7
+  total_master_rows: 1306144
+worldcover_coverage_verification:
+  tile_id: N18E072
+  raw_file: ESA_WorldCover_10m_2021_v200_N18E072_Map.tif
+  tile_bounds_epsg4326:
+  - 72.0
+  - 18.0
+  - 75.0
+  - 21.0
+  study_area_bbox_epsg4326:
+  - 72.84
+  - 19.04
+  - 72.9
+  - 19.12
+  coverage_verified: true
+  notes: WorldCover N18E072 covers Lat 18N to 21N and Lon 72E to 75E, providing 100%
+    spatial coverage over Mumbai study area.
+source_artifacts:
+- dataset: Copernicus DEM GLO-30
+  file_name: Copernicus_DSM_COG_10_N19_00_E072_00.tif
+  path: data\raw\phase7\dem\Copernicus_DSM_COG_10_N19_00_E072_00.tif
+  sha256: 9611f68888b0faff728baa0aa34ee1c2bde91393301f344b215929949ef0be2f
+  size_mb: 0.75
+  crs: EPSG:4326
+  resolution: 30m (1 arc-sec)
+  spatial_extent: Lat 19-20 N, Lon 72-73 E
+  date_coverage: 2021 Static Baseline
+  nodata_value: null
+  provenance: Copernicus Open Access Hub / AWS Terrain Tiles (GLO-30)
+- dataset: ESA WorldCover 2021 v200
+  file_name: ESA_WorldCover_10m_2021_v200_N18E072_Map.tif
+  path: data\raw\phase7\landcover\ESA_WorldCover_10m_2021_v200_N18E072_Map.tif
+  sha256: 2d28650e0eba865efb08656e45b75a269eaf535f9260a245ae5aad72ee5a5c63
+  size_mb: 125.77
+  crs: EPSG:4326
+  resolution: 10m
+  dimensions:
+  - 36000
+  - 36000
+  spatial_extent: Lat [18.0, 21.0], Lon [72.0, 75.0]
+  date_coverage: 2021 Annual Composite
+  nodata_value: 0
+  provenance: ESA WorldCover / Sentinel-1 + Sentinel-2
+- dataset: OpenStreetMap Real Infrastructure
+  file_name: osm_mithi_envelope.json
+  path: data\raw\phase7\osm\osm_mithi_envelope.json
+  sha256: 1c58ffc021cd38e8b65308681ae8b7bf36df029ed9b1da6bf5eda21d879e8d31
+  size_mb: 25.43
+  crs: EPSG:4326
+  resolution: Vector Geometries
+  spatial_extent: Mumbai / Mithi Catchment Envelope
+  date_coverage: Current OSM Extract
+  nodata_value: null
+  provenance: OpenStreetMap Overpass API
+- dataset: Copernicus Sentinel-1 GRD VV+VH Bitemporal Evidence
+  file_name: phase7_sar_bitemporal_evidence.parquet
+  path: data\processed\phase7\sar\phase7_sar_bitemporal_evidence.parquet
+  sha256: 6d80e73f3fa5d2c476fd60b0fb2792522de4ac9c98c1286a35be0758ee024c12
+  size_mb: 62.96
+  crs: EPSG:32643
+  resolution: 30m UTM Master Grid
+  dimensions:
+  - 1119552
+  - 17
+  spatial_extent: Mithi River Catchment UTM 43N
+  date_coverage: E02 (2017) to E07 (2021) Dual-Pol Pairs
+  nodata_value: NaN
+  provenance: Copernicus Sentinel-1 GRD IW SAFE Archives
+feature_definitions:
+  elevation_m: Copernicus DEM GLO-30 elevation in metres
+  slope_deg: Terrain slope angle in degrees [0, 90]
+  aspect_deg: Terrain aspect orientation in compass degrees [0, 360]
+  flow_accumulation_cells: Vectorized D8 flow accumulation cell count
+  drainage_proxy_score: Dimensionless surface drainage proxy score log((flow_accum
+    * dx) / tan_slope)
+  landcover_class: ESA WorldCover 2021 land cover class code (10-90)
+  built_up_fraction: 3x3 neighborhood fraction of WorldCover built-up class 50
+  distance_to_road_m: Euclidean distance to OpenStreetMap highway network in metres
+  distance_to_waterway_m: Euclidean distance to OpenStreetMap waterway network in
+    metres
+  rainfall_30min_mm: Real NASA GPM IMERG Final V07B precipitationCal (mm)
+  rainfall_intensity_mm_hr: Instantaneous rainfall rate (mm/hr)
+  tide_level_m: UHSLC Mumbai Port hourly observed tide level in metres
+label_definitions:
+  flood_label: Supervised flood ground truth label (-1 for unknown, strictly no fabrication)
+  label_status: Observational label status (EVIDENCE_SUPPORTED, UNKNOWN, BENCHMARK_ONLY,
+    EXCLUDED_PERMANENT_WATER)
+  evidence_strength: 'Sentinel-1 backscatter drop evidence level (STRONG: >5dB drop,
+    MODERATE: 3-5dB drop, WEAK: 1.5-3dB drop, NONE, EXCLUDED)'
+  permanent_water_mask: 1 for permanent water bodies (WorldCover class 80), 0 otherwise
+output_files:
+  master_features_parquet: data\processed\phase7\features\phase7_master_features.parquet
+  master_features_csv: data\processed\phase7\features\phase7_master_features.csv
+  flood_evidence_labels_parquet: data\processed\phase7\labels\phase7_flood_evidence_labels.parquet
+  flood_evidence_labels_csv: data\processed\phase7\labels\phase7_flood_evidence_labels.csv

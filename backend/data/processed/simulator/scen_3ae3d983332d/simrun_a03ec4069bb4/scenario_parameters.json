@@ -1,0 +1,23 @@
+{
+  "scenario_id": "scen_3ae3d983332d",
+  "run_id": "simrun_a03ec4069bb4",
+  "baseline_run_id": "dt_mithi_baseline_001",
+  "scenario_type": "DRAINAGE_CAPACITY_REDUCTION",
+  "parameters": {
+    "capacity_multiplier": 0.75
+  },
+  "assumptions": [
+    {
+      "assumption_type": "UNKNOWN_CAPACITY_PRESERVATION",
+      "assumption_value": "PRESERVE_UNKNOWN",
+      "assumption_source": "CORE_DRAINAGE_POLICY",
+      "assumption_description": "UNKNOWN capacity links remain UNKNOWN without artificial capacity substitution."
+    },
+    {
+      "assumption_type": "UNKNOWN_CAPACITY_PRESERVATION",
+      "assumption_value": "PRESERVE_UNKNOWN",
+      "assumption_source": "CORE_DRAINAGE_POLICY",
+      "assumption_description": "UNKNOWN capacity links remain UNKNOWN without artificial capacity substitution."
+    }
+  ]
+}

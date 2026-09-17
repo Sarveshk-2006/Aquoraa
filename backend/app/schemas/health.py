@@ -7,6 +7,8 @@ class LivenessResponse(BaseModel):
 class ServicesHealth(BaseModel):
     database: str = Field(..., json_schema_extra={"example": "ok"})
     redis: str = Field(..., json_schema_extra={"example": "ok"})
+    schema_migration: str = Field("ok", json_schema_extra={"example": "ok"})
+    terrain_assets: str = Field("ok", json_schema_extra={"example": "ok"})
 
 class ReadinessResponse(BaseModel):
     status: str = Field(..., json_schema_extra={"example": "ok"})

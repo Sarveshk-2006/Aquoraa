@@ -21,6 +21,24 @@ from app.db.session import AsyncSessionLocal
 from app.models.critical_access import CriticalFacility
 
 
+REQUIRED_PRODUCTION_TABLES = [
+    "audit_events",
+    "system_health",
+    "rainfall_observations",
+    "terrain_features",
+    "drainage_features",
+    "flood_simulations",
+    "digital_twin_runs",
+    "digital_twin_slices",
+    "routes",
+    "critical_facilities",
+    "protect_city_runs",
+    "ground_truth_reports",
+    "simulator_runs",
+    "alerts",
+]
+
+
 def apply_alembic_migrations() -> None:
     """Execute Alembic migrations (alembic upgrade head) programmatically."""
     logger.info("Verifying database schema migration status (alembic upgrade head)...")
@@ -41,6 +59,27 @@ def apply_alembic_migrations() -> None:
     except Exception as err:
         logger.error("Alembic migration execution error", error=str(err))
         raise err
+
+
+async def verify_production_schema() -> list[str]:
+    """
+    Verify all 14 required production tables exist in PostgreSQL.
+    Returns list of missing table names (empty list if 100% healthy).
+    """
+    from sqlalchemy import text
+    missing: list[str] = []
+    try:
+        async with AsyncSessionLocal() as session:
+            for table_name in REQUIRED_PRODUCTION_TABLES:
+                query = text("SELECT EXISTS (SELECT 1 FROM information_schema.tables WHERE table_name = :t);")
+                res = await session.execute(query, {"t": table_name})
+                exists = res.scalar()
+                if not exists:
+                    missing.append(table_name)
+    except Exception as err:
+        logger.error("Error executing schema verification query", error=str(err))
+        return REQUIRED_PRODUCTION_TABLES
+    return missing
 
 
 async def seed_critical_facilities() -> int:
@@ -130,11 +169,18 @@ async def seed_critical_facilities() -> int:
 
 
 async def run_migrations_and_seed() -> None:
-    """Execute migrations and seed facilities."""
+    """Execute migrations, verify production schema, and seed facilities."""
     apply_alembic_migrations()
+    missing = await verify_production_schema()
+    if missing:
+        err_msg = f"CRITICAL PRODUCTION SCHEMA FAILURE: Missing required tables: {missing}"
+        logger.error(err_msg)
+        raise RuntimeError(err_msg)
+    logger.info("Production database schema verification PASSED (all 14 required tables present).")
     await seed_critical_facilities()
 
 
 if __name__ == "__main__":
     apply_alembic_migrations()
-    asyncio.run(seed_critical_facilities())
+    asyncio.run(run_migrations_and_seed())
+

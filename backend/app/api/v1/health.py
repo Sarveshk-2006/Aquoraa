@@ -1,9 +1,11 @@
+from pathlib import Path
 import redis.asyncio as redis
 from fastapi import APIRouter, Response, status
 from sqlalchemy import text
 
 from app.core.config import settings
 from app.core.logging import logger
+from app.db.init_db import verify_production_schema
 from app.db.session import AsyncSessionLocal
 from app.schemas.health import LivenessResponse, ReadinessResponse, ServicesHealth
 
@@ -20,11 +22,13 @@ async def health_live() -> LivenessResponse:
 @router.api_route("/ready", methods=["GET", "HEAD"], response_model=ReadinessResponse, summary="Dependency Infrastructure Readiness Check")
 async def health_ready(response: Response) -> ReadinessResponse:
     """
-    Readiness check to verify PostgreSQL database and Redis connectivity.
+    Readiness check to verify PostgreSQL database, Redis, migration schema head, and terrain assets.
     Returns HTTP 200 when all dependencies are healthy, or HTTP 503 when degraded.
     """
     db_status = "ok"
     redis_status = "ok"
+    schema_status = "ok"
+    terrain_status = "ok"
 
     # 1. PostgreSQL Connectivity Check
     try:
@@ -36,7 +40,20 @@ async def health_ready(response: Response) -> ReadinessResponse:
         logger.error("Database readiness check failed", error=str(e))
         db_status = "error"
 
-    # 2. Redis Connectivity Check
+    # 2. Schema Verification Check (All 14 Required Tables)
+    if db_status == "ok":
+        try:
+            missing_tables = await verify_production_schema()
+            if missing_tables:
+                logger.error("Database readiness check failed: missing tables", missing=missing_tables)
+                schema_status = f"missing_{len(missing_tables)}_tables"
+        except Exception as e:  # noqa: BLE001
+            logger.error("Schema readiness check error", error=str(e))
+            schema_status = "error"
+    else:
+        schema_status = "db_unavailable"
+
+    # 3. Redis Connectivity Check
     try:
         r = redis.from_url(settings.REDIS_URL, socket_timeout=2.0)
         ping_ok = await r.ping()
@@ -47,13 +64,35 @@ async def health_ready(response: Response) -> ReadinessResponse:
         logger.error("Redis readiness check failed", error=str(e))
         redis_status = "error"
 
-    is_healthy = (db_status == "ok") and (redis_status == "ok")
+    # 4. Required Runtime Terrain Assets Check
+    try:
+        repo_root = Path(__file__).resolve().parents[3]
+        dem_path = repo_root / settings.DEM_GEOTIFF_PATH
+        if not dem_path.exists():
+            logger.warning("Terrain asset check failed: file missing", path=str(dem_path))
+            terrain_status = "missing_asset"
+    except Exception as e:  # noqa: BLE001
+        logger.error("Terrain asset check error", error=str(e))
+        terrain_status = "error"
+
+    is_healthy = (
+        db_status == "ok"
+        and redis_status == "ok"
+        and schema_status == "ok"
+        and terrain_status == "ok"
+    )
+
+    if not is_healthy:
+        response.status_code = status.HTTP_503_SERVICE_UNAVAILABLE
 
     return ReadinessResponse(
         status="ok" if is_healthy else "degraded",
         environment=settings.ENVIRONMENT,
         services=ServicesHealth(
             database=db_status,
-            redis=redis_status
+            redis=redis_status,
+            schema_migration=schema_status,
+            terrain_assets=terrain_status,
         )
     )
+

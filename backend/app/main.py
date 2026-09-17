@@ -26,11 +26,6 @@ async def lifespan(app: FastAPI):
         project_name=settings.PROJECT_NAME,
         version=settings.VERSION,
     )
-    try:
-        from app.db.init_db import run_migrations_and_seed
-        await run_migrations_and_seed()
-    except Exception as e:
-        logger.warning("Startup database initialization warning", error=str(e))
     yield
     logger.info("Shutting down Aquora Backend Service")
 

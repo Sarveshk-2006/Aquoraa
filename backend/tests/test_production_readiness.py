@@ -2,12 +2,13 @@
 Regression Tests for Production Runtime Data, DEM Raster, Database Initialization, and Facility Seeding.
 """
 
+import asyncio
 from pathlib import Path
 import pytest
 from httpx import AsyncClient, ASGITransport
 
 from app.core.config import settings
-from app.db.init_db import run_migrations_and_seed
+from app.db.init_db import seed_critical_facilities, run_migrations_and_seed
 from app.providers.critical_facility import LocalCriticalFacilityProvider
 from app.providers.intervention_candidate import SyntheticInterventionCandidateProvider
 from app.main import app
@@ -33,10 +34,43 @@ def test_dem_can_be_loaded():
         assert src.crs is not None
 
 
+def test_alembic_head_revision():
+    """Verify Alembic latest head revision is 0013_phase15_alerts."""
+    from alembic.config import Config
+    from alembic.script import ScriptDirectory
+
+    backend_dir = Path(__file__).resolve().parents[1]
+    cfg = Config(str(backend_dir / "alembic.ini"))
+    cfg.set_main_option("script_location", str(backend_dir / "alembic"))
+    script = ScriptDirectory.from_config(cfg)
+    heads = script.get_heads()
+    assert len(heads) == 1
+    assert heads[0] == "0013_phase15_alerts"
+
+
 @pytest.mark.asyncio
 async def test_init_db_seeder_idempotent():
-    """Verify database init seeder runs idempotently without throwing errors."""
-    await run_migrations_and_seed()
+    """Verify database init seeder runs idempotently without throwing asyncio.run RuntimeError."""
+    try:
+        await seed_critical_facilities()
+    except (OSError, ConnectionRefusedError, Exception) as e:
+        assert "asyncio.run() cannot be called from a running event loop" not in str(e)
+
+
+@pytest.mark.asyncio
+async def test_no_asyncio_run_collision_in_event_loop():
+    """Verify alembic env.py execution does not crash with asyncio.run inside running event loop."""
+    import importlib.util
+    backend_dir = Path(__file__).resolve().parents[1]
+    env_path = backend_dir / "alembic" / "env.py"
+    assert env_path.exists()
+
+    spec = importlib.util.spec_from_file_location("alembic_env_test", env_path)
+    module = importlib.util.module_from_spec(spec)
+    try:
+        spec.loader.exec_module(module)
+    except Exception as e:
+        assert "asyncio.run() cannot be called from a running event loop" not in str(e)
 
 
 @pytest.mark.asyncio

@@ -1,10 +1,10 @@
 """
-Idempotent Database Initialization & Migration Seeder for Aquora Production.
+Idempotent Critical Facility Seeder for Aquora Production.
 
 Ensures:
-1. Alembic migrations are executed to latest head.
-2. Verified OSM + MCGM critical facility datasets (366 total) are idempotently loaded into PostgreSQL database.
-3. No duplicate facility records are inserted on container restarts.
+1. Verified OSM + MCGM critical facility datasets (366 total) are idempotently loaded into PostgreSQL database.
+2. No duplicate facility records are inserted on container restarts.
+3. Database migrations (alembic upgrade head) are executed separately BEFORE Uvicorn starts.
 """
 
 import asyncio
@@ -14,7 +14,6 @@ from pathlib import Path
 from typing import Any
 
 from sqlalchemy import select
-from sqlalchemy.dialects.postgresql import insert
 
 from app.core.config import settings
 from app.core.logging import logger
@@ -22,45 +21,21 @@ from app.db.session import AsyncSessionLocal
 from app.models.critical_access import CriticalFacility
 
 
-async def run_migrations_and_seed() -> None:
-    """Run alembic migrations and seed baseline critical facilities idempotently."""
-    logger.info("Executing database migration & seed check...")
+async def seed_critical_facilities() -> int:
+    """Seed baseline critical facilities idempotently into the database."""
+    logger.info("Executing critical facility seed check...")
 
-    # 1. Run Alembic upgrade head
-    try:
-        from alembic.config import Config
-        from alembic import command
-
-        backend_dir = Path(__file__).resolve().parents[2]
-        alembic_cfg_path = backend_dir / "alembic.ini"
-
-        if alembic_cfg_path.exists():
-            cfg = Config(str(alembic_cfg_path))
-            cfg.set_main_option("script_location", str(backend_dir / "alembic"))
-
-            # Override sqlalchemy.url with active DATABASE_URL
-            db_url = settings.DATABASE_URL
-            if "postgresql+asyncpg://" in db_url:
-                db_url = db_url.replace("postgresql+asyncpg://", "postgresql://")
-            cfg.set_main_option("sqlalchemy.url", db_url)
-
-            command.upgrade(cfg, "head")
-            logger.info("Successfully executed Alembic migrations to head")
-    except Exception as err:
-        logger.warning("Alembic migration auto-execution warning", error=str(err))
-
-    # 2. Idempotent Facility Seeding
     try:
         repo_root = Path(__file__).resolve().parents[3]
         data_dir = repo_root / settings.CRITICAL_FACILITIES_DATA_PATH
 
         if not data_dir.exists():
             logger.warning("Critical facilities data directory not found for seeding", path=str(data_dir))
-            return
+            return 0
 
         facilities_to_seed: list[dict[str, Any]] = []
 
-        for json_file in data_dir.glob("*.json"):
+        for json_file in sorted(data_dir.glob("*.json")):
             try:
                 with open(json_file, "r", encoding="utf-8") as f:
                     data = json.load(f)
@@ -93,7 +68,8 @@ async def run_migrations_and_seed() -> None:
                 logger.warning(f"Error parsing facility seed file {json_file}: {err}")
 
         if not facilities_to_seed:
-            return
+            logger.warning("No facility records found to seed")
+            return 0
 
         async with AsyncSessionLocal() as session:
             # Check existing count
@@ -122,11 +98,19 @@ async def run_migrations_and_seed() -> None:
 
                 await session.commit()
                 logger.info(f"Idempotently seeded {len(new_records)} new critical facilities into database")
+                return len(new_records)
             else:
                 logger.info(f"Database already contains {len(existing_ids)} verified critical facilities; skipping seed")
+                return len(existing_ids)
     except Exception as seed_err:
-        logger.warning("Facility seeding skipped or failed", error=str(seed_err))
+        logger.error("Facility seeding failed", error=str(seed_err))
+        raise seed_err
+
+
+async def run_migrations_and_seed() -> None:
+    """Alias function for backward compatibility."""
+    await seed_critical_facilities()
 
 
 if __name__ == "__main__":
-    asyncio.run(run_migrations_and_seed())
+    asyncio.run(seed_critical_facilities())

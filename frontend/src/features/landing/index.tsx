@@ -11,7 +11,6 @@ import {
   AlertCircle,
   ArrowDown,
   Layers,
-  Cpu,
   Users,
   Activity,
   Menu,
@@ -23,6 +22,9 @@ import {
 } from 'lucide-react';
 import { useAppStore } from '@/store/useAppStore';
 import mumbaiHeroImg from '@/assets/aquora-mumbai-hero.webp';
+import rainTaxiImg from '@/assets/aquora-mumbai-rain-taxi.png';
+import commutersImg from '@/assets/aquora-mumbai-commuters.png';
+import scienceStackImg from '@/assets/aquora-science-stack.png';
 
 /* ─── Scroll Reveal Wrapper Component ────────────────────────── */
 interface RevealProps {
@@ -43,7 +45,7 @@ const Reveal: React.FC<RevealProps> = ({ children, className = '', delayMs = 0 }
           observer.unobserve(entry.target);
         }
       },
-      { threshold: 0.15, rootMargin: '0px 0px -50px 0px' }
+      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
     );
 
     if (ref.current) {
@@ -84,7 +86,7 @@ const LandingNavbar: React.FC = () => {
     setMobileMenuOpen(false);
     const elem = document.getElementById(id);
     if (elem) {
-      const yOffset = -90; // Offset for fixed navbar
+      const yOffset = -85;
       const y = elem.getBoundingClientRect().top + window.pageYOffset + yOffset;
       window.scrollTo({ top: y, behavior: 'smooth' });
     }
@@ -244,7 +246,7 @@ export const LandingPage: React.FC = () => {
   const scrollToId = (id: string) => {
     const elem = document.getElementById(id);
     if (elem) {
-      const yOffset = -90;
+      const yOffset = -85;
       const y = elem.getBoundingClientRect().top + window.pageYOffset + yOffset;
       window.scrollTo({ top: y, behavior: 'smooth' });
     }
@@ -416,16 +418,16 @@ export const LandingPage: React.FC = () => {
                 </div>
               </div>
 
-              {/* Right Visual Box (Mumbai Rain Scene Card with Stylized Overlay) */}
+              {/* Right Visual Box (Custom Mumbai Rainy Taxi Image with Stylized Overlay) */}
               <div className="lg:col-span-6 relative">
                 <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-slate-300/80 bg-slate-900 group">
-                  <div className="aspect-[4/3] relative overflow-hidden bg-gradient-to-br from-slate-800 to-slate-900">
+                  <div className="aspect-[4/3] relative overflow-hidden bg-slate-900">
                     <img
-                      src={mumbaiHeroImg}
-                      alt="Mumbai street infrastructure during heavy rain"
-                      className="w-full h-full object-cover filter brightness-[0.7] contrast-[1.1] transition-transform duration-700 group-hover:scale-105"
+                      src={rainTaxiImg}
+                      alt="Mumbai yellow-black taxi navigating heavy monsoon rain"
+                      className="w-full h-full object-cover filter brightness-[0.95] contrast-[1.05] transition-transform duration-700 group-hover:scale-105"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#04191C]/90 via-[#04191C]/30 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#04191C]/90 via-transparent to-transparent opacity-80" />
                   </div>
 
                   {/* Overlaid Quote Card */}
@@ -760,18 +762,28 @@ export const LandingPage: React.FC = () => {
                 </div>
               </div>
 
-              {/* Right Card */}
-              <div className="lg:col-span-6 p-8 sm:p-10 rounded-3xl bg-gradient-to-br from-[#062327] to-[#04191C] border border-teal-700/40 shadow-2xl space-y-6">
-                <div className="w-12 h-12 rounded-2xl bg-teal-500/15 border border-teal-500/30 flex items-center justify-center text-teal-300">
-                  <Cpu className="w-6 h-6" />
+              {/* Right Card with Custom Science Stack Graphic */}
+              <div className="lg:col-span-6 relative">
+                <div className="p-8 sm:p-10 rounded-3xl bg-gradient-to-br from-[#062327] to-[#04191C] border border-teal-700/40 shadow-2xl space-y-6 relative overflow-hidden group">
+                  {/* 3D Stack Graphic Illustration */}
+                  <div className="w-full aspect-[16/9] rounded-2xl overflow-hidden bg-slate-950 border border-teal-500/20 shadow-inner relative">
+                    <img
+                      src={scienceStackImg}
+                      alt="3D isometric visualization of AQUORA geospatial flood intelligence stack"
+                      className="w-full h-full object-cover filter brightness-[1.05] transition-transform duration-700 group-hover:scale-105"
+                    />
+                  </div>
+
+                  <div className="space-y-3">
+                    <h3 className="text-2xl sm:text-3xl font-black text-white leading-tight">
+                      Science for a <br />
+                      <span className="text-teal-300">safer tomorrow.</span>
+                    </h3>
+                    <p className="text-slate-300 text-sm sm:text-base leading-relaxed font-medium">
+                      We combine open data, proven modelling approaches and real-world evidence to support smarter, faster, and more inclusive decisions.
+                    </p>
+                  </div>
                 </div>
-                <h3 className="text-2xl sm:text-3xl font-black text-white leading-tight">
-                  Science for a <br />
-                  <span className="text-teal-300">safer tomorrow.</span>
-                </h3>
-                <p className="text-slate-300 text-sm sm:text-base leading-relaxed font-medium">
-                  We combine open data, proven modelling approaches and real-world evidence to support smarter, faster, and more inclusive decisions.
-                </p>
               </div>
             </div>
           </Reveal>
@@ -783,15 +795,17 @@ export const LandingPage: React.FC = () => {
         <div className="max-w-[1360px] mx-auto px-5 md:px-8">
           <Reveal>
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-              {/* Left Visual Card */}
+              {/* Left Visual Card with Custom Commuters Image */}
               <div className="lg:col-span-5 relative">
                 <div className="rounded-3xl overflow-hidden shadow-2xl border border-slate-300 bg-slate-900 relative group">
-                  <img
-                    src={mumbaiHeroImg}
-                    alt="People navigating Mumbai streets during monsoon"
-                    className="w-full h-full object-cover filter brightness-[0.75] contrast-[1.1] transition-transform duration-700 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-transparent to-transparent" />
+                  <div className="aspect-[4/3] relative overflow-hidden bg-slate-900">
+                    <img
+                      src={commutersImg}
+                      alt="Mumbai citizens walking along Marine Drive waterfront with umbrellas during monsoon rain"
+                      className="w-full h-full object-cover filter brightness-[0.9] contrast-[1.05] transition-transform duration-700 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-transparent to-transparent" />
+                  </div>
                   <div className="absolute bottom-6 left-6 right-6 p-5 rounded-2xl bg-white/95 backdrop-blur-md shadow-lg border border-slate-200">
                     <div className="text-lg font-serif italic text-slate-900">
                       People. Places. Possibilities.

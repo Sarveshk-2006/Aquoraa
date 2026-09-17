@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { MapPin, Clock, Bell, ChevronDown, Menu } from 'lucide-react';
+import { MapPin, Clock, Bell, ChevronDown, Menu, LogOut } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
 import { useReadinessQuery } from '@/queries/useHealthQuery';
 import { fetchAlerts } from '@/api/alerts';
@@ -20,7 +20,8 @@ const WaveMark: React.FC = () => (
 
 export const TopBar: React.FC<TopBarProps> = ({ onOpenMobileMenu }) => {
   const { data: readiness } = useReadinessQuery();
-  const { setActiveTab } = useAppStore();
+  const { setActiveTab, navigateToLanding } = useAppStore();
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
   const isConnected = readiness?.status === 'ok' || readiness?.status === 'degraded';
 
   // Fetch real alerts count from backend
@@ -163,20 +164,93 @@ export const TopBar: React.FC<TopBarProps> = ({ onOpenMobileMenu }) => {
           )}
         </button>
 
-        {/* User profile avatar control */}
-        <button
-          className="flex items-center gap-1.5 pl-1.5 pr-2.5 py-1 rounded-full border border-slate-200 hover:bg-slate-50 transition-colors cursor-pointer"
-          aria-label="User profile menu"
-          title="User profile"
-        >
-          <span
-            className="w-6 h-6 rounded-full flex items-center justify-center text-[11px] font-bold text-white"
-            style={{ background: 'var(--aq-navy)' }}
+        {/* User profile avatar control with dropdown */}
+        <div className="relative">
+          <button
+            onClick={() => setUserMenuOpen(!userMenuOpen)}
+            className={`flex items-center gap-1.5 pl-1.5 pr-2.5 py-1 rounded-full border transition-all cursor-pointer ${
+              userMenuOpen ? 'bg-teal-50 border-teal-500/50 shadow-sm' : 'border-slate-200 hover:bg-slate-50'
+            }`}
+            aria-label="User profile menu"
+            title="User Profile & Settings"
           >
-            U
-          </span>
-          <ChevronDown className="w-3.5 h-3.5 text-slate-400" />
-        </button>
+            <span
+              className="w-6 h-6 rounded-full flex items-center justify-center text-[11px] font-bold text-white shadow-xs"
+              style={{ background: 'var(--aq-navy)' }}
+            >
+              U
+            </span>
+            <ChevronDown className={`w-3.5 h-3.5 text-slate-400 transition-transform duration-200 ${userMenuOpen ? 'rotate-180 text-teal-600' : ''}`} />
+          </button>
+
+          {/* Profile Dropdown Menu */}
+          {userMenuOpen && (
+            <>
+              {/* Click outside backdrop */}
+              <div
+                className="fixed inset-0 z-40"
+                onClick={() => setUserMenuOpen(false)}
+              />
+
+              <div className="absolute right-0 mt-2 w-72 rounded-2xl bg-white border border-slate-200 shadow-2xl z-50 p-4 space-y-3 animate-in fade-in slide-in-from-top-2">
+                {/* User Info Header */}
+                <div className="flex items-center gap-3 pb-3 border-b border-slate-100">
+                  <div className="w-10 h-10 rounded-xl bg-[#008080] text-white font-extrabold text-sm flex items-center justify-center shadow-md">
+                    U
+                  </div>
+                  <div className="flex flex-col min-w-0">
+                    <span className="text-xs font-bold text-slate-900 truncate">
+                      Mumbai Civic Ops Admin
+                    </span>
+                    <span className="text-[11px] text-slate-500 truncate">
+                      ops.mumbai@aquora.gov.in
+                    </span>
+                    <span className="text-[10px] font-semibold text-[#008080] mt-0.5">
+                      ● Active Live Session
+                    </span>
+                  </div>
+                </div>
+
+                {/* Account Details & Context */}
+                <div className="space-y-1.5 text-[11px] text-slate-600 bg-slate-50 p-2.5 rounded-xl border border-slate-100">
+                  <div className="flex justify-between">
+                    <span className="text-slate-500 font-medium">Catchment Zone:</span>
+                    <span className="font-bold text-slate-800">Mithi River (17.8 km)</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-slate-500 font-medium">Access Tier:</span>
+                    <span className="font-bold text-teal-700">Civic Intelligence Level 3</span>
+                  </div>
+                </div>
+
+                {/* Actions */}
+                <div className="pt-1 space-y-1">
+                  <button
+                    onClick={() => {
+                      setUserMenuOpen(false);
+                      setActiveTab('alerts');
+                    }}
+                    className="w-full text-left px-3 py-2 rounded-xl text-xs font-semibold text-slate-700 hover:bg-slate-100 hover:text-teal-700 flex items-center justify-between transition-colors cursor-pointer"
+                  >
+                    <span>Alert Center Notifications</span>
+                    <Bell className="w-3.5 h-3.5 text-slate-400" />
+                  </button>
+
+                  <button
+                    onClick={() => {
+                      setUserMenuOpen(false);
+                      navigateToLanding();
+                    }}
+                    className="w-full text-left px-3 py-2 rounded-xl text-xs font-bold text-red-600 hover:bg-red-50 hover:text-red-700 flex items-center justify-between transition-colors cursor-pointer border border-red-100 mt-1"
+                  >
+                    <span>Sign Out & Exit to Landing Page</span>
+                    <LogOut className="w-3.5 h-3.5 text-red-500" />
+                  </button>
+                </div>
+              </div>
+            </>
+          )}
+        </div>
       </div>
     </header>
   );

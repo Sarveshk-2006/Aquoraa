@@ -42,8 +42,8 @@ const MumbaiSkylineHero: React.FC<MumbaiSkylineHeroProps> = ({ onExploreClick })
     />
 
     {/* 2. Dark Teal Gradient Overlay for WCAG-friendly text readability */}
-    <div className="absolute inset-0 bg-gradient-to-r from-[#031920] via-[#031920]/85 via-50% to-transparent opacity-95 sm:opacity-90" />
-    <div className="absolute inset-0 bg-gradient-to-b from-[#031920]/30 via-transparent to-[#031920]/50 pointer-events-none" />
+    <div className="absolute inset-0 bg-gradient-to-r from-[#031920]/85 via-[#031920]/60 via-45% to-transparent opacity-90 sm:opacity-85" />
+    <div className="absolute inset-0 bg-gradient-to-b from-[#031920]/20 via-transparent to-[#031920]/40 pointer-events-none" />
 
     {/* 3. Hero Content */}
     <div className="relative z-10 h-full max-w-[620px] flex flex-col justify-center px-6 sm:px-10 text-white">

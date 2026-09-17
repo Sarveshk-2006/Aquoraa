@@ -39,6 +39,7 @@ services:
   - type: keyvalue
     name: aquora-redis
     region: oregon
+    ipAllowList: []
     maxmemoryPolicy: allkeys-lru
 
 databases:

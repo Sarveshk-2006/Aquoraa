@@ -30,6 +30,8 @@ services:
         sync: false
       - key: ROUTING_PROVIDER
         value: OSRM
+      - key: ROUTING_BASE_URL
+        value: https://router.project-osrm.org
       - key: RAINFALL_PROVIDER
         value: IMERG
       - key: FACILITY_PROVIDER

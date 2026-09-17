@@ -177,7 +177,7 @@ class Settings(BaseSettings):
         description="Active routing provider implementation ('SYNTHETIC', 'OSRM')"
     )
     ROUTING_BASE_URL: str = Field(
-        default="http://localhost:5000",
+        default="https://router.project-osrm.org",
         description="Configurable base URL for external routing service (e.g. OSRM router endpoint)"
     )
     ROUTING_TIMEOUT_SECONDS: float = Field(

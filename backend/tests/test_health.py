@@ -79,6 +79,10 @@ async def test_vercel_cors_header_verification(async_client):
             "Access-Control-Request-Headers": "Content-Type",
         }
     )
+    assert preflight.status_code == 200
+    assert preflight.headers.get("access-control-allow-origin") == origin
+
+
 @pytest.mark.asyncio
 async def test_head_method_support_on_health_endpoints(async_client):
     """Verify HEAD requests on liveness, readiness, and alias health endpoints return 200 OK."""
@@ -90,5 +94,6 @@ async def test_head_method_support_on_health_endpoints(async_client):
 
     res_alias = await async_client.head("/health")
     assert res_alias.status_code in [200, 503]
+
 
 

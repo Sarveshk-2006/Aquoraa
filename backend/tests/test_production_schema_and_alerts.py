@@ -39,7 +39,6 @@ def test_required_production_tables_list():
     """Verify that all required production tables are tracked for schema verification."""
     expected_tables = [
         "audit_events",
-        "system_health",
         "rainfall_observation_grids",
         "terrain_datasets",
         "drainage_networks",

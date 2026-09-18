@@ -24,9 +24,11 @@ async def test_readiness_endpoint_degraded(async_client):
 
 @pytest.mark.asyncio
 async def test_readiness_endpoint_mocked_success(async_client):
-    """Verify /api/v1/health/ready returns 200 OK when DB and Redis are healthy."""
+    """Verify /api/v1/health/ready returns 200 OK when DB, Redis, schema, and DEM are healthy."""
     with patch("app.api.v1.health.AsyncSessionLocal") as mock_session_cls, \
-         patch("app.api.v1.health.redis.from_url") as mock_redis_cls:
+         patch("app.api.v1.health.redis.from_url") as mock_redis_cls, \
+         patch("app.api.v1.health.verify_production_schema", new_callable=AsyncMock) as mock_verify_schema, \
+         patch("pathlib.Path.exists", return_value=True):
 
         # Mock DB
         mock_session = AsyncMock()
@@ -35,6 +37,9 @@ async def test_readiness_endpoint_mocked_success(async_client):
         mock_session.execute = AsyncMock(return_value=mock_result)
         mock_session_cls.return_value.__aenter__ = AsyncMock(return_value=mock_session)
         mock_session_cls.return_value.__aexit__ = AsyncMock(return_value=None)
+
+        # Mock Schema Verification
+        mock_verify_schema.return_value = []
 
         # Mock Redis
         mock_redis = AsyncMock()

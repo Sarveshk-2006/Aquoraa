@@ -20,19 +20,12 @@ from app.core.middleware import RequestIDMiddleware
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Application startup and shutdown lifespan context."""
-    # Production backend build trigger v1.0.1
     setup_logging(settings.LOG_LEVEL)
     logger.info(
         "Starting Aquora Backend Service",
         project_name=settings.PROJECT_NAME,
         version=settings.VERSION,
     )
-    try:
-        from app.db.init_db import run_migrations_and_seed
-        await run_migrations_and_seed()
-    except Exception as err:
-        logger.error("Database initialization / migration error during startup lifespan", error=str(err))
-        raise err
 
     yield
     logger.info("Shutting down Aquora Backend Service")

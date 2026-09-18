@@ -11,6 +11,7 @@ from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.core.logging import logger
 from app.db.session import get_db
 from app.models.simulator import (
     SimulatorArtifact,
@@ -78,6 +79,11 @@ async def list_scenarios(
         res = await db.execute(stmt)
         scenarios = res.scalars().all()
     except Exception as err:
+        try:
+            await db.rollback()
+        except Exception:
+            pass
+        logger.error("Error querying simulator scenarios", error=str(err))
         return []
 
     out = []

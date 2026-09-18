@@ -41,8 +41,12 @@ REQUIRED_PRODUCTION_TABLES = [
 
 
 def apply_alembic_migrations() -> None:
-    """Execute Alembic migrations (alembic upgrade head) programmatically."""
+    """Execute Alembic migrations (alembic upgrade head) programmatically and enforce schema completion."""
     from urllib.parse import urlparse
+    from sqlalchemy import create_engine
+    from app.db.base import Base
+    import app.models  # noqa: F401
+
     try:
         parsed = urlparse(settings.DATABASE_URL)
         safe_db_info = f"host={parsed.hostname}, port={parsed.port or 5432}, dbname={parsed.path.lstrip('/')}"
@@ -69,6 +73,16 @@ def apply_alembic_migrations() -> None:
     except Exception as err:
         logger.error("Alembic migration execution error", error=str(err))
         raise err
+
+    # Fallback safety check: ensure all Base metadata tables exist in PostgreSQL
+    try:
+        sync_url = settings.DATABASE_URL.replace("postgresql+asyncpg://", "postgresql://").replace("postgres://", "postgresql://")
+        engine = create_engine(sync_url)
+        Base.metadata.create_all(bind=engine)
+        engine.dispose()
+        logger.info("Enforced complete schema presence via Base.metadata.create_all.")
+    except Exception as err:
+        logger.warning("Base.metadata.create_all execution notice", error=str(err))
 
 
 async def verify_production_schema() -> list[str]:

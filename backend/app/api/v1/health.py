@@ -66,8 +66,15 @@ async def health_ready(response: Response) -> ReadinessResponse:
 
     # 4. Required Runtime Terrain Assets Check
     try:
-        repo_root = Path(__file__).resolve().parents[3]
+        file_path = Path(__file__).resolve()
+        # Find project root containing data/ or backend/
+        repo_root = file_path.parents[4] if len(file_path.parents) > 4 else file_path.parents[-1]
         dem_path = repo_root / settings.DEM_GEOTIFF_PATH
+        if not dem_path.exists():
+            dem_path = Path(settings.DEM_GEOTIFF_PATH).resolve()
+        if not dem_path.exists():
+            # Try relative to cwd
+            dem_path = Path.cwd() / settings.DEM_GEOTIFF_PATH
         if not dem_path.exists():
             logger.warning("Terrain asset check failed: file missing", path=str(dem_path))
             terrain_status = "missing_asset"

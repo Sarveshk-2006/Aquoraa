@@ -63,7 +63,6 @@ async def create_scenario(
 
 @router.get(
     "/scenarios",
-    response_model=list[SimulatorScenarioResponseSchema],
     summary="List Simulator Scenarios"
 )
 async def list_scenarios(
@@ -92,56 +91,19 @@ async def list_scenarios(
             created_at_str = s.created_at.isoformat() if hasattr(s.created_at, "isoformat") else str(s.created_at or "")
             updated_at_str = s.updated_at.isoformat() if hasattr(s.updated_at, "isoformat") else str(s.updated_at or "")
             
-            try:
-                scen_type = ScenarioType(s.scenario_type)
-            except Exception:
-                scen_type = ScenarioType.RAINFALL_MULTIPLIER
-
-            try:
-                scen_status = ScenarioStatus(s.status)
-            except Exception:
-                scen_status = ScenarioStatus.DRAFT
-
-            parsed_assumptions = []
-            for a in (s.assumptions or []):
-                try:
-                    if isinstance(a, dict):
-                        parsed_assumptions.append(
-                            ScenarioAssumptionSchema(
-                                assumption_type=str(a.get("assumption_type", "DEFAULT")),
-                                assumption_value=a.get("assumption_value", str(a)),
-                                assumption_source=str(a.get("assumption_source", "SYSTEM")),
-                                assumption_description=str(a.get("assumption_description", "")),
-                            )
-                        )
-                    elif isinstance(a, ScenarioAssumptionSchema):
-                        parsed_assumptions.append(a)
-                    else:
-                        parsed_assumptions.append(
-                            ScenarioAssumptionSchema(
-                                assumption_type="DEFAULT",
-                                assumption_value=str(a),
-                                assumption_source="SYSTEM",
-                                assumption_description=str(a),
-                            )
-                        )
-                except Exception:
-                    pass
-
-            out.append(
-                SimulatorScenarioResponseSchema(
-                    scenario_id=s.scenario_id,
-                    baseline_run_id=s.baseline_run_id,
-                    scenario_type=scen_type,
-                    parameters=s.parameters if isinstance(s.parameters, dict) else {},
-                    assumptions=parsed_assumptions,
-                    status=scen_status,
-                    provenance=s.provenance if isinstance(s.provenance, dict) else {},
-                    created_at=created_at_str,
-                    updated_at=updated_at_str,
-                )
-            )
-        except Exception:
+            out.append({
+                "scenario_id": s.scenario_id,
+                "baseline_run_id": s.baseline_run_id,
+                "scenario_type": str(s.scenario_type or "RAINFALL_MULTIPLIER"),
+                "parameters": s.parameters if isinstance(s.parameters, dict) else {},
+                "assumptions": s.assumptions if isinstance(s.assumptions, list) else [],
+                "status": str(s.status or "DRAFT"),
+                "provenance": s.provenance if isinstance(s.provenance, dict) else {},
+                "created_at": created_at_str,
+                "updated_at": updated_at_str,
+            })
+        except Exception as err:
+            logger.error("Error formatting scenario item", error=str(err))
             continue
     return out
 

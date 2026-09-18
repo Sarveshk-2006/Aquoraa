@@ -47,14 +47,26 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
     )
 
 async def generic_exception_handler(request: Request, exc: Exception) -> JSONResponse:
+    from fastapi import HTTPException
     request_id = get_request_id(request)
-    logger.error("Unhandled internal server error", error=str(exc), request_id=request_id)
+    if isinstance(exc, HTTPException):
+        return JSONResponse(
+            status_code=exc.status_code,
+            content={
+                "error": {
+                    "code": "HTTP_ERROR",
+                    "message": exc.detail,
+                    "request_id": request_id
+                }
+            }
+        )
+    logger.error("Unhandled internal server error", error_type=type(exc).__name__, error=str(exc), request_id=request_id)
     return JSONResponse(
         status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
         content={
             "error": {
                 "code": "INTERNAL_SERVER_ERROR",
-                "message": "An unexpected internal server error occurred.",
+                "message": f"Unhandled error ({type(exc).__name__}): {exc!s}",
                 "request_id": request_id
             }
         }

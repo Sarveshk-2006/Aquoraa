@@ -59,6 +59,12 @@ async def create_scenario(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail=str(err)
         )
+    except Exception as err:
+        logger.error("Error creating scenario", error=str(err))
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Scenario creation failed: {err!s}"
+        )
 
 
 @router.get(
@@ -83,7 +89,10 @@ async def list_scenarios(
         except Exception:
             pass
         logger.error("Error querying simulator scenarios", error=str(err))
-        return []
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Query scenarios failed: {err!s}"
+        )
 
     out = []
     for s in scenarios:

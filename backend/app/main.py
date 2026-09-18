@@ -20,6 +20,7 @@ from app.core.middleware import RequestIDMiddleware
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Application startup and shutdown lifespan context."""
+    # Production backend build trigger v1.0.1
     setup_logging(settings.LOG_LEVEL)
     logger.info(
         "Starting Aquora Backend Service",

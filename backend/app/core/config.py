@@ -90,6 +90,10 @@ class Settings(BaseSettings):
         default="data/processed/dem",
         description="Directory path for processed terrain derivative rasters"
     )
+    DEM_GEOTIFF_PATH: str = Field(
+        default="data/processed/phase7/terrain/elevation_30m.tif",
+        description="Canonical relative path to Copernicus 30m DEM GeoTIFF"
+    )
     SURFACE_DRAINAGE_THRESHOLD_AREA_M2: float = Field(
         default=10000.0,
         description="Configurable contributing area threshold in m2 for extracting DEM-derived surface drainage proxy"

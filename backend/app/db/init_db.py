@@ -41,7 +41,15 @@ REQUIRED_PRODUCTION_TABLES = [
 
 def apply_alembic_migrations() -> None:
     """Execute Alembic migrations (alembic upgrade head) programmatically."""
-    logger.info("Verifying database schema migration status (alembic upgrade head)...")
+    from urllib.parse import urlparse
+    try:
+        parsed = urlparse(settings.DATABASE_URL)
+        safe_db_info = f"host={parsed.hostname}, port={parsed.port or 5432}, dbname={parsed.path.lstrip('/')}"
+        logger.info("Database connection target for migrations", target=safe_db_info)
+    except Exception:
+        logger.info("Database connection target configured via settings.DATABASE_URL")
+
+    logger.info("Verifying database schema migration status (alembic upgrade head)... Target head: 0013_phase15_alerts")
     try:
         from alembic.config import Config
         from alembic import command
@@ -52,8 +60,9 @@ def apply_alembic_migrations() -> None:
         if alembic_ini_path.exists():
             alembic_cfg = Config(str(alembic_ini_path))
             alembic_cfg.set_main_option("script_location", str(backend_dir / "alembic"))
+            alembic_cfg.set_main_option("sqlalchemy.url", settings.DATABASE_URL)
             command.upgrade(alembic_cfg, "head")
-            logger.info("Alembic database migrations applied successfully (head reached).")
+            logger.info("Alembic database migrations applied successfully (head reached: 0013_phase15_alerts).")
         else:
             logger.warning("alembic.ini not found at path", path=str(alembic_ini_path))
     except Exception as err:

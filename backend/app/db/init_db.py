@@ -72,23 +72,20 @@ def apply_alembic_migrations() -> None:
 
 async def verify_production_schema() -> list[str]:
     """
-    Verify all 14 required production tables exist in PostgreSQL.
+    Verify all 14 required production tables exist in PostgreSQL public schema.
     Returns list of missing table names (empty list if 100% healthy).
     """
     from sqlalchemy import text
-    missing: list[str] = []
     try:
         async with AsyncSessionLocal() as session:
-            for table_name in REQUIRED_PRODUCTION_TABLES:
-                query = text("SELECT EXISTS (SELECT 1 FROM information_schema.tables WHERE table_name = :t);")
-                res = await session.execute(query, {"t": table_name})
-                exists = res.scalar()
-                if not exists:
-                    missing.append(table_name)
+            query = text("SELECT table_name FROM information_schema.tables WHERE table_schema = 'public';")
+            res = await session.execute(query)
+            existing_tables = set(res.scalars().all())
+            missing = [t for t in REQUIRED_PRODUCTION_TABLES if t not in existing_tables]
+            return missing
     except Exception as err:
         logger.error("Error executing schema verification query", error=str(err))
         return REQUIRED_PRODUCTION_TABLES
-    return missing
 
 
 async def seed_critical_facilities() -> int:

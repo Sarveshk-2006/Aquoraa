@@ -179,7 +179,7 @@ async def seed_critical_facilities() -> int:
 
 async def run_migrations_and_seed() -> None:
     """Execute migrations, verify production schema, and seed facilities."""
-    apply_alembic_migrations()
+    await asyncio.to_thread(apply_alembic_migrations)
     missing = await verify_production_schema()
     if missing:
         err_msg = f"CRITICAL PRODUCTION SCHEMA FAILURE: Missing required tables: {missing}"

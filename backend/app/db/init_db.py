@@ -34,6 +34,7 @@ REQUIRED_PRODUCTION_TABLES = [
     "critical_facilities",
     "protect_city_runs",
     "ground_truth_runs",
+    "simulator_scenarios",
     "simulator_runs",
     "alerts",
 ]

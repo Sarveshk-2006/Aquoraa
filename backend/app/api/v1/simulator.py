@@ -77,28 +77,58 @@ async def list_scenarios(
     res = await db.execute(stmt)
     scenarios = res.scalars().all()
 
-    return [
-        SimulatorScenarioResponseSchema(
-            scenario_id=s.scenario_id,
-            baseline_run_id=s.baseline_run_id,
-            scenario_type=ScenarioType(s.scenario_type),
-            parameters=s.parameters,
-            assumptions=[
-                ScenarioAssumptionSchema(
-                    assumption_type=str(a.get("assumption_type", "DEFAULT")) if isinstance(a, dict) else "DEFAULT",
-                    assumption_value=a.get("assumption_value", str(a)) if isinstance(a, dict) else str(a),
-                    assumption_source=str(a.get("assumption_source", "SYSTEM")) if isinstance(a, dict) else "SYSTEM",
-                    assumption_description=str(a.get("assumption_description", "")) if isinstance(a, dict) else str(a),
+    out = []
+    for s in scenarios:
+        created_at_str = s.created_at.isoformat() if hasattr(s.created_at, "isoformat") else str(s.created_at)
+        updated_at_str = s.updated_at.isoformat() if hasattr(s.updated_at, "isoformat") else str(s.updated_at)
+        
+        try:
+            scen_type = ScenarioType(s.scenario_type)
+        except Exception:
+            scen_type = ScenarioType.RAINFALL_MULTIPLIER
+
+        try:
+            scen_status = ScenarioStatus(s.status)
+        except Exception:
+            scen_status = ScenarioStatus.DRAFT
+
+        parsed_assumptions = []
+        for a in (s.assumptions or []):
+            if isinstance(a, dict):
+                parsed_assumptions.append(
+                    ScenarioAssumptionSchema(
+                        assumption_type=str(a.get("assumption_type", "DEFAULT")),
+                        assumption_value=a.get("assumption_value", str(a)),
+                        assumption_source=str(a.get("assumption_source", "SYSTEM")),
+                        assumption_description=str(a.get("assumption_description", "")),
+                    )
                 )
-                for a in (s.assumptions or [])
-            ],
-            status=ScenarioStatus(s.status),
-            provenance=s.provenance,
-            created_at=s.created_at.isoformat(),
-            updated_at=s.updated_at.isoformat(),
+            elif isinstance(a, ScenarioAssumptionSchema):
+                parsed_assumptions.append(a)
+            else:
+                parsed_assumptions.append(
+                    ScenarioAssumptionSchema(
+                        assumption_type="DEFAULT",
+                        assumption_value=str(a),
+                        assumption_source="SYSTEM",
+                        assumption_description=str(a),
+                    )
+                )
+
+        out.append(
+            SimulatorScenarioResponseSchema(
+                scenario_id=s.scenario_id,
+                baseline_run_id=s.baseline_run_id,
+                scenario_type=scen_type,
+                parameters=s.parameters or {},
+                assumptions=parsed_assumptions,
+                status=scen_status,
+                provenance=s.provenance or {},
+                created_at=created_at_str,
+                updated_at=updated_at_str,
+            )
         )
-        for s in scenarios
-    ]
+    return out
 
 
 @router.get(

@@ -36,7 +36,7 @@ def test_alembic_migration_head_is_0013_phase15_alerts():
 
 
 def test_required_production_tables_list():
-    """Verify that all 14 required production tables are tracked for schema verification."""
+    """Verify that all required production tables are tracked for schema verification."""
     expected_tables = [
         "audit_events",
         "system_health",
@@ -50,6 +50,7 @@ def test_required_production_tables_list():
         "critical_facilities",
         "protect_city_runs",
         "ground_truth_runs",
+        "simulator_scenarios",
         "simulator_runs",
         "alerts",
     ]
@@ -59,16 +60,16 @@ def test_required_production_tables_list():
 
 @pytest.mark.asyncio
 async def test_schema_verification_detects_missing_tables():
-    """Verify verify_production_schema returns missing tables when query reports False."""
+    """Verify verify_production_schema returns missing tables when query reports empty."""
     with patch("app.db.init_db.AsyncSessionLocal") as mock_session_cls:
         mock_session = AsyncMock()
         mock_res = MagicMock()
-        mock_res.scalar.return_value = False
+        mock_res.scalars.return_value.all.return_value = []
         mock_session.execute = AsyncMock(return_value=mock_res)
         mock_session_cls.return_value.__aenter__.return_value = mock_session
 
         missing = await verify_production_schema()
-        assert len(missing) == 14, "Expected all 14 tables to be flagged as missing"
+        assert len(missing) == len(REQUIRED_PRODUCTION_TABLES), "Expected all tables to be flagged as missing"
 
 
 @pytest.mark.asyncio
